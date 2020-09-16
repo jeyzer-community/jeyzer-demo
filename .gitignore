@@ -1,0 +1,9 @@
+# ignore maven build directory
+**/target/
+# ignore gradle build directory
+**/.gradle
+**/build
+.apt_generated
+# ignore generated license files
+/LICENSE.txt
+

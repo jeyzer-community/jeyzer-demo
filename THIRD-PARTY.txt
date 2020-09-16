@@ -1,0 +1,7 @@
+
+Lists of 8 third-party dependencies.
+     (Eclipse Public License - v 1.0) (GNU Lesser General Public License) Logback Classic Module (ch.qos.logback:logback-classic:1.0.13 - http://logback.qos.ch)
+     (Eclipse Public License - v 1.0) (GNU Lesser General Public License) Logback Core Module (ch.qos.logback:logback-core:1.0.13 - http://logback.qos.ch)
+     (New BSD License) Commons Compiler (org.codehaus.janino:commons-compiler:2.6.1 - http://docs.codehaus.org/display/JANINO/Home/commons-compiler)
+     (New BSD License) Janino (org.codehaus.janino:janino:2.6.1 - http://docs.codehaus.org/display/JANINO/Home/janino)
+     (MIT License) SLF4J API Module (org.slf4j:slf4j-api:1.7.5 - http://www.slf4j.org)

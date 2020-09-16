@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="event_journal" name="Detected incidents" critical_tab_color="LIGHT_ORANGE">
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays the detected incidents.</description>
+			<display date_format="yyyy/MM/dd HH:mm:ss" grouping="false" group_sorting="false" clean_duplicate_events="false">
+				<links sequence_sheets="Mon, Fct"/>
+				<ranking>
+					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/monitoring-event-ranks.xml"/>
+				</ranking>
+			</display>
+			<rules>
+			
+				<rule_set file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/monitor/rules/runtime_rules.xml"/>
+				<rule_set file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/monitor/rules/system_rules.xml"/>
+				
+				<!--  Exclude the job start applicative events. -->
+				<all_applicative_rules exclude_ref_patterns="JZR_LAB_01, JZR_LAB_02"/>
+			
+			</rules>
+			<stickers>
+				<sticker_set file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/monitor/stickers/labor_stickers.xml"/>
+				<sticker_set file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/monitor/stickers/demo_stickers.xml"/>
+			</stickers>
+		</sheet>

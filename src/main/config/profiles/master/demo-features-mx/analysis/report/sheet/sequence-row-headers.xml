@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Row Headers" link_type="Rhe">
+
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays Jeyzer time sequence display features, focusing on row headers.</description>
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+				<action_start_time/>
+				<action_duration  color="RGB-231-213-137" threshold="50"/>	<!-- Light brown -->
+				<executor>
+					<highlight name="Demo thread" color="RGB-172-186-230"/>  <!-- Light grey blue-->
+					<highlight name="Lock feature thread" color="RGB-236-201-166"/>  <!-- Light skin -->
+					<highlight name="Deadlock feature thread" color="RGB-236-164-152"/>  <!-- Red skin-->
+				</executor>
+				<function_principal>
+					<highlight name="(ATBI)" color="GREY_25_PERCENT"/>
+					<highlight name="PING displayed in blue" color="RGB-0-112-192"/>
+					<highlight name="PONG displayed in green" color="RGB-112-173-71"/>
+				</function_principal>
+				<operation_principal>
+					<highlight name="(OTBI)" color="GREY_25_PERCENT"/>
+					<highlight name="Thread on hold (sleep)" color="RGB-119-165-233"/> <!-- Blue light-->
+					<highlight name="Memory creation : fill list with random long numbers" color="RGB-254-148-6"/> <!-- Orange light-->
+					<highlight name="CPU creation : do mathematical operations" color="RGB-72-181-11"/> <!-- Green light-->
+					<highlight name="Method action level2 is synchronized" color="RGB-191-219-157"/> <!-- Green ultra light-->
+					<highlight name="Access to already locked resource" color="RGB-255-101-101"/> <!-- Red light-->
+				</operation_principal>
+				<action_size color="RGB-231-213-137" threshold="10"/> <!-- Light brown -->
+				<action_consumed_memory color="ORANGE" threshold="100" color_activity="RGB-225-255-225"/>
+				<action_consumed_cpu color="ORANGE" threshold="1" color_activity="RGB-225-255-225"/>
+				<lock_state>
+					<highlight name="Action in deadlock situation" regex="D" color="RED"/>
+					<highlight name="Action in locking situation" regex="L" color="ORANGE"/>
+					<highlight name="Action suspended on debug breakpoint" regex="S" color="RED"/>
+				</lock_state>
+				<frozen_code_state threshold="5" color="ORANGE"/>
+			</row_headers>
+		
+			<display>
+
+				<advanced_function display_operation="false" display_contention_type="false">
+					<highlight name="(ATBI)" color="GREY_25_PERCENT"/>
+					<highlight name="PING displayed in blue" color="RGB-0-112-192"/>
+					<highlight name="PONG displayed in green" color="RGB-112-173-71"/>
+				</advanced_function>
+
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+
+				<!-- Identical consecutive stacks : add colored borders  -->
+				<frozen_code_state color="RED" stats="false"/>
+				
+				<!-- Operation display. Color applies for OTBI -->
+				<!--  operation color="GREY_25_PERCENT"/>-->
+
+				<!-- Long running tasks display -->
+				<long_running color="LIGHT_YELLOW" threshold="4" stats="false"/>
+				
+				<!-- Java Lock display -->
+				<lock_state color="ORANGE" lock_owner="RGB-209-47-109" lock_owner_and_locked="RGB-174-76-169" deadlock="RED" suspended="RED" stats="false"/>
+
+			</display>
+		</sheet>
+
+		
+<!-- Supported colors :    
+	HSSFColor.AQUA, 
+	HSSFColor.AUTOMATIC, 
+	HSSFColor.BLACK, 
+	HSSFColor.BLUE, 
+	HSSFColor.BLUE_GREY, 
+	HSSFColor.BRIGHT_GREEN, 
+	HSSFColor.BROWN, 
+	HSSFColor.CORAL, 
+	HSSFColor.CORNFLOWER_BLUE, 
+	HSSFColor.DARK_BLUE, 
+	HSSFColor.DARK_GREEN, 
+	HSSFColor.DARK_RED, 
+	HSSFColor.DARK_TEAL, 
+	HSSFColor.DARK_YELLOW, 
+	HSSFColor.GOLD, 
+	HSSFColor.GREEN, 
+	HSSFColor.GREY_25_PERCENT, 
+	HSSFColor.GREY_40_PERCENT, 
+	HSSFColor.GREY_50_PERCENT, 
+	HSSFColor.GREY_80_PERCENT, 
+	HSSFColor.INDIGO, 
+	HSSFColor.LAVENDER, 
+	HSSFColor.LEMON_CHIFFON, 
+	HSSFColor.LIGHT_BLUE, 
+	HSSFColor.LIGHT_CORNFLOWER_BLUE, 
+	HSSFColor.LIGHT_GREEN, 
+	HSSFColor.LIGHT_ORANGE, 
+	HSSFColor.LIGHT_TURQUOISE, 
+	HSSFColor.LIGHT_YELLOW, 
+	HSSFColor.LIME, 
+	HSSFColor.MAROON, 
+	HSSFColor.OLIVE_GREEN, 
+	HSSFColor.ORANGE, 
+	HSSFColor.ORCHID, 
+	HSSFColor.PALE_BLUE, 
+	HSSFColor.PINK, 
+	HSSFColor.PLUM, 
+	HSSFColor.RED, 
+	HSSFColor.ROSE, 
+	HSSFColor.ROYAL_BLUE, 
+	HSSFColor.SEA_GREEN, 
+	HSSFColor.SKY_BLUE, 
+	HSSFColor.TAN, 
+	HSSFColor.TEAL, 
+	HSSFColor.TURQUOISE, 
+	HSSFColor.VIOLET, 
+	HSSFColor.WHITE, 
+	HSSFColor.YELLOW 
+-->

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<stickers group="Labors demo">
+
+	<sticker name="logback-1.0.x" type="process jar version" jar_name="logback-classic" pattern="^1\.0\.*"/>
+
+</stickers>

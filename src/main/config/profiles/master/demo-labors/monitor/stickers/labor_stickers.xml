@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<stickers group="Labors internal">
+
+	<!-- Analyzer ambient stickers. Examples : code_analysis, performance, QA..  -->
+	<!-- Recommended way is to reuse the standard sticker list (defined in the default_setup.xml) 
+	     and therefore set the extra stickers onto the JEYZER_MONITOR_ANALYZER_STICKERS variable -->
+
+	<sticker name="cpu_consuming_task"        type="property card" property="demo.job.cpu_consuming_task"       pattern="true"/>
+
+	<sticker name="function_global_percentage"         type="property card" property="demo.job.function_global_percentage"        pattern="true"/>
+	<sticker name="operation_global_percentage"        type="property card" property="demo.job.operation_global_percentage"       pattern="true"/>
+	<sticker name="contention_type_global_percentage"  type="property card" property="demo.job.contention_type_global_percentage" pattern="true"/>
+
+	<sticker name="function_presence"         type="property card" property="demo.job.function_presence"        pattern="true"/>
+	<sticker name="operation_presence"        type="property card" property="demo.job.operation_presence"       pattern="true"/>
+	
+	<sticker name="function_pattern"          type="property card" property="demo.job.function_pattern"         pattern="true"/>
+	<sticker name="operation_pattern"         type="property card" property="demo.job.operation_pattern"        pattern="true"/>
+	<sticker name="contention_type_pattern"   type="property card" property="demo.job.contention_type_pattern"  pattern="true"/>
+	
+	<sticker name="operation_pattern_with_percentage"   type="property card" property="demo.job.operation_pattern_with_percentage"  pattern="true"/>
+	<sticker name="function_pattern_with_percentage"    type="property card" property="demo.job.function_pattern_with_percentage"   pattern="true"/>
+
+	<sticker name="disk_free_space"           type="property card" property="demo.job.disk_free_space"          pattern="true"/>
+	<sticker name="disk_used_space"           type="property card" property="demo.job.disk_used_space"          pattern="true"/>
+	<sticker name="disk_space_total"          type="property card" property="demo.job.disk_space_total"         pattern="true"/>
+	<sticker name="disk_write_time"           type="property card" property="demo.job.disk_write_time"          pattern="true"/>
+	<sticker name="disk_write_speed"          type="property card" property="demo.job.disk_write_speed"         pattern="true"/>
+	
+	<sticker name="process_card_property_pattern"    type="property card" property="demo.job.process_card_property_pattern"        pattern="true"/>
+	<sticker name="process_card_property_number"     type="property card" property="demo.job.process_card_property_number"         pattern="true"/>
+	<sticker name="process_card_property_absence"    type="property card" property="demo.job.process_card_property_absence"        pattern="true"/>
+	
+	<sticker name="thread_dump_capture_time"  type="property card" property="demo.job.thread_dump_capture_time"    pattern="true"/>
+	<sticker name="process_up_time"           type="property card" property="demo.job.process_up_time"             pattern="true"/>
+	
+	<sticker name="operation_in_principal_percentage"         type="property card" property="demo.job.operation_in_principal_percentage"         pattern="true"/>
+	<sticker name="function_in_principal_percentage"          type="property card" property="demo.job.function_in_principal_percentage"          pattern="true"/>
+	<sticker name="contention_type_in_principal_percentage"   type="property card" property="demo.job.contention_type_in_principal_percentage"   pattern="true"/>
+	
+	<sticker name="memory_consuming_task"      type="property card" property="demo.job.memory_consuming_task"       pattern="true"/>
+	<sticker name="memory_consuming_process"   type="property card" property="demo.job.memory_consuming_process"    pattern="true"/>
+	<sticker name="excessive_gc_time"          type="property card" property="demo.job.excessive_gc_time"           pattern="true"/>
+	<sticker name="excessive_old_gc_execution" type="property card" property="demo.job.excessive_old_gc_execution"  pattern="true"/>
+	 
+	<sticker name="named_thread_leak"          type="property card" property="demo.job.named_thread_leak"   pattern="true"/>
+	<sticker name="global_thread_leak"         type="property card" property="demo.job.global_thread_leak"  pattern="true"/>
+	
+	<sticker name="active_thread_limit"        type="property card" property="demo.job.active_thread_limit" pattern="true"/>
+	<sticker name="global_thread_limit"        type="property card" property="demo.job.global_thread_limit" pattern="true"/>
+	
+	<sticker name="stack_overflow"             type="property card" property="demo.job.stack_overflow"              pattern="true"/>
+	<sticker name="task_execution_pattern"     type="property card" property="demo.job.task_execution_pattern"      pattern="true"/>
+	
+	<sticker name="jeyzer_mx_context_parameter_number"       type="property card" property="demo.job.jeyzer_mx_context_parameter_number"       pattern="true"/>
+	<sticker name="jeyzer_mx_context_parameter_pattern"      type="property card" property="demo.job.jeyzer_mx_context_parameter_pattern"      pattern="true"/>
+	<sticker name="task_jeyzer_mx_context_parameter_number"  type="property card" property="demo.job.task_jeyzer_mx_context_parameter_number"  pattern="true"/>
+	<sticker name="task_jeyzer_mx_context_parameter_pattern" type="property card" property="demo.job.task_jeyzer_mx_context_parameter_pattern" pattern="true"/>
+	
+	<sticker name="locker_task"         type="property card" property="demo.job.locker_task"        pattern="true"/>
+	<sticker name="locks_contention"    type="property card" property="demo.job.locks_contention"   pattern="true"/>
+
+	<sticker name="process_command_line_max_heap"             type="property card" property="demo.job.process_command_line_max_heap"            pattern="true"/>
+	<sticker name="process_command_line_parameter_absence"    type="property card" property="demo.job.process_command_line_parameter_absence"   pattern="true"/>
+
+	<sticker name="function_parallel_contention"          type="property card" property="demo.job.function_parallel_contention"         pattern="true"/>
+	<sticker name="operation_parallel_contention"         type="property card" property="demo.job.operation_parallel_contention"        pattern="true"/>
+	<sticker name="contention_type_parallel_contention"   type="property card" property="demo.job.contention_type_parallel_contention"  pattern="true"/>
+	<sticker name="function_and_operation_parallel_contention" type="property card" property="demo.job.function_and_operation_parallel_contention"  pattern="true"/>
+	
+	<sticker name="cpu_runnable_vs_cpu_capacity"   type="property card" property="demo.job.cpu_runnable_vs_cpu_capacity"  pattern="true"/>
+	
+	<sticker name="long_running_task_with_function"  type="property card" property="demo.job.long_running_task_with_function"  pattern="true"/>
+	<sticker name="long_running_task"                type="property card" property="demo.job.long_running_task"                pattern="true"/>
+	
+	<sticker name="deadlock"     type="property card" property="demo.job.deadlock"   pattern="true"/>
+	
+	<sticker name="absent_threads"                    type="property card" property="demo.job.absent_threads"                       pattern="true"/>
+	<sticker name="active_named_thread_limit"         type="property card" property="demo.job.active_named_thread_limit"            pattern="true"/>
+	<sticker name="active_unique_thread"              type="property card" property="demo.job.active_unique_thread"                 pattern="true"/>
+	<sticker name="named_thread_limit"                type="property card" property="demo.job.named_thread_limit"                   pattern="true"/>
+	<sticker name="unique_thread"                     type="property card" property="demo.job.unique_thread"                        pattern="true"/>
+	
+	<sticker name="gc_failing_to_release_memory"         type="property card" property="demo.job.gc_failing_to_release_memory"   pattern="true"/>
+	<sticker name="system_cpu_overload"                  type="property card" property="demo.job.system_cpu_overload"            pattern="true"/>
+	<sticker name="cpu_consuming_process"                type="property card" property="demo.job.cpu_consuming_process"          pattern="true"/>
+	
+	<sticker name="session_execution_pattern"         type="property card" property="demo.job.session_execution_pattern"   pattern="true"/>
+	
+	<sticker name="process_command_line_property_number"         type="property card" property="demo.job.process_command_line_property_number"    pattern="true"/>
+	<sticker name="process_command_line_property_pattern"        type="property card" property="demo.job.process_command_line_property_pattern"   pattern="true"/>
+	<sticker name="process_command_line_parameter_pattern"       type="property card" property="demo.job.process_command_line_parameter_pattern"  pattern="true"/>
+	
+	<sticker name="mx_bean_parameter_number_higher"       type="property card" property="demo.job.mx_bean_parameter_number_higher"   pattern="true"/>
+	<sticker name="mx_bean_parameter_number_lower"        type="property card" property="demo.job.mx_bean_parameter_number_lower"    pattern="true"/>
+	<sticker name="mx_bean_parameter_pattern"             type="property card" property="demo.job.mx_bean_parameter_pattern"         pattern="true"/>
+	<sticker name="mx_bean_parameter_number_system"       type="property card" property="demo.job.mx_bean_parameter_number_system"   pattern="true"/>
+	<sticker name="mx_bean_parameter_pattern_system"      type="property card" property="demo.job.mx_bean_parameter_pattern_system"  pattern="true"/>
+	
+	<sticker name="frozen_stacks"                 type="property card" property="demo.job.frozen_stacks"                pattern="true"/>
+	<sticker name="frozen_stacks_with_function"   type="property card" property="demo.job.frozen_stacks_with_function"  pattern="true"/>
+	
+	<sticker name="memory_consuming_system"   type="property card" property="demo.job.memory_consuming_system"  pattern="true"/>
+	
+	<sticker name="disk_space_free_percent"   type="property card" property="demo.job.disk_space_free_percent"  pattern="true"/>
+	<sticker name="disk_space_used_percent"   type="property card" property="demo.job.disk_space_used_percent"  pattern="true"/>
+
+	<sticker name="multi_function_contention"   type="property card" property="demo.job.multi_function_contention"  pattern="true"/>
+	
+	<sticker name="sticker_match"   type="property card" property="demo.job.sticker_match"  pattern="true"/>
+	
+	<sticker name="process_jar_version_snapshot"    		type="property card" property="demo.job.process_jar_version_snapshot"   		pattern="true"/>
+	<sticker name="process_jar_multiple_versions"   		type="property card" property="demo.job.process_jar_multiple_versions"  		pattern="true"/>
+	<sticker name="process_jar_version"             		type="property card" property="demo.job.process_jar_version"            		pattern="true"/>
+	<sticker name="process_jar_version_absence"     		type="property card" property="demo.job.process_jar_version_absence"    		pattern="true"/>
+	<sticker name="process_jar_name"                		type="property card" property="demo.job.process_jar_name"               		pattern="true"/>
+	<sticker name="process_jar_name_absence"                type="property card" property="demo.job.process_jar_name_absence"               pattern="true"/>
+	<sticker name="process_jar_manifest_version_mismatch"   type="property card" property="demo.job.process_jar_manifest_version_mismatch"  pattern="true"/>
+
+</stickers>

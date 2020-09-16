@@ -1,0 +1,55 @@
+<configuration scan="true" scanPeriod="30 seconds">
+
+  <!--  File log / conditional on environment variable availability -->
+  <if condition='isDefined("JEYZER_OUTPUT_DIR")'>
+    <then>
+
+	  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+	    <file>log/jeyzer-demo.log</file>
+	    <encoder>
+	      <pattern>%d{MM/dd/yyyy HH:mm:ss} %level %msg%n</pattern>
+	    </encoder>
+	  </appender>
+
+	  <root level="debug">
+	    <appender-ref ref="FILE" />
+	  </root>
+
+    </then>
+  </if>
+  
+  <if condition='isDefined("JEYZER_DEMO_HOME")'>
+    <then>
+
+	  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+	    <file>${JEYZER_DEMO_HOME}/log/jeyzer-${DEMO_AGENT_PROFILE}.log</file>
+	    <encoder>
+	      <pattern>%d{MM/dd/yyyy HH:mm:ss} %level %msg%n</pattern>
+	    </encoder>
+	  </appender>
+
+	  <root level="debug">
+	    <appender-ref ref="FILE" />
+	  </root>
+
+    </then>
+  </if>
+
+  <!--  Console log -->
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+       <pattern>%d{MM/dd/yyyy HH:mm:ss} %level %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <root level="WARN">
+    <appender-ref ref="STDOUT" />
+  </root>
+  
+  <!-- Log categories : DEBUG, INFO, WARN, ERROR, ALL, OFF -->  
+  <logger name="org.jeyzer.demo" level="INFO" />
+  
+  <!-- Added on purpose as the demo log back configuration file is loaded first -->
+  <logger name="org.jeyzer.recorder" level="INFO"/>
+      
+</configuration>

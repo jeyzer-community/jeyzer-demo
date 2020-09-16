@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Tennis" stickers="sports, wimbledon">
+
+		<!-- ************************************************************************ -->
+		<!--                        APPLICATIVE RULES                                 -->
+		<!-- ************************************************************************ -->
+
+		<!-- ************************************************************************ -->
+		<!--                        Jeyzer MX Rules                                  -->
+		<!-- ************************************************************************ -->
+
+		<!--  If Jeyzer MX context parameter is greater or equal to [value] ms for [count] times, generate event. -->
+		<rule name="Jeyzer MX context parameter number" param_display="Number of serves" param="tennis-serves" ref="DEM-TEN-001">
+			<narrative>This rule permits to detect high number of tennis serves.</narrative>
+			<thresholds>
+				<threshold type="global value" 
+						   count="1"
+				           value="17" 
+				           level="CRITICAL"
+				           sub_level="6"
+				           message="Number of serves too high."/>
+   			</thresholds>		
+		</rule>
+		
+		<!--  If Jeyzer MX context parameter value is matching the [pattern] for more than [count] or [time], generate event. -->
+		<rule name="Jeyzer MX context parameter pattern" param_display="Game score" param="tennis-score" ref="DEM-TEN-002">
+			<narrative>This rule permits to detect good tennis scores.</narrative>
+			<thresholds>
+				<threshold type="session pattern" 
+						   count="1"
+				           pattern="(5 / 0)|(0 / 5)" 
+				           level="WARNING"
+				           sub_level="8" 
+				           message="Good score !!"/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If Jeyzer MX context parameter [param] for the current task is greater than [value], generate event. If user exists, will be added as message prefix -->
+		<rule name="Task Jeyzer MX context parameter number" param_display="Number of player serves" param="tennis-serves" ref="DEM-TEN-003">
+			<narrative>This rule permits to detect high number of player serves.</narrative>
+			<thresholds>
+				<threshold 	type="action value" 
+							count="1"
+							value="9" 
+							level="WARNING"
+							sub_level="6" 
+							message="Player number of serves too high."/>
+			</thresholds>
+		</rule>
+
+		<!--  If Jeyzer MX context parameter [param] for the current task contains the given [pattern], generate event. If user exists, will be added as message prefix -->
+		<rule name="Task Jeyzer MX context parameter pattern" param_display="Player score" param="tennis-points" ref="DEM-TEN-004">
+			<narrative>This rule permits to detect high number of player points.</narrative>		
+			<thresholds>
+				<threshold 	type="stack pattern" 
+							count="2" 
+							pattern=".*5.*" 
+							level="WARNING"
+							sub_level="6" 
+							message="Very good consecutive player score !!"/>
+				<threshold 	type="action pattern" 
+							count="10"
+							pattern=".*5.*"
+							percentage_in_action="70"
+							level="INFO"
+							sub_level="6" 
+							message="Very good player score!!"/>
+			</thresholds>
+		</rule>
+
+		<!-- ************************************************************************ -->
+		<!--                        Generic MX Rules                                  -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If the MX bean [param] value contains the given [pattern], generate event. -->
+		<rule name="MX bean parameter pattern" param_display="Bug Pattern detected" param="org.jeyzer.demo:DemoFeatures:PlayedFeatures" stickers="demo_sticker_that_will_never_match" ref="DEM-TEN-005">
+			<narrative>This rule will never be loaded as its sticker will never be present.</narrative>
+			<thresholds>
+				<threshold type="session pattern" 
+						   count="1"
+				           pattern="Bug Pattern" 
+				           level="WARNING"
+				           trust_factor="25"
+				           sub_level="9"
+				           message="Bug pattern detected !!"/>
+   			</thresholds>
+		</rule>
+
+		<!--  If the MX bean [param] value contains the given [pattern], generate event. -->
+		<rule name="MX bean parameter pattern" param_display="Sticker dependent rule" param="org.jeyzer.demo:DemoFeatures:PlayedFeatures" stickers="!demo_sticker_that_will_never_match" ref="DEM-TEN-006">
+			<narrative>This rule will be loaded as its sticker absence will always be true.</narrative>
+			<thresholds>
+				<threshold type="session pattern" 
+						   count="1"
+				           pattern="Bug Pattern" 
+				           level="WARNING"
+				           sub_level="9"
+				           message="If this rule got a hit, stickers are probably disabled"/>
+   			</thresholds>
+		</rule>
+		
+		<!-- ************************************************************************ -->
+		<!--                        Sticker Match Rules                               -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If sticker - inherited from the rule group - is matched, generate event. -->
+		<rule name="Sticker match" extra_info="Wimbledon" ref="DEM-TEN-007" stickers="wimbledon">
+			<thresholds>
+				<threshold type="system signal"
+				           level="INFO"
+				           sub_level="6" 
+				           message="Tennis match is happening at Wimbledon."/>
+			</thresholds>
+		</rule>
+		
+	</rules>
+
+</monitor>

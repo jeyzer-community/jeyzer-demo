@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="event_journal" name="Journal of events" critical_tab_color="LIGHT_ORANGE">
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays applicative and monitoring events.&#10;Permits to correlate application events with system incidents.</description>
+			<display date_format="yyyy/MM/dd HH:mm:ss" grouping="false" group_sorting="false" clean_duplicate_events="false">
+				<links sequence_sheets="Mon, Ctt,Lck,Mem,Cpu"/>
+				<ranking>
+					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/monitoring-event-ranks.xml"/>
+				</ranking>
+			</display>
+			<rules>
+				<rule_set file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/monitor/rules/advanced_rules.xml"/>
+				<rule_set file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/monitor/rules/standard_rules.xml"/>
+				<all_applicative_rules/>
+			</rules>
+			<stickers>
+				<sticker_set file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/monitor/stickers/demo_stickers.xml"/>
+			</stickers>
+		</sheet>

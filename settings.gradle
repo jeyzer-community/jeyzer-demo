@@ -1,0 +1,10 @@
+pluginManagement {
+    repositories {
+        maven {
+            url = uri('C:/Dev/programs/Build/maven-repository')
+        }
+    }
+}
+
+rootProject.name = 'jeyzer-demo'
+

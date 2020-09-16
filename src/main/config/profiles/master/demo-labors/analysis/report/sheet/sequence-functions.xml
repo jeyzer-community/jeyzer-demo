@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Functions" link_type="Fct">
+		
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays the demo features on a Jeyzer time sequence, focusing on functions and headers.</description>
+		
+			<!-- Optional -->
+			<headers formats="Advanced JMX,Advanced Agent">
+			
+				<!-- Headers -->
+				<capture_time          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/capture-time.xml"/>
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+
+				<section_delimiter title="MX Plane" color="RGB-201-208-168"/>
+				<mx_bean_param_number name="org.jeyzer.demo:DemoPlane:Altitude" display="Altitude" display_comment="Plane altitude in meters" threshold="1" color="RED">
+					<!-- Factor defined in percentage gain or loss -->
+					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
+				</mx_bean_param_number>
+				<mx_bean_param name="org.jeyzer.demo:DemoPlane:State" display="State" display_comment="Plane state"/>
+			</headers>
+			<headers formats="Jstack 1.6+,Jstack 1.6+ Hung,JMX,Jstack 1.5">
+			
+				<!-- Headers -->
+				<capture_time          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/capture-time.xml"/>
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+			</headers>
+			<headers formats="IBM core dump, default">
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+			</headers>
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+			</row_headers>
+		
+			<display>
+
+				<advanced_function display_operation="false" display_contention_type="false">
+					<highlight name="(ATBI)" color="GREY_25_PERCENT"/> <!-- Blue light -->
+					<highlight name="Perform" color="RGB-189-215-238"/>
+					<highlight name="Analyze" color="RGB-189-215-238"/>
+					<highlight name="Focus" color="RGB-189-215-238"/>
+				</advanced_function>
+
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+
+				<!-- Identical consecutive stacks : add colored borders  -->
+				<frozen_code_state color="RED" stats="true"/>
+				
+				<!-- Operation display. Color applies for OTBI -->
+				<!--  operation color="GREY_25_PERCENT" />-->
+
+				<!-- Long running tasks display -->
+				<long_running color="LIGHT_YELLOW" threshold="5" stats="true"/>
+				
+				<!-- Java Lock display -->
+				<lock_state color="ORANGE" lock_owner="RGB-209-47-109" lock_owner_and_locked="RGB-174-76-169" deadlock="RED" suspended="RED" stats="true"/>
+
+			</display>
+		</sheet>
+		
+<!-- Supported colors :    
+	HSSFColor.AQUA, 
+	HSSFColor.AUTOMATIC, 
+	HSSFColor.BLACK, 
+	HSSFColor.BLUE, 
+	HSSFColor.BLUE_GREY, 
+	HSSFColor.BRIGHT_GREEN, 
+	HSSFColor.BROWN, 
+	HSSFColor.CORAL, 
+	HSSFColor.CORNFLOWER_BLUE, 
+	HSSFColor.DARK_BLUE, 
+	HSSFColor.DARK_GREEN, 
+	HSSFColor.DARK_RED, 
+	HSSFColor.DARK_TEAL, 
+	HSSFColor.DARK_YELLOW, 
+	HSSFColor.GOLD, 
+	HSSFColor.GREEN, 
+	HSSFColor.GREY_25_PERCENT, 
+	HSSFColor.GREY_40_PERCENT, 
+	HSSFColor.GREY_50_PERCENT, 
+	HSSFColor.GREY_80_PERCENT, 
+	HSSFColor.INDIGO, 
+	HSSFColor.LAVENDER, 
+	HSSFColor.LEMON_CHIFFON, 
+	HSSFColor.LIGHT_BLUE, 
+	HSSFColor.LIGHT_CORNFLOWER_BLUE, 
+	HSSFColor.LIGHT_GREEN, 
+	HSSFColor.LIGHT_ORANGE, 
+	HSSFColor.LIGHT_TURQUOISE, 
+	HSSFColor.LIGHT_YELLOW, 
+	HSSFColor.LIME, 
+	HSSFColor.MAROON, 
+	HSSFColor.OLIVE_GREEN, 
+	HSSFColor.ORANGE, 
+	HSSFColor.ORCHID, 
+	HSSFColor.PALE_BLUE, 
+	HSSFColor.PINK, 
+	HSSFColor.PLUM, 
+	HSSFColor.RED, 
+	HSSFColor.ROSE, 
+	HSSFColor.ROYAL_BLUE, 
+	HSSFColor.SEA_GREEN, 
+	HSSFColor.SKY_BLUE, 
+	HSSFColor.TAN, 
+	HSSFColor.TEAL, 
+	HSSFColor.TURQUOISE, 
+	HSSFColor.VIOLET, 
+	HSSFColor.WHITE, 
+	HSSFColor.YELLOW 
+-->

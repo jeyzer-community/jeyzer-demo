@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Demo-Shared">
+
+		<rule name="Sticker match" extra_info="Demo shared library loaded" ref="DEM-SHA-001" stickers="demo-shared-sticker">
+			<thresholds>
+				<threshold type="system signal"
+				           level="INFO"
+				           sub_level="6" 
+				           message="Demo shared library has been loaded."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>

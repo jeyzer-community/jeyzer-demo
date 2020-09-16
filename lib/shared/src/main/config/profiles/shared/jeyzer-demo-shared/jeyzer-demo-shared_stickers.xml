@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<stickers group="Demo-Shared">
+
+	<sticker name="demo-shared-sticker" type="process jar version" jar_name="jeyzer-demo-shared" pattern=".*"/>
+
+</stickers>

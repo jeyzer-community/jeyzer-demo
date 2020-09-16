@@ -1,0 +1,725 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+		
+	<rules group_name="Demo labors runtime">
+	
+		<!-- ************************************************************************ -->
+		<!--                              STANDARD RULES                              -->
+		<!-- ************************************************************************ -->
+	
+		<!--  If task consuming more than [second_threshold] CPU % for [threshold] times, generate event. -->
+		<rule name="CPU consuming task" stickers="cpu_consuming_task" ref="LAB-RUN-001">
+			<thresholds>
+				<threshold type="stack value" 
+						   count="3"
+				           value="70" 
+				           level="WARNING"
+				           sub_level="8" 
+				           message="CPU consuming stack. If too frequent, please contact support."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If percentage of function is greater or equal to [value] across current session, generate event. -->
+		<rule name="Function global percentage" param_display="Message pay load processing" param="Process message pay load" stickers="function_global_percentage" ref="LAB-RUN-002">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="10" 
+				           level="WARNING"
+				           message="High message pay load processing.&#10; You may consider reviewing the message handling."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="Message pay load logging" param="Log message payload" stickers="operation_global_percentage" ref="LAB-RUN-003">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="10" 
+				           level="WARNING" 
+				           message="High message pay load logging.&#10; You may reduce the logging level for the messaging."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of contention type is greater or equal to [value] across current session, generate event. -->
+		<rule name="Contention type global percentage" param_display="Message wait contention" param="Waiting" stickers="contention_type_global_percentage" ref="LAB-RUN-004">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="10" 
+				           level="WARNING" 
+				           message="High message wait contention.&#10; You may review the messaging infrastructure."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If function is detected across current session, generate event. -->
+		<rule name="Function presence" param_display="Deprecated class usage" param="Deprecated function method" stickers="function_presence" ref="LAB-RUN-005">
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           message="XY is deprecated class.&#10; Prefer YZ for better performance."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation is detected across current session, generate event. -->
+		<rule name="Operation presence" param_display="Unsecured method usage" param="Unsecured operation method" stickers="operation_presence" ref="LAB-RUN-006">
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           message="XY method is known as unsecured.&#10; Prefer YZ method."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If contention type regex pattern in the current task is seen more than [value] percentage for [count] snapshots or [time], generate event. -->
+		<rule name="Contention type pattern" extra_info="Logging" stickers="contention_type_pattern" ref="LAB-RUN-007">
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="5"
+				           pattern="Log"
+				           percentage_in_action="60" 
+				           level="INFO" 
+				           message="Active thread logging at high rate"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of operation within action principal is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation in principal percentage" principal="Process big data" param_display="Read access percentage in data processing" param="Read data" stickers="operation_in_principal_percentage" ref="LAB-RUN-008">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="50" 
+				           level="WARNING" 
+				           message="High reading access in big data processing.&#10; You may consider reviewing the data access layer performance&#10; or review the data access logic."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of function within action principal is greater or equal to [value] across current session, generate event. -->
+		<rule name="Function in principal percentage" principal="Increase speed" param_display="Engine slow initialization in Gzo activity" param="Init secondary engine" stickers="function_in_principal_percentage" ref="LAB-RUN-009">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="30"
+				           level="WARNING" 
+				           message="2ndary engine initialization taking too much time in Gzo activity.&#10; You may consider reviewing the 2nd engine design."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process consuming more than [value] heap memory % for [count or time], generate event. -->
+		<rule name="Memory consuming process"  stickers="memory_consuming_process" ref="LAB-RUN-010">
+			<thresholds>
+				<threshold type="session value"
+						   count="5"
+						   value="10"
+				           level="WARNING"
+				           sub_level="6"
+				           message="Process consuming high amount of memory. If too frequent, please contact your support service."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If Garbage Collection takes more than [value] ms for [count or time] times, generate event. -->
+		<rule name="Excessive GC time" stickers="excessive_gc_time" ref="LAB-RUN-011">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="10" 
+				           level="CRITICAL"
+				           sub_level="6"
+				           message="GC time high. Check memory figures. If too high, restart may be foreseen."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If Old GC execution count is greater than [value] for [count] snapshots or [time], generate event. -->
+		<rule name="Excessive old GC execution" stickers="excessive_old_gc_execution" ref="LAB-RUN-012">
+			<thresholds>
+				<threshold type="global value"
+						   count="1"
+						   value="1" 
+				           level="WARNING"
+				           sub_level="6"
+				           message="Old GC execution is too frequent. Check memory figures. If too high, restart may be foreseen."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of threads matching the [pattern] is greater than [value] for [count] times and is increasing by at least [delta_y] threads every [delta_x] times, generate event. Applies for active and inactive threads. Pattern is regex -->
+		<rule name="Named thread leak" extra_info="Java timers" stickers="named_thread_leak" ref="LAB-RUN-013">
+			<thresholds>
+				<threshold type="session custom with context"
+						   count="30"
+						   value="5"
+						   delta_x="5"
+						   delta_y="10"
+						   pattern="^Timer-.*" 
+				           level="WARNING"
+				           message="High number of timer threads, increasing. Check the Pools sheet."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If total number of threads is greater than [value] for [count] times and is increasing by at least [delta_y] threads every [delta_x] times, generate event. -->
+		<rule name="Global thread leak" stickers="global_thread_leak" ref="LAB-RUN-014">
+			<thresholds>
+				<threshold type="session custom with context"
+						   count="5"
+						   value="100"
+						   delta_x="5"
+						   delta_y="3"
+				           level="CRITICAL"
+				           message="Huge number of threads, increasing : potential thread leakage. &#10;Check the Pools sheet. &#10;Risk of process crash. &#10;Please plan applicative restart."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If stack shows long recursive call which exceeds [value] limit, generate event-->
+		<rule name="Stack overflow" stickers="stack_overflow" ref="LAB-RUN-015">
+			<thresholds>
+				<threshold type="stack value"
+						   count="5"
+						   value="200"
+				           level="WARNING" 
+				           message="Thread stack too high. There is a risk of stack overflow. Please check with RnD."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If execution regex pattern in the current task is seen more than [count] or [time], generate event. If user exists, will be added as message prefix -->
+		<rule name="Task execution pattern" extra_info="Risky code section" stickers="task_execution_pattern" ref="LAB-RUN-016">
+			<narrative>This rule detects risky code execution.</narrative>
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="1"
+				           pattern="TaskExecutionPatternJob\.riskySection|TaskExecutionPatternJob\.problematicSection"
+				           level="CRITICAL" 
+				           message="Problematic execution pattern detected at task level.&#10; Please contact your support for remediation."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation regex pattern in the current task is seen more than [value] percentage for [count] snapshots or [time], generate event. -->
+		<rule name="Operation pattern" extra_info="Java exception generation" stickers="operation_pattern_with_percentage" ref="LAB-RUN-017">
+			<narrative>This rule detects unusual exception generation.</narrative>
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="1"
+				           pattern="Unexpected exception generation"
+				           percentage_in_action="10"
+				           level="WARNING" 
+				           message="Exception generated very often within the action. Check the applicative logs for errors. Review the code as exception generation is performance invasive."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation regex pattern in the current task is seen more than [value] percentage for [count] snapshots or [time], generate event. -->
+		<rule name="Operation pattern" extra_info="Thread on hold" stickers="operation_pattern" ref="LAB-RUN-018">
+			<narrative>This rule detects sleep usage.</narrative>
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="1"
+				           pattern="On hold"
+				           level="INFO" 
+				           message="Thread is on hold."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation function pattern in the current task is seen more than [value] percentage for [count] snapshots or [time], generate event. -->
+		<rule name="Function pattern" extra_info="Pre-processing check" stickers="function_pattern_with_percentage" ref="LAB-RUN-019">
+			<narrative>This rule detects any long pre-processing inside an activity.</narrative>
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="10"
+				           pattern="Preprocess"
+				           percentage_in_action="40"
+				           function="Activity xyz"
+				           level="WARNING" 
+				           message="Activity preprocessing takes too much time. Check the status of dependencies."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If function regex pattern in the current task is seen more than value, generate event. Pattern is regex -->
+		<rule name="Function pattern" extra_info="Module initialization" stickers="function_pattern" ref="LAB-RUN-020">
+			<narrative>This rule detects any module initialization.</narrative>
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="1"
+				           pattern="Init module" 
+				           level="INFO"
+				           sub_level="8"
+				           message="Module has been started."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If Jeyzer MX context parameter is greater or equal to [value] ms for [count] times, generate event. -->
+		<rule name="Jeyzer MX context parameter number" param_display="Number of open resources" param="open-resources" stickers="jeyzer_mx_context_parameter_number" ref="LAB-RUN-021">
+			<narrative>This rule permits to detect a very high number of open applicative resources.</narrative>
+			<thresholds>
+				<threshold type="global value" 
+						   count="1"
+				           value="1000" 
+				           level="CRITICAL"
+				           sub_level="6"
+				           message="Number of open resources is too high."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If Jeyzer MX context parameter value is matching the [pattern] for more than [count] or [time], generate event. -->
+		<rule name="Jeyzer MX context parameter pattern" param_display="Gateway state" param="gateway-state" stickers="jeyzer_mx_context_parameter_pattern" ref="LAB-RUN-022">
+			<narrative>This rule permits to detect the gateway closure.</narrative>
+			<thresholds>
+				<threshold type="session pattern" 
+						   count="1"
+				           pattern="Closed"
+				           level="WARNING"
+				           sub_level="8" 
+				           message="Gateway is closed. Please contact the gateway support."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If Jeyzer MX context parameter [param] for the current task is greater than [value], generate event. If user exists, will be added as message prefix -->
+		<rule name="Task Jeyzer MX context parameter number" param_display="Activity error count" param="activity-error-count" stickers="task_jeyzer_mx_context_parameter_number" ref="LAB-RUN-023">
+			<narrative>This rule permits to detect TKZ activity errors.</narrative>
+			<thresholds>
+				<threshold 	type="action value" 
+							count="1"
+							value="1" 
+							level="WARNING"
+							sub_level="6" 
+							message="TKZ activity ecountered some issues. Please check the activity logs for errors."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If Jeyzer MX context parameter [param] for the current task contains the given [pattern], generate event. If user exists, will be added as message prefix -->
+		<rule name="Task Jeyzer MX context parameter pattern" param_display="Activity state" param="activity-state" stickers="task_jeyzer_mx_context_parameter_pattern" ref="LAB-RUN-024">
+			<narrative>This rule permits to monitor the TKZ activity state.</narrative>		
+			<thresholds>
+				<threshold 	type="stack pattern"
+							count="2" 
+							pattern="failed|suspended" 
+							level="WARNING"
+							sub_level="6" 
+							message="TKZ activity has been closed or suspended."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of active threads greater than [value], generate event -->
+		<rule name="Active thread limit" stickers="active_thread_limit" ref="LAB-RUN-025">
+			<thresholds>
+				<threshold type="session value" 
+						   count="1"
+				           value="500"
+				           level="WARNING" 
+				           message="High number of active threads. Application may be under load. Monitor closely the application."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If number of threads greater than [value], generate event -->
+		<rule name="Global thread limit" stickers="global_thread_limit" ref="LAB-RUN-026">
+			<thresholds>
+				<threshold type="global value" 
+						   count="3"
+				           value="600"
+				           level="WARNING" 
+				           message="High number of threads created. Please monitor closely the application."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If task is locking [value] threads for [count] or [time], generate event. -->
+		<rule name="Locker task" stickers="locker_task" ref="LAB-RUN-027">
+			<thresholds>
+				<threshold type="stack value"
+						   count="5"
+						   value="3"
+				           level="WARNING" 
+				           message="A Java lock has been detected for long period of time. Please contact your support."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of locked threads, whatever the the involved lock owners, is greater than [value], generate event -->
+		<rule name="Locks contention" stickers="locks_contention" ref="LAB-RUN-028">
+			<thresholds>
+				<threshold type="session value" 
+						   count="5"
+				           value="10"
+				           level="WARNING" 
+				           message="High number of locked threads. Application may be under load. Monitor closely the application."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If function regex [pattern] is seen in more than [value] parallel threads for [count] successive times, generate event. -->
+		<rule name="Function parallel contention" extra_info="Stale connection" stickers="function_parallel_contention" ref="LAB-RUN-029">
+			<narrative>This rule detects the presence of stale connections.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Handle io exception" 
+				           level="WARNING"
+				           sub_level="8"
+				           message="Client connections get stale or closed.&#10;Either client is under load or down."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads for [count] successive times, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Prepared statement creation contention" stickers="operation_parallel_contention" ref="LAB-RUN-030">
+			<narrative>This rule detects contentions on the prepared statement generation.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="3"
+						   value="5"
+				           pattern="Wait for prepared statement"  
+				           level="WARNING"
+				           sub_level="6"
+				           message="Contention on the prepared statement creation.&#10;System is creating too many distinct prepared statements.&#10;Enable the prepared statement pool or increase its size (set the gkz.max_statementsparameter)."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If contention type regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Contention type parallel contention" extra_info="Database contention" stickers="contention_type_parallel_contention" ref="LAB-RUN-031">
+			<narrative>This rule detects database access contentions.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="10"
+				           pattern="Database|Oracle|MSSQL|DB2" 
+				           level="INFO" 
+				           message="Contention on database."/>
+				<threshold type="session custom"
+						   count="3"
+						   value="10"
+				           pattern="Database|Oracle|MSSQL|DB2"  
+				           level="WARNING"
+				           message="Huge contention on database.&#10;There is a risk of performance decrease.&#10;Check the logs and monitoring figures."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of contention type within action principal is greater or equal to [value] across current session, generate event. -->
+		<rule name="Contention type in principal percentage" principal="Execute purchase" param_display="MSSQL access percentage in purchase execution" param="MSSQL" stickers="contention_type_in_principal_percentage" ref="LAB-RUN-032">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="50" 
+				           level="WARNING" 
+				           message="High MSSQL access in purchase execution.&#10; You may consider monitoring MSSQL &#10; or review the purchase execution logic."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the number of CPU runnable threads is greater or equal to the number of available CPUs (as per the jzr.ext.process.available.processors process card property), generate event. -->
+		<rule name="CPU Runnable vs CPU capacity" stickers="cpu_runnable_vs_cpu_capacity" ref="LAB-RUN-033">
+			<thresholds>
+				<threshold type="session signal" 
+				           level="WARNING" 
+				           message="High applicative CPU access, exceeding the system CPU capacity.&#10; You may consider to increase it."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If function regex [pattern] and operation regex [operation_pattern] are seen in more than [value] parallel threads, generate event. -->
+		<rule name="Function and operation parallel contention" extra_info="JDBC connection pool misery" stickers="function_and_operation_parallel_contention" ref="LAB-RUN-034">
+			<narrative>This rule detects if the SUN JDBC connection pool is running out of database connections.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Jdbc connection pool access"
+						   operation_pattern="Wait for pool resource"
+				           level="WARNING"
+				           message="Contention on JDBC connection pool.&#10;System is about to run out of database resources.&#10;Increase the JDBC database connection pool size and investigate any JDBC connection leakage."/>
+				<threshold type="session custom"
+						   count="5"
+						   value="5"
+				           pattern="Jdbc connection pool access"
+						   operation_pattern="Wait for pool resource"						   
+				           level="CRITICAL"
+				           message="Severe contention on JDBC connection pool.&#10;System is running out of database resources.&#10;Plan possibly a restart, increase the JDBC database connection pool size and investigate any JDBC connection leakage."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If [function] task duration longer than [count] snapshots or [time], generate event. Value has no meaning -->
+		<rule name="Long running task" stickers="long_running_task_with_function" ref="LAB-RUN-035">
+			<thresholds>
+				<threshold type="action value"
+						   count="6"
+						   value="1"
+						   function="End of month processing"
+				           level="WARNING"
+				           sub_level="8"
+				           message="End of month processing activity is taking longer than expected. Check the applicative and database. Could be db statistics problem."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If task duration longer than [count] snapshots or [time], generate event. Value has no meaning -->
+		<rule name="Long running task" stickers="long_running_task" ref="LAB-RUN-036">
+			<thresholds>
+				<threshold type="action value"
+						   count="48"
+						   value="1"
+				           level="WARNING"
+				           sub_level="8"
+				           message="Very long running task."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If task consuming more than [value] heap applicative memory % for [count] times, generate event. -->
+		<rule name="Memory consuming task" stickers="memory_consuming_task" ref="LAB-RUN-037">
+			<thresholds>
+				<threshold type="action value"
+						   count="1"
+						   value="10"
+				           level="WARNING"
+				           sub_level="9"
+				           message="Memory consuming action. If too frequent, please contact support."/>
+			</thresholds>
+		</rule>
+		
+		 <!--  If deadlock is detected, generate event. This rule should be only set to CRITICAL. -->
+		<rule name="Deadlock" stickers="deadlock" ref="LAB-RUN-038">
+			<thresholds>
+				<threshold type="session signal"
+						   count="1" 
+				           level="CRITICAL" 
+				           message="A Java deadlock has been detected. Please send the Jeyzer recording to your Support service and restart the application."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of threads (active and inactive) matching the [pattern] is lower or equal than [value] for [count] snapshots or [time], generate event. Pattern is regex -->
+		<rule name="Absent threads" extra_info="Vital thread" stickers="absent_threads" ref="LAB-RUN-039">
+			<narrative>This rule detects the absence of a vital thread. Vital thread will be running all the time and be stopped by this job. Vital thread is restarted at job's end.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="4"
+						   value="0"
+						   pattern="AT.*vital_thread"
+				           level="CRITICAL"
+				           sub_level="9"
+				           message="Vital thread is not running. Please check the logs and plan a restart."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of active threads matching the [pattern] is greater than [value] for [count] snapshots or [time], generate event. Applies for thread pools. Pattern is regex -->
+		<rule name="Active named thread limit" extra_info="Worker pool" stickers="active_named_thread_limit" ref="LAB-RUN-040">
+			<thresholds>
+				<threshold type="session custom"
+						   count="4"
+						   value="4"
+						   pattern="worker_thread" 
+				           level="INFO"
+				           sub_level="6"
+				           message="All workers are actively running. You may consider increasing the worker thread pool size."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of threads matching the [pattern] is greater than [value] for [count] times, generate event. Applies for active and inactive threads. Pattern is regex -->
+		<rule name="Active named thread limit" extra_info="Fail-over thread detection" stickers="active_unique_thread"  ref="LAB-RUN-041">
+			<narrative>This rule detects the presence of a fail-over thread. This rule can be typically used to detect unusual thread activity with high meaning.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="2"
+						   value="0"
+						   pattern="fail_over_thread" 
+				           level="WARNING"
+				           sub_level="6"
+				           message="Application performs fail-over activity with interface Xyp. Please monitor closely the interface."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of threads (active and inactive) matching the [pattern] is greater than [value] for [count] times, generate event. Applies for active and inactive threads. Pattern is regex -->
+		<rule name="Named thread limit" extra_info="Client connections" stickers="named_thread_limit"  ref="LAB-RUN-042">
+			<narrative>This rule detects a high number of client connections established with Bcd server.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="2"
+						   value="100"
+						   pattern="client_connection_thread"
+				           level="WARNING"
+				           sub_level="6"
+				           message="High number of client connections established with Bcd server. Check the process activity."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of threads (active and inactive) matching the [pattern] is greater than [value] for [count] times, generate event. Applies for active and inactive threads. Pattern is regex -->
+		<rule name="Named thread limit" extra_info="3rd party unexpected thread" stickers="unique_thread"  ref="LAB-RUN-043">
+			<narrative>This rule detects the presence of an unusual thread which implies for example the wrong underlying usage of a 3rd party (clean up thread in applicative server for example which leads to zombie thread on restart).</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="2"
+						   value="0"
+						   pattern="undesired_thread"
+				           level="WARNING"
+				           sub_level="6"
+				           message="3rd party unexpected thread detected. Please check the Xyz third party configuration."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If used memory is increasing and upper than [used_memory] %, released memory is lower than [released_memory] % and GC time is higher than [gc_time] ms for [count or time] times, generate event. -->
+		<rule name="GC failing to release memory" stickers="gc_failing_to_release_memory"  ref="LAB-RUN-044">
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   used_memory="85" 
+						   released_memory="10"
+						   gc_time="20"
+				           level="CRITICAL"
+				           sub_level="10"
+				           message="Process running out of memory : GC failing to release memory. Check memory figures. If too high, applicative restart is recommended."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If System CPU usage is greater than [value] % for [count or time] times, generate event. -->
+		<rule name="System CPU overload" stickers="system_cpu_overload" ref="LAB-RUN-045">
+			<thresholds>
+				<threshold type="global value"
+						   count="4"
+						   value="25"
+				           level="WARNING"
+				           sub_level="7"
+				           message="System CPU very high. Check system usage and possibly stop the root cause application."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process consuming more than [value] CPU %  for [count or time] times, generate event. -->
+		<rule name="CPU consuming process" stickers="cpu_consuming_process" ref="LAB-RUN-046">
+			<thresholds>
+				<threshold type="session value"
+						   count="3"
+				           value="50" 
+				           level="WARNING" 
+				           message="Process consuming high CPU. If too frequent, please contact support."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If execution regex pattern in the current session is seen more than [value], generate event. If user exists, will be added as message prefix -->
+		<rule name="Session execution pattern" extra_info="Dysfunctional code sequence detected" stickers="session_execution_pattern" ref="LAB-RUN-047">
+			<thresholds>
+				<threshold type="session pattern" 
+						   count="1"
+				           pattern="SessionExecutionPatternJob\.riskySection|SessionExecutionPatternJob\.problematicSection" 
+				           level="CRITICAL" 
+				           message="Problematic execution pattern detected at session level.&#10; Please contact your support for remediation."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If MX bean value is higher than [value] for some time, generate event. -->
+		<rule name="MX bean parameter number" param_display="Plane altitude" param="org.jeyzer.demo:DemoPlane:Altitude" stickers="mx_bean_parameter_number_higher" ref="LAB-RUN-048">
+			<narrative>This rule checks that plane is not flying too high.</narrative>
+			<thresholds>
+				<threshold type="session value" 
+						   count="2"
+				           value="10000" 
+				           level="CRITICAL"
+				           sub_level="7" 
+				           message="Plane is flying too high. Please take appropriate action."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If MX bean value is higher than [value] for some time, generate event. -->
+		<rule name="MX bean parameter number" param_display="Plane altitude" param="org.jeyzer.demo:DemoPlane:Altitude" operator="lower_or_equal" stickers="mx_bean_parameter_number_lower" ref="LAB-RUN-049">
+			<narrative>This rule checks the plane is not flying too low.</narrative>
+			<thresholds>
+				<threshold type="session value" 
+						   count="2"
+				           value="100" 
+				           level="CRITICAL"
+				           sub_level="7" 
+				           message="Plane is flying too low. Please take appropriate action."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the MX bean [param] value contains the given [pattern] for some time, generate event. -->
+		<rule name="MX bean parameter pattern" param_display="Plane state" param="org.jeyzer.demo:DemoPlane:State"  stickers="mx_bean_parameter_pattern" ref="LAB-RUN-050">
+			<narrative>This rule checks the plane state.</narrative>
+			<thresholds>
+				<threshold type="session pattern" 
+						   count="1"
+				           pattern="failure" 
+				           level="CRITICAL"
+				           sub_level="9"
+				           message="Plane got a failure. Please inform the ATC."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If task stack is identical for [count] snapshots or [time], optionally for function principal=[regex], generate event -->
+		<rule name="Frozen stacks" stickers="frozen_stacks" ref="LAB-RUN-051">
+			<thresholds>
+				<threshold 	type="action signal"
+							count="35" 
+							level="WARNING" 
+							message="Task showing identical consecutive stacks for long time. Please contact your support."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If task stack is identical for [count] snapshots or [time], optionally for function principal=[regex], generate event -->
+		<rule name="Frozen stacks" stickers="frozen_stacks_with_function" ref="LAB-RUN-052">
+			<thresholds>
+				<threshold 	type="action signal" 
+							count="4" 
+							function="Specific fast critical section" 
+							level="INFO" 
+							message="Critical activity gets slow. Please contact your support."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If system consuming more than [value] system memory % for [count] snapshots or [time], generate event. -->
+		<rule name="Memory consuming system" stickers="memory_consuming_system" ref="LAB-RUN-053">
+			<thresholds>
+				<threshold type="global value"
+						   count="4"
+						   value="10"
+				           level="WARNING"
+				           sub_level="7" 
+				           message="System consuming high amount of memory (>10%) on very long period. If too frequent, please check all running process states on this server."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the list of comma separated functions [functions] is respectively seen in more than [function_appearance_thresholds] parallel threads, generate event. -->
+		<rule name="Multi function contention" extra_info="Intensive message broker connection failover"  stickers="multi_function_contention" ref="LAB-RUN-054">
+			<narrative>This rule detects any message broker intensive connection failover.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="3"
+						   functions="Add connection, Stop connection in jmx, Io exception handling"
+						   function_appearance_thresholds="10,5,10"
+				           level="CRITICAL"
+				           sub_level="6"
+				           message="Massive connection fail-over is occurring.&#10;Message broker is in stress situation and has to handle now client reconnections which will make it worse.&#10;Check the broker logs and monitor the queues and topics to determine the activity type and take action accordingly.&#10;Broker may crash with an Out of memory error of type Cannot create thread.&#10;Please plan an AMQ restart"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process jar version is a snapshot, alpha, beta, build... version, generate event. -->
+		<rule name="Process jar version snapshot" ref="LAB-RUN-055" stickers="process_jar_version_snapshot">
+			<narrative>This rule checks if the process jars have snapshot versions. It it important to run with official libraries.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="WARNING"
+				           sub_level="10" 
+				           message="Demo is running with snapshot libraries.&#10; It is highly recommended to run only with release libraries."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process jar is present multiple times, generate event. -->
+		<rule name="Process jar multiple versions" ref="LAB-RUN-056" stickers="process_jar_multiple_versions">
+			<narrative>This rule checks if any process jar is present under different versions.\n If the jar files can be accessed from the monitored application (depending on the class loading design), it can be dangerous as the wrong jar file may be loaded.\n Under an application server, this could be a false positive as the loaded jar files can be isolated at web app level.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="WARNING"
+				           message="Demo is running with different versions of the same library which is not intended.&#10;. Please contact your support."/>
+			</thresholds>
+		</rule>
+		
+				
+		<!--  If the process jar version is not available, generate event. -->
+		<rule name="Process jar version absence" stickers="process_jar_version_absence" ref="LAB-RUN-057">
+			<narrative>This rule checks the absence of versions on the process jars. It it important to know the library version in case of issue.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="INFO"
+				           sub_level="8" 
+				           message="Demo is running with libraries without version.&#10; It is recommended to run with versionned libraries."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process jar file name version differs from the jar version stored in the Manifest attributes, generate event. -->
+		<rule name="Process jar manifest version mismatch" stickers="process_jar_manifest_version_mismatch" ref="LAB-RUN-058">
+			<narrative>This rule checks that the Manifest version attributes match the jar file name version.\n If the versions differ, it means that the jar build is wrong or someone has altered the jar file.\n In both cases, you could run with a different version of the library than you would think.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="INFO"
+				           message="Demo is running with libraries containing inconsistent version information."/>
+			</thresholds>
+		</rule>
+		
+	</rules>
+
+</monitor>

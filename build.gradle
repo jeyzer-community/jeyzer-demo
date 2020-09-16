@@ -1,0 +1,277 @@
+import proguard.gradle.ProGuardTask
+import org.apache.tools.ant.filters.ReplaceTokens
+
+buildscript {
+    repositories {
+        mavenCentral()
+		maven { url 'C:/Dev/programs/Build/maven-repository' }
+    }
+    dependencies {
+        // required for the Proguard task
+        classpath 'net.sf.proguard:proguard-gradle:6.1.1'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'maven'
+    id 'org.jeyzer.profile-updater' version '2.0'
+}
+
+dependencies {
+		implementation 'org.jeyzer:jeyzer-publish:2.0'
+		implementation 'org.jeyzer:jeyzer-demo-shared:2.0'
+		implementation 'ch.qos.logback:logback-classic:1.0.13'
+		implementation 'ch.qos.logback:logback-core:1.0.13'
+		implementation 'org.codehaus.janino:janino:2.6.1'
+		implementation 'org.slf4j:slf4j-api:1.7.5'
+}
+
+
+group = 'org.jeyzer.demo'
+version = '2.0'
+
+description = "jeyzer-demo"
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+def javaName = archivesBaseName
+def fullJavaName = archivesBaseName + '_proguard_base'
+
+def props = new Properties()
+file("project.properties").withInputStream { props.load(it) }
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'C:/Dev/programs/Build/maven-repository' }
+}
+dependencies {
+    compile group: 'org.jeyzer', name: 'jeyzer-demo-shared', version:'2.0'
+    compile group: 'org.jeyzer', name: 'jeyzer-publish', version:'2.0'
+    compile group: 'org.jeyzer', name: 'jeyzer-annotations', version:'2.0'
+    compile group: 'org.jeyzer', name: 'jeyzer-annotation-processors', version:'2.0'
+	implementation files('lib/jeyzer-demo-dup-1.1.1.alpha.jar', 'lib/jeyzer-demo-dup-2.2.2-SNAPSHOT.jar', 'lib/jeyzer-demo-dup-3.3.3.jar')
+}
+
+
+
+jar {
+    baseName = javaName
+    manifest {
+        attributes "Implementation-Title": javaName
+        attributes "Implementation-Version": version
+    }
+ 
+}
+
+task incrementBuildNumber(group: 'versioning', description: 'Increments the project build number') {
+  	String current = "$artifactBuildNumber"
+  	//Note that this doesn’t modify project.version’s value
+  	artifactBuildNumber = artifactBuildNumber.toInteger() + 1
+  	logger.info "Incrementing build number: $current $artifactBuildNumber"
+  	ant.propertyfile(file: file('gradle.properties')) {
+      entry(key: 'artifactBuildNumber', type: 'int', operation: '+', value: 1)
+  	}
+}
+
+task fullJavaJar(type: Jar, dependsOn: 'incrementBuildNumber') {
+    baseName = fullJavaName
+    manifest {
+        attributes "Implementation-Title": baseName
+        attributes "Implementation-Version": version
+        attributes "Implementation-Build": artifactBuildNumber
+    }
+    from sourceSets.main.output
+    artifacts {
+        archives fullJavaJar
+    }
+}
+
+task proguard(type: ProGuardTask, dependsOn: 'fullJavaJar') {
+	configuration 'src/main/assembly/proguard/jeyzer-samples.pro'
+	
+	printmapping "$buildDir/libs/${archivesBaseName}-${version}-${artifactBuildNumber}-proguard_map.txt"
+	printseeds "$buildDir/libs/${archivesBaseName}-${version}-${artifactBuildNumber}-proguard_seeds.txt"
+	
+	injars "$buildDir/libs/${fullJavaName}-${version}.jar"
+    outjars "$buildDir/libs/${javaName}-${version}.jar"
+	
+	libraryjars "${System.getProperty('java.home')}/lib/rt.jar"
+	libraryjars configurations.compile.find { it.name.startsWith("logback-core") }
+	libraryjars configurations.compile.find { it.name.startsWith("logback-classic") }
+	libraryjars configurations.compile.find { it.name.startsWith("jeyzer-demo-shared") }
+	libraryjars configurations.compile.find { it.name.startsWith("jeyzer-publish") }
+	libraryjars configurations.compile.find { it.name.startsWith("slf4j-api") }
+	libraryjars configurations.compile.find { it.name.startsWith("janino") }
+	
+	// Could not get the logger classes on the class path, even with above libraryjars..
+	// So let's ignore the warnings 
+	ignorewarnings
+		
+    // deploy the mapping file
+    doLast {
+    	def mappingDir = "$buildDir/libs"
+    	def mappingFile = "${archivesBaseName}-${version}-${artifactBuildNumber}-proguard_map.txt"
+
+		def mappingDefaultDir = props.getProperty("obfuscation.mapping.default.deploy.directory") + "/$rootProject.name"
+
+		println "Proguard mapping files deployment"
+  		copy {
+            from mappingDir
+            into mappingDefaultDir
+            include mappingFile
+            rename (mappingFile, 'proguard_map.txt')
+        }
+    
+		def tomcat = new File(props.getProperty("tomcat.base.dir"))
+		if(tomcat.exists()) {
+		    println "Tomcat found"
+		    def  tomcatMappingDir = new File(props.getProperty("tomcat.base.dir") + "/webapps/proguard/mappings/${rootProject.name}")
+		    if(!tomcatMappingDir.exists()) {
+  				// Create all folders
+  				tomcatMappingDir.mkdirs()
+  			}
+  			copy {
+            	from mappingDir
+            	into tomcatMappingDir
+            	include mappingFile
+        	}
+		}
+    }
+}
+
+task obfuscate(dependsOn: tasks.withType(ProGuardTask)) {
+    doLast {}
+}
+
+profileUpdateJeyzerTaskSettings {
+	sourcePatterns     "$projectDir/src/main/config/profiles/master/demo-features-mx/analysis/patterns.xml"
+	newPatternEntries  "$buildDir/../target/generated-sources/jeyzer/new_pattern_entries.xml"
+	targetPatternsDir  "$buildDir/generated-sources/jeyzer"
+	targetPatternsName "gradle-generated-patterns"
+}
+
+task distProfiles(type: Zip, dependsOn:profileUpdateJeyzerTask ){
+  archiveName="${archivesBaseName}-${version}-profiles.zip"
+  destinationDir = file("$buildDir/distribution")
+  into('profiles')
+  from (files('./src/main/config/profiles'))
+  from (files('./src/main/doc/README.txt'))
+}
+
+task distMapping(type: Zip, dependsOn:obfuscate ){
+  archiveName="${archivesBaseName}-${version}-obfuscation-mappings.zip"
+  destinationDir = file("$buildDir/distribution")
+  into("deobfuscation/${archivesBaseName}")
+  from ("$buildDir/libs/") {
+        include '**/*.txt'
+  }
+  from ("./src/main/sample") {
+        include '**/*.txt'
+  }
+}
+
+task distSamples(type: Zip, dependsOn:obfuscate ){
+  archiveName="${archivesBaseName}-${version}-samples.zip"
+  destinationDir = file("$buildDir/distribution")
+  into("samples")
+  from ("./src/main/sample") {
+        include '**/*.zip'
+        include '**/*.xlsx'
+  }
+}
+
+task distPackage(type: Zip){
+  archiveName="${archivesBaseName}-${version}-package.zip"
+  destinationDir = file("$buildDir/distribution")
+  // ${project.version} is not replaced. Would require Ant build call
+  from ('./src/main/scripts/bin') {
+        fileMode = 0755
+        include '*.bat'
+        include '*.sh'
+        into("${archivesBaseName}-${version}/bin")
+   }
+   from ('./src/main/config/record') {
+        into("${archivesBaseName}-${version}/config/record")
+   }
+   from ('./src/main/java') {
+   		fileMode = 0444
+        into("${archivesBaseName}-${version}/src")
+   }
+   from ('./src/main/doc/README.txt') {
+        into("${archivesBaseName}-${version}")
+        // Works with @ token
+        // filter(ReplaceTokens, tokens:['project.version': 'test'])
+        // Works without token, but fails on ${ } 
+        // filter{ it.replaceAll("project.version", "test")}
+   }
+   from ('./LICENSE.txt') {
+        into("${archivesBaseName}-${version}")
+   }
+   from ('./THIRD-PARTY.txt') {
+        into("${archivesBaseName}-${version}")
+   }
+   from (configurations.runtime) {
+        into "${archivesBaseName}-${version}/lib"
+        exclude 'jeyzer-annotation*'
+        exclude 'jeyzer-demo.*'
+   }
+   from ("$buildDir/libs") {
+        into("${archivesBaseName}-${version}/lib")
+        include "${javaName}-${version}.jar"
+        rename '(.*).jar', 'jeyzer-demo.jar'
+   }
+}
+
+task dumpUpdate {
+    doLast {
+    	def profilesDir = "src/main/config/record/profiles"
+    	def agentDir = "src/main/config/record/agent"
+    
+		def jzrConfigDir = new File(props.getProperty("jeyzer.recorder.config.dir"))
+		if(jzrConfigDir.exists()) {
+			println "Jeyzer Recorder profiles and agent configuration deployment"
+		
+		    def  jzrConfigProfilesDir = new File(props.getProperty("jeyzer.recorder.config.dir") + '/profiles')
+		    if(!jzrConfigProfilesDir.exists()) {
+  				// Create all folders
+  				jzrConfigProfilesDir.mkdirs()
+  			}
+  			copy {
+            	from profilesDir
+            	into jzrConfigProfilesDir
+            	include('**/*.xml')
+        	}
+        	
+		    def  jzrConfigAgentDir = new File(props.getProperty("jeyzer.recorder.config.dir") + '/agent')
+		    if(!jzrConfigAgentDir.exists()) {
+  				// Create all folders
+  				jzrConfigAgentDir.mkdirs()
+  			}
+  			copy {
+            	from agentDir
+            	into jzrConfigAgentDir
+            	include('**/*.properties')
+        	}
+		}
+    }
+}
+
+task dist(dependsOn: tasks.withType(Zip)) {
+     doLast {}
+}
+
+build.dependsOn(dist)
+build.dependsOn(profileUpdateJeyzerTask)
+build.dependsOn(obfuscate)
+build.dependsOn(dumpUpdate)

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Demo labors system">
+
+		<!-- ************************************************************************ -->
+		<!--                              ADVANCED RULES                              -->
+		<!-- ************************************************************************ -->
+
+		<!--  If free disk space is lower than [value] Gb for [count] or [time], generate event. -->
+		<rule name="Disk space free" param_display="App partition" param="work" stickers="disk_free_space" ref="LAB-SYS-001">
+			<thresholds>
+				<threshold type="global value"
+						   time="60s"
+						   value="3000"
+				           level="WARNING"
+				           message="Free disk space low. Check the disk space : log files, temp directories.."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If used disk space is higher than [value] Gb for [count] or [time], generate event. -->
+		<rule name="Disk space used" param_display="App partition" param="work" stickers="disk_used_space" ref="LAB-SYS-002">
+			<thresholds>
+				<threshold type="global value"
+						   time="60s"
+						   value="100"
+				           level="WARNING"
+				           message="Used disk space high. Check the disk space : log files, temp directories.."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If total disk space is lower than [value] Gb, generate event. -->
+		<rule name="Disk space total" param_display="App partition" param="work" stickers="disk_space_total" ref="LAB-SYS-003">
+			<thresholds>
+				<threshold type="system value"
+						   count="1"
+						   value="2500"
+				           level="INFO"
+				           message="Total disk space lower than recommend one to run the application. Please refer to your application Admin Guide."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If recording writing time is higher than [value] ms for [count] or [time], generate event. Applicable only in Jeyzer agent mode -->
+		<rule name="Disk write time" stickers="disk_write_time" ref="LAB-SYS-004">
+			<thresholds>
+				<threshold type="global value"
+						   count="10"
+						   value="0"
+				           level="WARNING"
+				           message="Recording writing takes time. Check the disk controller state and recording content at that period of time."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If recording writing speed is lower than [value] Kb/sec for [count] or [time], generate event. Applicable only in Jeyzer agent mode -->
+		<rule name="Disk write speed" stickers="disk_write_speed" ref="LAB-SYS-005">
+			<thresholds>
+				<threshold type="global value"
+						   count="10"
+						   value="100000" 
+				           level="WARNING"
+				           message="Disk writing low. Check the disk controller state."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If thread dump capture time is greater than [value] ms for [count or time in ms] times, generate event. -->
+		<rule name="Recording snapshot capture time" stickers="thread_dump_capture_time" ref="LAB-SYS-006">
+			<thresholds>
+				<threshold type="global value"
+						   count="1"
+						   value="50" 
+				           level="WARNING"
+				           sub_level="6"
+				           message="Recording snapshot capture time high. Check process state."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property value contains the given pattern, generate event. -->
+		<rule name="Process card property pattern" param_display="Installation path" param="java.vm.specification.name" stickers="process_card_property_pattern" ref="LAB-SYS-007">
+			<narrative>This rule checks the JVM specification correctness</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="Java Virtual Machine"
+				           level="INFO"
+				           message="Application is running with the right JVM specification."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property value is greater or equal to [value], generate event. -->
+		<rule name="Process card property number" param_display="CPU count" param="jzr.ext.process.available.processors" operator="lower_or_equal" stickers="process_card_property_number" ref="LAB-SYS-008">
+			<narrative>This rule detects if the number of CPUs is sufficient.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="512" 
+				           level="WARNING" 
+				           message="Production system running with low number of CPUs.&#10; You may consider to increase it."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property with name [pattern] is not found, generate event. -->
+		<rule name="Process card property absence" param_display="Missing applicative.property" param="applicative.property" stickers="process_card_property_absence" ref="LAB-SYS-009">
+			<narrative>This rule checks if the "applicative.property" is present in the process card as system property or environment variable.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="WARNING"
+				           sub_level="8" 
+				           message="Applicative property is not defined.&#10; Please make sure it is set by the application or at startup."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process up time is greater than [value] sec, generate event. -->
+		<rule name="Process up time" stickers="process_up_time" ref="LAB-SYS-010">
+			<thresholds>
+				<threshold type="session value"
+						   value="10"
+				           level="WARNING"
+				           sub_level="7"
+				           message="Process has been running for too long. It is recommended to restart it"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process command line max heap (Xmx) is lower than [value] in Mb, generate event. -->
+		<rule name="Process command line max heap" stickers="process_command_line_max_heap" ref="LAB-SYS-011">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="2000"
+				           level="WARNING" 
+				           message="Max heap is too low.&#10; Please increase it on the process command line"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process command line parameter with name [pattern] is not found, generate event. -->
+		<rule name="Process command line parameter absence" param_display="Missing Xms" param="Xms.*" stickers="process_command_line_parameter_absence" ref="LAB-SYS-012">
+			<narrative>This rule checks if the Xms parameter is set on the process command line. (This rule is originally derived from the Xmx one)</narrative>
+			<thresholds>0
+				<threshold type="system signal"
+				           level="WARNING" 
+				           message="Initial Java heap size is not set.&#10; Please add the -Xms&lt;size&gt; to the process command line."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process command line property value is lower or equal to [value], generate event. -->
+		<rule name="Process command line property number" param_display="JMX port test" param="com.sun.management.jmxremote.port" operator="lower_or_equal"  stickers="process_command_line_property_number" ref="LAB-SYS-013">
+			<narrative>This rule checks that the JMX port specified on the command line is lower than 3000.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="3000" 
+				           level="INFO" 
+				           sub_level="8"
+				           message="JMX port value is lower than 3000."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process command line property value contains the given pattern, generate event. -->
+		<rule name="Process command line property pattern" param_display="JMX remote authentication activated" param="com.sun.management.jmxremote.authenticate" stickers="process_command_line_property_pattern" ref="LAB-SYS-014">
+			<narrative>This rule checks if the JMX remote authentication is activated on the command line.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="false" 
+				           level="INFO" 
+				           sub_level="10"
+				           message="JMX remote authentication is activated."/>
+			</thresholds>
+		</rule>
+		
+		<rule name="Process command line parameter pattern" param_display="JMX remote access enabled" param="com.sun.management.jmxremote" stickers="process_command_line_parameter_pattern" ref="LAB-SYS-015">
+			<narrative>This rule detects if the JMX remote access is enabled.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="com.sun.management.jmxremote" 
+				           level="INFO" 
+				           message="JMX remote access is enabled."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If free disk space is lower than [value] % for [count] or [time], generate event. -->
+		<rule name="Disk space free percent" param_display="App partition" param="work" stickers="disk_space_free_percent" ref="LAB-SYS-016">
+			<thresholds>
+				<threshold type="global value"
+						   count="5"
+						   value="99"
+				           level="WARNING" 
+				           message="Free disk space very low. Check the disk space : log files, temp directories.."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If used disk space is higher than [value] % for [count] or [time], generate event. -->
+		<rule name="Disk space used percent" param_display="App partition" param="work" stickers="disk_space_used_percent" ref="LAB-SYS-017">
+			<thresholds>
+				<threshold type="global value"
+						   count="5"
+						   value="1"
+				           level="WARNING" 
+				           message="Used disk space very high. Check the disk space : log files, temp directories.."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property value contains the given pattern, generate event. -->
+		<rule name="Process card property pattern" param_display="Plane model" param="org.jeyzer.demo:DemoPlane:Model" stickers="mx_bean_parameter_pattern_system" ref="LAB-SYS-018">
+			<narrative>This rule checks the plane model.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="AX.*367b"
+				           level="WARNING"
+				           sub_level="9"
+				           message="Plane model is of AX family : it requires review. Please inform the company."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property value is greater or equal to [value], generate event. -->
+		<rule name="Process card property number" param_display="Plane age" param="org.jeyzer.demo:DemoPlane:Age" stickers="mx_bean_parameter_number_system" ref="LAB-SYS-019">
+			<narrative>This rule checks that plane is not too old.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="20" 
+				           level="WARNING"
+				           sub_level="7" 
+				           message="Plane is too old. Please plan its replacement."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If sticker(s) is/are matched, generate event. -->
+		<rule name="Sticker match" extra_info="Plane maintenance required" ref="LAB-SYS-020" stickers="sticker_match">
+		    <narrative>This rule checks if the plane requires maintenance.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="INFO"
+				           sub_level="6"
+				           message="Plane maintenance must be done. Please plan it."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process jar version is a snapshot, alpha, beta, build... version, generate event. -->
+		<rule name="Process jar version" extra_info="Logback obscolescence" stickers="logback-1.0.x, process_jar_version" ref="LAB-SYS-021">
+			<narrative>This rule checks the obsolescence of the logback library.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           sub_level="9"
+				           message="Demo running with 1.0.x version of logback.&#10;This logback version is obsolete and may contain critical bugs.&#10;Please upgrade to a more recent version (1.2+)"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the given process jar name is detected, generate event. -->
+		<rule name="Process jar name" extra_info="Jeyzer Recorder agent detection" stickers="process_jar_name" ref="LAB-SYS-022">
+			<narrative>This rule detects the presence of the Jeyzer Recorder agent.</narrative>
+			<thresholds>
+				<threshold type="system pattern"
+				           level="INFO"
+				           pattern="jeyzer-recorder"
+				           message="Demo is running with the Jeyzer Recorder agent."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the given process jar name is not detected, generate event. -->
+		<rule name="Process jar name absence" extra_info="Important module library missing" stickers="process_jar_name_absence" ref="LAB-SYS-023">
+			<narrative>This rule detects the absence of the Xyz module library.</narrative>
+			<thresholds>
+				<threshold type="system pattern"
+				           level="INFO"
+				           pattern="xyz-module"
+				           message="Demo is running without the XYZ module library which is required for the ABC functionality."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>

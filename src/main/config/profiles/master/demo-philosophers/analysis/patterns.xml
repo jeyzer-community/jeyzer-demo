@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="Demo-philosophers" version="${project.version}">
+
+
+		<!-- 
+			Pattern rule appliance by priority :
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - function  (6)
+			5 - function_discovery  (5)
+			6 - executor  (4)
+			7 - executor_thread_name (3)
+			8 - operation (2)
+			9 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
+			<functions>
+				<!-- Philosophers2 demo -->
+				<function pattern="philosopher2.Philosopher.accessFirstBowl"  name="Grabs bowl"/>
+				<function pattern="philosopher2.Philosopher.eatBowls"  name="Has both bowls" priority="900"/>
+				<function pattern="philosopher2.Philosopher.log"  name="Speaks"/>
+				<function pattern="philosopher2.PhilosophersDemo.demo"  name="Waiter" />
+				<function pattern="CountDownLatch.await;philosopher2.Philosopher.run"  name="Arrives" />
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				
+				<!-- Philosophers2 demo -->
+				<operation pattern="CountDownLatch.await;philosopher2.Philosopher.run"  name="Takes place"/>
+				<operation pattern="philosopher2.Philosopher.eatBowls"  name="Eats" priority="903"/>
+				
+				<operation pattern="Bowl_1.ownsFirstBowl"  name="Owns first bowl 1" priority="900"/>
+				<operation pattern="Bowl_2.ownsFirstBowl"  name="Owns first bowl 2" priority="900"/>
+				<operation pattern="Bowl_3.ownsFirstBowl"  name="Owns first bowl 3" priority="900"/>
+				<operation pattern="Bowl_4.ownsFirstBowl"  name="Owns first bowl 4" priority="900"/>
+				<operation pattern="Bowl_5.ownsFirstBowl"  name="Owns first bowl 5" priority="900"/>
+				<operation pattern="Bowl_1.ownsSecondBowl"  name="Owns second bowl 1" priority="902"/>
+				<operation pattern="Bowl_2.ownsSecondBowl"  name="Owns second bowl 2" priority="902"/>
+				<operation pattern="Bowl_3.ownsSecondBowl"  name="Owns second bowl 3" priority="902"/>
+				<operation pattern="Bowl_4.ownsSecondBowl"  name="Owns second bowl 4" priority="902"/>
+				<operation pattern="Bowl_5.ownsSecondBowl"  name="Owns second bowl 5" priority="902"/>
+				
+				<operation pattern="philosopher2.bowl.Bowl_1.getFirstAccess"  name="Waits for first bowl 1" />
+				<operation pattern="philosopher2.bowl.Bowl_2.getFirstAccess"  name="Waits for first bowl 2" />
+				<operation pattern="philosopher2.bowl.Bowl_3.getFirstAccess"  name="Waits for first bowl 3" />
+				<operation pattern="philosopher2.bowl.Bowl_4.getFirstAccess"  name="Waits for first bowl 4" />
+				<operation pattern="philosopher2.bowl.Bowl_5.getFirstAccess"  name="Waits for first bowl 5" />
+				<operation pattern="philosopher2.bowl.Bowl_1.getSecondAccess"  name="Waits for second bowl 1" priority="901"/>
+				<operation pattern="philosopher2.bowl.Bowl_2.getSecondAccess"  name="Waits for second bowl 2" priority="901"/>
+				<operation pattern="philosopher2.bowl.Bowl_3.getSecondAccess"  name="Waits for second bowl 3" priority="901"/>
+				<operation pattern="philosopher2.bowl.Bowl_4.getSecondAccess"  name="Waits for second bowl 4" priority="901"/>
+				<operation pattern="philosopher2.bowl.Bowl_5.getSecondAccess"  name="Waits for second bowl 5" priority="901"/>
+			</operations>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<!-- Philosophers2 demo -->
+				<executor pattern="philosopher2.Philosopher.run" name="Philosopher"/>
+				<executor pattern="philosopher2.PhilosophersDemo.main" name="Main"/>
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<!--executor_thread_name pattern="thread pattern" name="Thread type name"/-->
+				<!--executor_thread_name pattern_regex="regex" name="Thread type name"/-->
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude pattern="ThreadPoolExecutor.getTask" name="RMI Scheduler"/>
+				<exclude pattern="Finalizer$FinalizerThread.run" name="Finalizer"/>
+				<exclude pattern="Table.epilogue"  name="Epilogue" />
+				<exclude pattern="philosopher2.PhilosophersDemo.main" name="Main"/>
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude_thread_name pattern_regex="RMI TCP.*" name="RMI thread"/>
+				<exclude_thread_name pattern="JMX server connection timeout" name="RMI thread"/>
+				<exclude_thread_name pattern="Reference Handler" name="Reference Handler"/>
+			</exclude_thread_names>
+		</patterns>
+
+</profile>

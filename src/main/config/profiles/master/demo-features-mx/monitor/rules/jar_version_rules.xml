@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Demo features process jar versions">
+
+		<!-- ************************************************************************ -->
+		<!--                   PROCESS JAR VERSION RULES                              -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If process jar version is matching the given sticker (usually a process jar version sticker), generate event. -->
+		<rule name="Process jar version" extra_info="Logback obscolescence" stickers="logback-1.0.x" ref="DEM-PJV-001">
+			<narrative>This rule checks the obsolescence of the logback library.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           sub_level="9"
+				           message="Demo running with 1.0.x version of logback.&#10;This logback version is obsolete and may contain critical bugs.&#10;Please upgrade to a more recent version (1.2+)"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process jar version is a snapshot, alpha, beta, build... version, generate event. -->
+		<rule name="Process jar version snapshot" ref="DEM-PJV-002">
+			<narrative>This rule checks if the process jars have snapshot versions. It it important to run with official libraries.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="WARNING"
+				           sub_level="10" 
+				           message="Demo is running with snapshot libraries.&#10; It is highly recommended to run only with release libraries."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process jar version is not available, generate event. -->
+		<rule name="Process jar version absence" ref="DEM-PJV-003">
+			<narrative>This rule checks the absence of versions on the process jars. It it important to know the library version in case of issue.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="INFO"
+				           sub_level="8" 
+				           message="Demo is running with libraries without version.&#10; It is recommended to run with versionned libraries."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process jar is present multiple times, generate event. -->
+		<rule name="Process jar multiple versions" ref="DEM-PJV-004">
+			<narrative>This rule checks if any process jar is present under different versions.\n If the jar files can be accessed from the monitored application (depending on the class loading design), it can be dangerous as the wrong jar file may be loaded.\n Under an application server, this could be a false positive as the loaded jar files can be isolated at web app level.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="WARNING"
+				           message="Demo is running with different versions of the same library which is not intended.&#10;. Please contact your support."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process jar file name version differs from the jar version stored in the Manifest attributes, generate event. -->
+		<rule name="Process jar manifest version mismatch" ref="DEM-PJV-005">
+			<narrative>This rule checks that the Manifest version attributes match the jar file name version.\n If the versions differ, it means that the jar build is wrong or someone has altered the jar file.\n In both cases, you could run with a different version of the library than you would think.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="INFO"
+				           message="Demo is running with libraries that do carry inconsistent version information."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the given process jar name is detected, generate event. -->
+		<rule name="Process jar name" extra_info="Jeyzer Recorder agent detection" ref="DEM-PJV-006">
+			<narrative>This rule checks detects the presence of the Jeyzer Recorder agent.</narrative>
+			<thresholds>
+				<threshold type="system pattern"
+				           level="INFO"
+				           pattern="jeyzer-recorder"
+				           message="Demo is running with the Jeyzer Recorder agent."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the given process jar name is not detected, generate event. -->
+		<rule name="Process jar name absence" extra_info="Demo underground library missing" ref="DEM-PJV-007">
+			<narrative>This rule detects the absence of the demo underground library (which is fake library).</narrative>
+			<thresholds>
+				<threshold type="system pattern"
+				           level="INFO"
+				           pattern="demo-underground"
+				           message="Demo is running without the demo-underground library."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>

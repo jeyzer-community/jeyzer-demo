@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<stickers group="Demo">
+
+	<!-- Analyzer ambient stickers. Examples : code_analysis, performance, QA..  -->
+	<!-- Recommended way is to reuse the standard sticker list (defined in the default_setup.xml) 
+	     and therefore set the extra stickers onto the JEYZER_MONITOR_ANALYZER_STICKERS variable -->
+	<sticker_set list="sports" group="sport"/>
+
+	<sticker name="logback-1.0.x" type="process jar version" jar_name="logback-classic" pattern="^1\.0\.*"/>
+
+	<sticker name="wimbledon" type="property card" property="jzr.cxt.param-tennis-location" pattern="Wimbledon"/>
+
+	<sticker name="demo_unmatched_sticker" type="property card" property="unmatched.property" pattern="unmatched_pattern"/>
+
+</stickers>

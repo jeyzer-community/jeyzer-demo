@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Demo features process card">
+
+		<!-- ************************************************************************ -->
+		<!--                   APPLICATIVE PROCESS CARD RULES                         -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If process card property value contains the given pattern, generate event. -->
+		<rule name="Process card property pattern" param_display="Demo features version" param="jzr.process.version" ref="DEM-PCD-001">
+			<narrative>This rule checks the validity of the Jeyzer demo version.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="1.[0-9].*" 
+				           level="WARNING" 
+				           sub_level="7"
+				           message="Early demo version.&#10; You may need to upgrade soon."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property with name [pattern] is not found, generate event. -->
+		<rule name="Process card property absence" param_display="Missing applicative.property" param="applicative.property" ref="DEM-PCD-002">
+			<narrative>This rule checks if the "applicative.property" is present in the process card as system property or environment variable.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="WARNING"
+				           sub_level="8" 
+				           message="Applicative property is not defined.&#10; Please make sure it is set by the application or at startup."/>
+			</thresholds>
+		</rule>
+		
+		<!-- ************************************************************************ -->
+		<!--                   APPLICATIVE PROCESS COMMAND LINE RULES                 -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If process command line property value is lower or equal to [value], generate event. -->
+		<rule name="Process command line property number" param_display="JMX port test" param="com.sun.management.jmxremote.port" operator="lower_or_equal" ref="DEM-PCD-003">
+			<narrative>This rule checks that the JMX port specified on the command line is lower than 3000.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="3000" 
+				           level="INFO" 
+				           sub_level="8"
+				           message="JMX port value is lower than 3000."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process command line property value contains the given pattern, generate event. -->
+		<rule name="Process command line property pattern" param_display="JMX remote authentication activated" param="com.sun.management.jmxremote.authenticate" ref="DEM-PCD-004">
+			<narrative>This rule checks if the JMX remote authentication is activated on the command line.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="false" 
+				           level="INFO" 
+				           sub_level="10"
+				           message="JMX remote authentication is activated."/>
+			</thresholds>
+		</rule>
+
+		<!--  If process command line max heap is lower than value in Mb, generate event. -->
+		<rule name="Process command line max heap" ref="DEM-PCD-005">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="500" 
+				           level="CRITICAL"
+				           sub_level="8" 
+				           message="Max heap is too low.&#10; Please increase it on the command line"/>
+			</thresholds>
+		</rule>
+		
+	</rules>
+
+</monitor>

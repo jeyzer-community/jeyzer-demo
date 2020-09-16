@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Jeyzer-Publish"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/Jeyzer-Annotations"/>
+	<classpathentry kind="var" path="M2_REPO/ch/qos/logback/logback-core/1.0.13/logback-core-1.0.13.jar"/>
+	<classpathentry kind="var" path="M2_REPO/ch/qos/logback/logback-classic/1.0.13/logback-classic-1.0.13.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.7.5/slf4j-api-1.7.5.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/codehaus/janino/janino/2.6.1/janino-2.6.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/codehaus/janino/commons-compiler/2.6.1/commons-compiler-2.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Dev/src/jeyzer/demo/lib/jeyzer-demo-dup-1.1.1.alpha.jar"/>
+	<classpathentry kind="lib" path="C:/Dev/src/jeyzer/demo/lib/jeyzer-demo-dup-2.2.2-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="C:/Dev/src/jeyzer/demo/lib/jeyzer-demo-dup-no-version.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Jeyzer-Demo-Shared"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Monitor Console configuration -->
+<monitor_console output_directory="${JEYZER_OUTPUT_DIR}/monitor_console" >
+
+	<!-- Action graph player (optional) and action graph picture generation (always effective) -->
+	<function_graph_player graph_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/graph/player/function_graph_player.xml"/>
+	
+	<!-- Contention type graph player (optional) and contention type graph picture generation (always effective) -->
+	<contention_graph_player graph_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/graph/player/contention_graph_player.xml"/>
+	
+</monitor_console>

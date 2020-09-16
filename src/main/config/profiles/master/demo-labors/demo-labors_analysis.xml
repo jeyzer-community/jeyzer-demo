@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==================================================== -->
+<!--            Jeyzer Analyzer configuration             -->
+<!-- ==================================================== -->
+
+<!--   Available states : production, draft, generic, disabled -->
+<analysis application_type="Demo-labors" application_id="${JEYZER_TARGET_NAME}" state="production">
+
+	<!-- Context information -->
+	<context desc="${JEYZER_TARGET_DESCRIPTION}" issuer="${JEYZER_TARGET_ISSUER}"/>
+	
+	<!-- Discovery mode. If disabled, discovery rules won't be loaded. -->
+	<discovery_mode enabled="false"/>
+	
+	<!-- Dependency sets. Referenced in the analysis patterns and monitoring rules -->
+	<dependencies>
+		<set id="base-shared-deps" profiles="jeyzer, java"/>
+	</dependencies>
+
+		<!-- Analysis patterns. Load order : top to bottom. Pattern rules of the top pattern set apply first. Dynamic patterns are loaded at last -->
+	<patterns>
+		
+		<!-- Applicative patterns. Local path or remote url (http, https, ftp) -->
+		<pattern_set file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/patterns.xml"/>
+
+		<!-- Repository patterns, either local or remote, loaded as per the dependency declaration order -->
+		<pattern_sets files="repo://base/@@base-shared-deps@@"/>
+		
+		<!-- Repository patterns, either local or remote, loaded as per the process jar path declaration order (JZR recording) -->
+		<!-- Declared_repository_only indicates if the loading is limited to jars which contain the Jeyzer Repository attribute. In such case, the patterns will be loaded from the given repository -->
+		<!--   Otherwise, the patterns scanning of all repositories will be achieved to load the appropriate shared profile if any (extra cost) -->
+		<dynamic_pattern_sets declared_repository_only="true"/>
+	
+	</patterns>
+
+	<!-- JZR Report configuration -->
+	<report report_config_file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/report.xml"/>
+
+	<!-- Refresh period in sec -->
+	<replay enabled="${JEYZER_ANALYZER_REPLAY_ENABLED}" refresh_period="${JEYZER_GRAPH_REFRESH_PERIOD}" output_directory="${JEYZER_OUTPUT_DIR}/analysis">
+		<!-- Action graph player -->
+		<function_graph_player graph_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/graph/player/function_graph_player.xml"/>
+	</replay>
+
+	<!-- JZR Report distribution -->
+	<!-- Event threshold is applied if any monitoring sheet is displaying an event of same category or higher. Possible values ares : INFO, WARNING, CRITICAL -->
+	<notification threshold="CRITICAL">
+		<!-- recipients is a comma separated list of emails -->
+		<mail mail_enabled="${JEYZER_ANALYZER_TEAM_EMAIL_ENABLED}" setup="${JEYZER_ANALYZER_CONFIG_DIR}/mail/mail.properties" recipients="jean.doe06@gmail.com" subject="${JEYZER_TARGET_PROFILE} JZR report generated">
+			<template directory="${JEYZER_ANALYZER_CONFIG_DIR}/notification/mail" name="mail_content_template.vm"/>
+		</mail>
+	</notification>
+
+	<!-- Recording configuration -->
+	<!-- File is optional and must refer to a zip or gz file name -->
+	<recording period="${JEYZER_RECORD_PERIOD}" directory="${JEYZER_RECORD_DIRECTORY}" file="${JEYZER_RECORD_FILE}">
+	
+		<translators>	
+	
+			<!-- Optional uncompress -->
+			<translator type="compression" translator_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/translators/compression/uncompress.xml"/>
+	
+			<!-- Optional decryption -->
+			<!-- translator type="jzr_security" translator_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/translators/security/decryption.xml"/-->
+
+			<!-- Obfuscation -->
+			<translator type="obfuscation" translator_config_file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/translators/obfuscation/deobfuscation.xml"/>
+
+		</translators>
+	
+		<file_patterns>
+		
+			<!-- Jeyzer file name pattern : time stamp is taken out from file name as well as the time zone. -->
+			<!-- File name pattern is snap-<time-zone-origin : p or c or jzr>-<date format with regional time zone>.jzr  -->
+		    <file_jzr_pattern/>
+					
+		</file_patterns>
+		
+	</recording>
+
+	<!-- Thread stack configuration -->
+	<thread_stack>
+	
+		<!-- Stack discard pre-filters -->
+		<!--  Permits to exclude the majority of stacks of no interest --> 
+		<!--  Analysis profiles will do the rest -->
+		<analysis_prefilter>
+			<!-- Discard ALL stacks below the stack size -->
+			<stack_size_interest>
+				<!-- Size strategy : auto or known or master_profile_dependent  -->
+				<strategy type="known" >
+					<!-- Interest size is known up front -->
+					<known_size_strategy min="3"/>
+				</strategy>
+				<!-- In the discard all, do keep particular stacks as follow : -->
+				<keep_stacks running="false" locked="false"/>
+			</stack_size_interest>
+		</analysis_prefilter>
+	
+		<!-- Log unidentified stacks (unknown function, operation or executor) -->
+		<!--   order by file : stacks may appear multiple times.               --> 
+		<!--            frequency : each stack is printed only once            -->
+		<ufo generation_enabled="true" zip_output_dir="${JEYZER_OUTPUT_DIR}/analysis" order_by="frequency"/>
+	
+		<!-- write all discarded stack traces into ignored-stacks.zip -->
+		<ignored_stacks generation_enabled="false" zip_output_dir="${JEYZER_OUTPUT_DIR}/analysis"/>
+	</thread_stack>
+
+	<!-- Static data setup -->
+	<setup setup_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/setup/default_setup.xml"/>
+
+</analysis>

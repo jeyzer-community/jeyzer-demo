@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="Demo-labors" version="${project.version}">
+
+
+		<!-- 
+			Pattern rule appliance by priority :
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - function  (6)
+			5 - function_discovery  (5)
+			6 - executor  (4)
+			7 - executor_thread_name (3)
+			8 - operation (2)
+			9 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
+			<functions>
+				<!--  function pattern="code pattern"  name="function name"/-->
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<!-- operation pattern="code pattern"  name="operation name"/-->
+			</operations>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<!-- executor pattern="executor pattern" name="executor name"/-->
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<!--executor_thread_name pattern="thread pattern" name="Thread type name"/-->
+				<!--executor_thread_name pattern_regex="regex" name="Thread type name"/-->
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude pattern="TimerThread.mainLoop" name="Timer inactive" size="3"/>
+				<exclude pattern="GlobalThreadLimitJob$SubGlobalThreadLimit.run" name="Inactive global thread"/>
+				<exclude pattern="ActiveNamedThreadLimitJob$SubActiveNamedThreadLimitWorker.doNothing" name="Inactive named thread limit worker"/>
+				<exclude pattern="ThreadPoolExecutor.getTask" name="RMI Scheduler"/>
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude_thread_name pattern_regex="RMI TCP.*" name="RMI thread"/>
+				<exclude_thread_name pattern="JMX server connection timeout" name="RMI thread"/>
+				<exclude_thread_name pattern="Reference Handler" name="Reference Handler"/>
+				<exclude_thread_name pattern="Job scheduler" name="Job scheduler"/>
+			</exclude_thread_names>
+		</patterns>
+
+</profile>

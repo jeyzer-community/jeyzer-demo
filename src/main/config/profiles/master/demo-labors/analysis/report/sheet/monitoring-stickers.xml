@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="monitoring_stickers" name="Stickers">
+
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays the monitoring stickers.&#10;Includes sticker positive and negative matching.</description>
+
+			<stickers>
+				<sticker_set file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/monitor/stickers/labor_stickers.xml"/>
+				<sticker_set file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/monitor/stickers/demo_stickers.xml"/>
+			</stickers>
+			
+		</sheet>

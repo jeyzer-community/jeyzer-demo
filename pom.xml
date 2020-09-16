@@ -1,0 +1,467 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jeyzer</groupId>
+	<artifactId>jeyzer-demo</artifactId>
+	<packaging>jar</packaging>
+	<version>2.0-SNAPSHOT</version>
+	<name>Jeyzer Demo</name>
+	<description>The Jeyzer Demo. More info at https://jeyzer.org/demos/</description>
+	
+	<properties>
+		<jeyzer-demo-shared.version>${project.version}</jeyzer-demo-shared.version>
+    	<jeyzer-annotations.version>${project.version}</jeyzer-annotations.version>
+    	<jeyzer-publish.version>${project.version}</jeyzer-publish.version>
+    	<jeyzer-annotation-processors.version>${project.version}</jeyzer-annotation-processors.version>
+    	
+    	<!-- Logback - Old versions -->
+		<jeyzer.demo-ch.qos.logback.logback-classic.version>1.0.13</jeyzer.demo-ch.qos.logback.logback-classic.version>
+		<jeyzer.demo-slf4j-api.version>1.7.5</jeyzer.demo-slf4j-api.version>
+		<jeyzer.demo-logback-core.version>1.0.13</jeyzer.demo-logback-core.version>
+    	
+    	<!-- Logback / Janino - Used to perform conditional configuration blocks - Old versions -->
+		<jeyzer.demo-org.codehaus.janino.janino.version>2.6.1</jeyzer.demo-org.codehaus.janino.janino.version>
+		<jeyzer.demo-janino.commons-compiler.version>2.6.1</jeyzer.demo-janino.commons-compiler.version>
+	</properties>
+	
+	<profiles>
+      <profile>
+        <id>proguard-java-8</id>
+        <properties>
+           <proguard.lib.java.rt-1>${java.home}/lib/rt.jar</proguard.lib.java.rt-1>
+           <!-- Fake entry as rt.jar alone is sufficient. management-agent.jar is small lib, available in all JRE 8 distributions -->
+           <proguard.lib.java.rt-2>${java.home}/lib/management-agent.jar</proguard.lib.java.rt-2>
+        </properties>
+        <activation>
+          <jdk>1.8</jdk>
+        </activation>
+      </profile>
+      <profile>
+        <id>proguard-java-11</id>
+        <properties>
+           <proguard.lib.java.rt-1>${java.home}/jmods/java.base.jmod</proguard.lib.java.rt-1>
+           <proguard.lib.java.rt-2>${java.home}/jmods/java.management.jmod</proguard.lib.java.rt-2>
+        </properties>
+        <activation>
+          <jdk>11</jdk>
+        </activation>
+      </profile>
+    </profiles>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.jeyzer</groupId>
+			<artifactId>jeyzer-demo-shared</artifactId>
+			<version>${jeyzer-demo-shared.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jeyzer</groupId>
+			<artifactId>jeyzer-publish</artifactId>
+			<version>${jeyzer-publish.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jeyzer</groupId>
+			<artifactId>jeyzer-annotations</artifactId>
+			<version>${jeyzer-annotations.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jeyzer</groupId>
+			<artifactId>jeyzer-annotation-processors</artifactId>
+			<version>${jeyzer-annotation-processors.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${jeyzer.demo-ch.qos.logback.logback-classic.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.janino</groupId>
+			<artifactId>janino</artifactId>
+			<version>${jeyzer.demo-org.codehaus.janino.janino.version}</version>
+		</dependency>
+		<!-- Duplicate, snapshot libraries -->
+		<!-- This type of dependency declaration may be deprecated by Maven -->
+		<dependency>
+		    <groupId>org.jeyzer</groupId>
+    		<artifactId>jeyzer-demo-dup1</artifactId>
+    		<version>1.1.1.alpha</version>
+    		<scope>system</scope>
+ 		    <systemPath>${project.basedir}/lib/jeyzer-demo-dup-1.1.1.alpha.jar</systemPath>
+		</dependency>
+		<dependency>
+		    <groupId>org.jeyzer</groupId>
+    		<artifactId>jeyzer-demo-dup2</artifactId>
+    		<version>2.2.2.SNAPSHOT</version>
+    		<scope>system</scope>
+ 		    <systemPath>${project.basedir}/lib/jeyzer-demo-dup-2.2.2-SNAPSHOT.jar</systemPath>
+		</dependency>
+		<dependency>
+		    <groupId>org.jeyzer</groupId>
+    		<artifactId>jeyzer-demo-dup3</artifactId>
+    		<version>3.3.3</version>
+    		<scope>system</scope>
+ 		    <systemPath>${project.basedir}/lib/jeyzer-demo-dup-3.3.3.jar</systemPath>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<!-- Process license -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>1.14</version>
+				<configuration>
+					<licenseName>mpl-2.0</licenseName>
+                    <licenseResolver>${project.baseUri}/src/license</licenseResolver>
+                    <processStartTag>---------------------------LICENSE_START---------------------------</processStartTag>
+			        <processEndTag>----------------------------LICENSE_END----------------------------</processEndTag>
+			        <sectionDelimiter>--</sectionDelimiter>
+					<roots>
+						<root>src/main/java</root>
+					</roots>
+				</configuration>
+				<executions>
+					<execution>
+						<id>first</id>
+						<goals>
+							<goal>update-file-header</goal>
+							<goal>update-project-license</goal>
+						</goals>
+						<phase>process-sources</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Load property file : external variables -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>project.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Generate unique build number -->
+      		<plugin>
+        		<groupId>org.codehaus.mojo</groupId>
+        		<artifactId>buildnumber-maven-plugin</artifactId>
+        		<version>1.4</version>
+        		<executions>
+          			<execution>
+            			<phase>validate</phase>
+            			<goals>
+              				<goal>create</goal>
+            			</goals>
+          			</execution>
+        		</executions>
+        		<configuration>
+      				<format>{0,number}</format>
+      				<items>
+        				<item>buildNumber0</item>
+				    </items>
+        			<doCheck>false</doCheck>
+       				<doUpdate>false</doUpdate>
+         			<revisionOnScmFailure>false</revisionOnScmFailure>
+        		</configuration>
+      		</plugin>
+      		<!-- Compile -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<verbose>true</verbose>
+					<fork>false</fork>
+				</configuration>
+			</plugin>
+			<!-- Generate the javadoc for the applicative event codes -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.3</version>
+				<configuration>
+      				<source>8</source>
+					<excludePackageNames>org.jeyzer.demo.features:org.jeyzer.demo.labors:org.jeyzer.demo.philosopher:org.jeyzer.demo.philosopher2:org.jeyzer.demo.tollbooth:org.jeyzer.demo.util</excludePackageNames>
+				</configuration>
+				<executions>
+					<execution>
+						<id>javadoc-package</id>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Generate the jar file with Manifest properties -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+						<manifestEntries>
+              				<Built-By></Built-By>
+              				<!--  Used for the deobfuscation -->
+              				<Implementation-Build>${buildNumber}</Implementation-Build>
+              				<Implementation-ArtifactId>${project.artifactId}</Implementation-ArtifactId>
+            			</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<!-- Obfuscate the code -->
+            <plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <version>2.2.0</version>
+                <executions>
+                   <execution>
+                       <phase>package</phase>
+                       <goals>
+						<goal>proguard</goal>
+						</goals>
+                   </execution>
+                </executions>
+                <configuration>
+                	<proguardVersion>6.1.1</proguardVersion>
+                    <proguardInclude>${basedir}/src/assembly/proguard/jeyzer-samples.pro</proguardInclude>
+                    <libs>
+                        <lib>${proguard.lib.java.rt-1}</lib>
+                        <lib>${proguard.lib.java.rt-2}</lib>
+                    </libs>
+                    <options>
+                    	<option>-printmapping ${project.build.directory}/${project.artifactId}-${project.version}-${buildNumber}-proguard_map.txt</option>
+                    	<option>-printseeds ${project.build.directory}/${project.artifactId}-${project.version}-${buildNumber}-proguard_seeds.txt</option>
+                    </options>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sf.proguard</groupId>
+                        <artifactId>proguard-base</artifactId>
+                        <version>6.1.1</version>
+                        <scope>runtime</scope>
+                    </dependency>
+                </dependencies>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+				    <!-- Deploy the obfuscation mappings -->
+					<execution>
+						<phase>package</phase>
+						<id>mapping</id>
+						<configuration>
+							<target>
+								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.dependency.classpath" />
+								<!-- Default file -->
+								<copy file="${project.build.directory}/${project.artifactId}-${project.version}-${buildNumber}-proguard_map.txt" tofile="${obfuscation.mapping.default.deploy.directory}/${project.artifactId}/proguard_map.txt" />
+								<!-- Repository file -->
+								<if>
+									<available file="${tomcat.base.dir}" type="dir"/>
+									<then>
+										<mkdir dir="${tomcat.base.dir}/webapps/proguard/mappings/${project.artifactId}"/>
+                            			<copy file="${project.build.directory}/${project.artifactId}-${project.version}-${buildNumber}-proguard_map.txt" tofile="${tomcat.base.dir}/webapps/proguard/mappings/${project.artifactId}/${project.artifactId}-${project.version}-${buildNumber}-proguard_map.txt" />
+                        			</then>
+                    			</if>
+                			</target>
+						</configuration>
+            			<goals>
+                			<goal>run</goal>
+            			</goals>
+        			</execution>
+        			<!-- Deploy the dump profiles in the agent - Optional -->
+        			<execution>
+						<phase>package</phase>
+						<id>dump</id>
+						<configuration>
+							<target>
+								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.dependency.classpath" />
+								<!-- Agent directory -->
+								<if>
+									<available file="${jeyzer.recorder.config.dir}" type="dir"/>
+									<then>
+										<mkdir dir="${jeyzer.recorder.config.dir}/profiles"/>
+                            			<copy todir="${jeyzer.recorder.config.dir}/profiles">
+                            			    <fileset dir="${basedir}/src/main/config/dump/profiles">
+      											<include name="**/*.xml"/>
+    										</fileset>
+    									</copy>
+                            			<mkdir dir="${jeyzer.recorder.config.dir}/agent"/>
+                            			<copy todir="${jeyzer.recorder.config.dir}/agent">
+                            			    <fileset dir="${basedir}/src/main/config/dump/agent">
+      											<include name="**/*.properties"/>
+    										</fileset>
+    									</copy>
+                        			</then>
+                    			</if>
+                			</target>
+						</configuration>
+            			<goals>
+                			<goal>run</goal>
+            			</goals>
+        			</execution>
+    			</executions>
+    			<dependencies>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+						<exclusions>
+							<exclusion>
+								<groupId>ant</groupId>
+								<artifactId>ant</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<!-- Update the project Jeyzer profiles -->
+			<plugin>
+				<groupId>org.jeyzer.build</groupId>
+				<artifactId>jeyzer-maven-plugin</artifactId>
+				<version>${project.version}</version>
+				<executions>
+					<execution>
+						<id>demo-features-mx</id>
+						<phase>package</phase>
+						<configuration>
+							<sourcePatterns>${basedir}/src/main/config/profiles/master/demo-features-mx/analysis/patterns.xml</sourcePatterns>
+							<!-- newPatternEntries>${project.build.directory}/generated-sources/jeyzer/new_pattern_entries.xml</newPatternEntries>
+							<targetPatternsDir>${project.build.directory}/generated-sources/jeyzer</targetPatternsDir> -->
+							<targetPatternsName>demo-features-mx_patterns</targetPatternsName>
+						</configuration>
+						<goals>
+							<goal>update-profile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>demo-labors</id>
+						<phase>package</phase>
+						<configuration>
+							<sourcePatterns>${basedir}/src/main/config/profiles/master/demo-labors/analysis/patterns.xml</sourcePatterns>
+							<!-- <newPatternEntries>${project.build.directory}/generated-sources/jeyzer/new_pattern_entries.xml</newPatternEntries>
+							<targetPatternsDir>${project.build.directory}/generated-sources/jeyzer</targetPatternsDir> -->
+							<targetPatternsName>demo-labors_patterns</targetPatternsName>
+						</configuration>
+						<goals>
+							<goal>update-profile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Generate the packages -->
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>make-zip</id>
+						<configuration>
+							<descriptors>
+								<descriptor>src/assembly/bin.xml</descriptor>
+								<descriptor>src/assembly/profiles.xml</descriptor>
+								<descriptor>src/assembly/obfuscation-mapping.xml</descriptor>
+								<descriptor>src/assembly/analyzer-bin-preset.xml</descriptor>
+							</descriptors>
+							<attach>false</attach>
+							<outputDirectory>${project.build.directory}/distribution</outputDirectory>
+						</configuration>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Package the installer files -->
+      		<plugin>
+        		<artifactId>maven-resources-plugin</artifactId>
+        		<version>3.1.0</version>
+       			<executions>
+          			<execution>
+            			<id>copy-resources</id>
+            			<phase>package</phase>
+            			<goals>
+              				<goal>copy-resources</goal>
+            			</goals>
+            			<configuration>
+              				<outputDirectory>${basedir}/target/installer/templates/demo</outputDirectory>
+              				<resources>
+                				<resource>
+                  					<directory>src/main/config/record/agent</directory>
+                  					<includes>
+          								<include>**/*.installer.properties</include>
+       								</includes>
+                  					<filtering>false</filtering>
+                				</resource>
+              				</resources>
+            			</configuration>
+          			</execution>
+        		</executions>
+      		</plugin>
+		</plugins>
+	</build>
+	
+	<licenses>
+      <license>
+        <name>Mozilla Public License Version 2.0</name>
+        <url>http://mozilla.org/MPL/2.0/</url>
+        <distribution>repo</distribution>
+      </license>
+    </licenses>
+	
+	<developers>
+		<developer>
+			<id>jeyzer-community-admin</id>
+			<name>Jeyzer Community Admin</name>
+			<email>jeyzer-community-admin@jeyzer.org</email>
+			<url>https://jeyzer.org/contribute-and-share/</url>
+			<organization>Jeyzer</organization>
+			<organizationUrl>https://jeyzer.org</organizationUrl>
+			<roles>
+				<role>administrator</role>
+			</roles>
+		</developer>
+	</developers>
+	
+	<organization>
+		<name>Jeyzer SAS</name>
+		<url>https://jeyzer.org</url>
+	</organization>
+	<inceptionYear>2020</inceptionYear>
+	
+	<scm>
+		<connection>scm:git:git://github.com/jeyzer-community/jeyzer-demo</connection>
+		<developerConnection>scm:git:git://github.com/jeyzer-community/jeyzer-demo</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/jeyzer-community/jeyzer-demo</url>
+	</scm>
+	
+</project>

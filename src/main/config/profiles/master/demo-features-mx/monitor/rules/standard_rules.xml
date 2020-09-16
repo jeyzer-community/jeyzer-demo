@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+		
+	<rules group_name="Demo features">
+	
+		<!-- ************************************************************************ -->
+		<!--                              STANDARD RULES                              -->
+		<!-- ************************************************************************ -->
+	
+		<!--  If task stack is identical for [count] snapshots or [time], optionally for function principal=[regex], generate event -->
+		<rule name="Frozen stacks" ref="DEM-STD-001">
+			<thresholds>
+				<threshold 	type="action signal"
+							time="40s" 
+							level="WARNING" 
+							message="Task showing identical consecutive stacks for long time. Collects thread dumps and contact your software provider."/>
+				<threshold 	type="action signal" 
+							count="2" 
+							function="Frozen code section.*" 
+							level="INFO" 
+							message="Task showing identical consecutive stacks on specific action. Collects thread dumps and contact your software provider."/>
+			</thresholds>
+		</rule>
+
+		<!--  If number of threads greater than [value], generate event -->
+		<rule name="Global thread limit" ref="DEM-STD-002">
+			<thresholds>
+				<threshold type="global value" 
+						   count="12"
+				           value="10" 
+				           level="WARNING" 
+				           message="High number of threads created. Please send the Jeyzer recording to your Support service and monitor closely the application."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If number of active threads greater than [value], generate event -->
+		<rule name="Active thread limit" ref="DEM-STD-003">
+			<thresholds>
+				<threshold type="session value" 
+						   count="1"
+				           value="6" 
+				           level="WARNING" 
+				           message="High number of active threads. Application may be under load. Monitor closely the application."/>
+   			</thresholds>
+		</rule>		
+
+		<!--  If execution regex pattern in the current task is seen more than value, generate event. If user exists, will be added as message prefix -->
+		<rule name="Task execution pattern" extra_info="Dysfunctional code sequence" ref="DEM-STD-004">
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="1"
+				           pattern="(?s).*DysfunctionalCodeSequence.dysfunctionalCode2.*DysfunctionalCodeSequence.dysfunctionalCode1.*" 
+				           level="CRITICAL"
+				           trust_factor="95"
+				           message="Corruption detected.&#10; Please contact the WWTennis Federation to ask for fix ANTI-CORRUPT-F28."/>
+			</thresholds>
+		</rule>
+
+		<!--  If application not available longer than [count or time] missing thread dumps, generate event -->
+		<rule name="Missing thread dump" ref="DEM-STD-005">
+			<thresholds>
+				<threshold type="global diff"
+						   count="2"
+				           level="CRITICAL" 
+				           message="Application may run out of memory : check GC and memory figures."/>
+			</thresholds>
+		</rule>
+
+ 		<!--  If deadlock is detected, generate event. This rule should be only set to CRITICAL. -->
+		<rule name="Deadlock" ref="DEM-STD-006">
+			<thresholds>
+				<threshold type="session signal"
+						   count="1" 
+				           level="CRITICAL" 
+				           message="A Java deadlock has been detected. Please send the Jeyzer recording to your Support service and restart the application."/>
+			</thresholds>
+		</rule>
+
+		<!--  If task is locking [value] threads for [count] or [time], generate event. -->
+		<rule name="Locker task" ref="DEM-STD-007">
+			<thresholds>
+				<threshold type="stack value"
+						   count="2"
+						   value="1"
+				           level="WARNING" 
+				           message="A Java lock has been detected for some time. Please send the Jeyzer recording to your Support service and restart the application."/>
+			</thresholds>
+		</rule>
+			
+		<!--  If task duration longer than [count] or [time], generate event. Value has no meaning -->
+		<rule name="Long running task" ref="DEM-STD-008">
+			<narrative>This rule detects the long running tennis player actions.</narrative>
+			<thresholds>
+				<threshold type="action value"
+						   time="60s"
+						   value="1"
+						   function=".*running tennis player.*" 
+				           level="WARNING"
+				           sub_level="6"
+				           message="Long tennis match. Wow !"/>
+			</thresholds>
+		</rule>
+
+		<!--  If stack shows long recursive call which exceeds [value] limit, generate event-->
+		<rule name="Stack overflow" ref="DEM-STD-009">
+			<thresholds>
+				<threshold type="stack value"
+						   count="5"
+						   value="10"
+				           level="CRITICAL" 
+				           message="Thread stack too high. Check the relative thread dump to see if there is stack overflow evidence."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of active threads matching the [pattern] is greater than [value], generate event. Applies for thread pools. Pattern is regex -->
+		<rule name="Active named thread limit" extra_info="Demo thread pool" ref="DEM-STD-010">
+			<thresholds>
+				<threshold type="global custom"
+						   count="1"
+						   value="1"
+						   pattern="^Demo thread.*" 
+				           level="INFO"
+				           message="Demo thread pool alert : demo is running."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of threads (active and inactive) matching the [pattern] is lower or equal than [value] for [count] thread dumps or [time], generate event. Pattern is regex -->
+		<!--  Important : Absent threads rules cannot be complementary as one or the other will wrongly match. Put all patterns under the same regex -->
+		<rule name="Absent threads" extra_info="Demo thread pool" ref="DEM-STD-011">
+			<thresholds>
+				<threshold type="session custom"
+						   count="2"
+						   value="0"
+						   pattern="^Demo thread.*" 
+				           level="WARNING"
+				           sub_level="9"
+				           message="Demo thread pool alert : demo is NOT running."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If function regex pattern in the current task is seen more than value, generate event. Pattern is regex  -->
+		<rule name="Function pattern" extra_info="Ping pong players" ref="DEM-STD-012">
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="1"
+				           pattern="(ping)|(pong)" 
+				           level="INFO"
+				           sub_level="7" 
+				           message="Ping-pong players are active !!"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation regex pattern in the current task is seen more than value, generate event. Pattern is regex -->
+		<rule name="Operation pattern" extra_info="Sleeping threads" ref="DEM-STD-013">
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="5"
+				           pattern="Thread on hold" 
+				           level="INFO" 
+				           sub_level="7"
+				           message="Active threads sleeping !!"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If suspended threads are detected, generate event. This rule should be only set to CRITICAL. -->
+		<rule name="Suspended threads" ref="DEM-STD-014">
+			<thresholds>
+				<threshold type="session signal"
+						   count="1" 
+				           level="CRITICAL" 
+				           message="Suspended threads have been detected. Someone has paused some threads through a Java debugger connected to the application. It may impact the applicative processing."/>
+			</thresholds>
+		</rule>
+		
+	</rules>
+
+</monitor>

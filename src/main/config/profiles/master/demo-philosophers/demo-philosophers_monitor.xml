@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor node="${JEYZER_TARGET_NAME}" output_directory="${JEYZER_OUTPUT_DIR}/monitor" session_directory="${JEYZER_OUTPUT_DIR}/monitor/session">
+
+	<!-- Scanning period in sec must be larger than the snapshot recording period -->
+	<scanning scanning_period="${JEYZER_MONITOR_SCAN_PERIOD}" startup_point_persisted="true"/>
+
+	<!-- Generate JZR report. Can be CPU/memory consuming if large volume of thread dumps -->
+	<!--   Conditional generation based on event level threshold : INFO, WARNING, CRITICAL -->
+	<!--   Optional email attachment -->
+	<analysis analysis_report_enabled="${JEYZER_JZR_REPORT_ENABLED}" publishers="mailer" threshold="CRITICAL"/>
+
+	<!-- Graph picture generation at the end of each monitoring scanning -->
+	<graph_snapshot snapshot_enabled="${JEYZER_MONITOR_GRAPH_PICTURE_ENABLED}" publishers="web" >
+		<function_graph_player graph_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/graph/player/function_graph_player.xml"/>
+		<contention_graph_player graph_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/graph/player/contention_graph_player.xml"/>
+	</graph_snapshot>
+
+	<!-- date formats : http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html-->
+	<display date_format="yyyy/MM/dd HH:mm:ss" clean_duplicate_events="false"/>
+
+	<rules>
+		<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/advanced_rules.xml"/>
+		<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/standard_rules.xml"/>
+		<rule_sets files="repo://base/@@base-shared-deps@@"/>
+		<dynamic_rule_sets declared_repository_only="true"/>
+	</rules>
+
+	<!-- Event distribution -->
+	<publishers>
+	
+		<!-- Event threshold. Possible values ares : INFO, WARNING, CRITICAL -->
+		<!-- Re-emit published events : if true, upon a long life critical event for ex, repeat the email sending. Implies to dump the events. Recommended. -->
+		<!--                            if false, email sending will occur only at the critical event generation. -->
+		<!--                            Note that JZR report will be generated and sent only once for performance and anti email pollution reasons. -->
+		<mailer threshold="CRITICAL" reemit_published_events="true">
+			<!-- mail configuration -->
+			<!-- recipients is a comma separated list of emails --> 
+			<mail mail_enabled="${JEYZER_MONITOR_ALERT_EMAIL_ENABLED}" setup="${JEYZER_ANALYZER_CONFIG_DIR}/mail/mail.properties" recipients="${JEYZER_MONITOR_ALERT_EMAIL_RECIPIENTS}" subject="${JEYZER_TARGET_PROFILE} monitoring alert" dump_events="true">
+				<template directory="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/publishers/mailer" name="mail_content_template.vm"/>
+			</mail>
+		</mailer>
+		
+		<!-- Push the result of the HTML logger under a web doc directory --> 
+		<web web_enabled="${JEYZER_MONITOR_WEB_ENABLED}" url="https://${JEYZER_MONITOR_WEB_HOST}:${JEYZER_MONITOR_WEB_PORT}/jeyzer-monitor" deploy="${JEYZER_MONITOR_WEB_DEPLOY_DIR}"/>
+
+		<!-- sound alert configuration. Will beep for critical (long beeps) and warning (short beep) events -->
+		<sound sound_enabled="${JEYZER_MONITOR_SOUND_ENABLED}"/>
+	
+	</publishers>
+
+	<!-- logger configuration -->
+	<loggers>
+		<!-- Each event is written on one line with tabulations. -->
+		<logger logger_enabled="true" format="single_excel_line" file="${JEYZER_TARGET_NAME}_monitor_excel.log"/>
+		<!-- Each event is written on one line without tabulations. Used for external parsing. -->
+		<logger logger_enabled="true" format="single_line" file="${JEYZER_TARGET_NAME}_monitor_single_line.log"/>
+		<!-- Each event is written in a readable format -->
+		<logger logger_enabled="true" format="journal" file="${JEYZER_TARGET_NAME}_monitor.log"/>
+		<!-- Each event is written per column for Excel. Includes headers for filtering -->
+		<logger logger_enabled="true" format="csv" file="${JEYZER_TARGET_NAME}_monitor.csv" publishers="mailer,web"/>
+		<!-- Events are written in HTML table taken out from a velocity template -->
+		<logger logger_enabled="true" format="html" file="${JEYZER_TARGET_NAME}_monitor.html" publishers="web">
+			<template directory="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/loggers/html" name="events_template.vm"/>
+		</logger>
+	</loggers>
+
+</monitor>

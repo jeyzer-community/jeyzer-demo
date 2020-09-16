@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<report enabled="${JEYZER_JZR_REPORT_ENABLED}">
+
+	<!-- JZR report configuration -->
+	
+	<!-- Path of the generated JZR report file : 
+	     output_directory/output_file_prefix==start day(yyyy-MM-dd)===start hour(HH-mm-ss)===end hour(HH-mm-ss)=jzr.xlsx -->
+	     
+	<xlsx_report output_directory="${JEYZER_OUTPUT_DIR}/analysis" output_file_prefix="${JEYZER_TARGET_NAME}-report">
+
+		<sheet type="navigation" name="Menu" tab_color="LIGHT_GREEN"/>
+		
+		<sheet type="session_details" name="Session info"/>
+
+		<!-- process card sheet will be displayed only if the process card file is available -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/process-card/process-card.xml"/>
+	
+		<sheet sheet_config_file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/sheet/monitoring-standard-alerts-with-graph.xml"/>
+
+		<sheet sheet_config_file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/sheet/monitoring-advanced-alerts-with-graph.xml"/>
+		
+		<sheet sheet_config_file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/sheet/sequence-monitoring-std-advanced-alerts.xml"/>
+
+		<sheet sheet_config_file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/sheet/action-dashboard.xml"/>
+
+		<sheet sheet_config_file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/sheet/sequence-functions.xml"/>
+		
+		<sheet sheet_config_file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/sheet/sequence-operations.xml"/>
+		
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-contention-types.xml"/>
+		
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-charts.xml"/>
+		
+		<!--  display the list of actions -->
+		<sheet type="action_list" name="Task list"/>
+		
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-locks.xml"/>
+
+		<!--  display the distinct actions and their related stacks as a tree. -->
+		<sheet sheet_config_file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/sheet/action-distinct-profiling-with-graph.xml"/>
+		
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-thread-states.xml"/>
+
+		<!--  display the stacks seen more than threshold times, ordered by number of appearances -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/top-stacks/top-stacks-with-graph.xml"/>
+
+		<!-- function and operation global appearance at distinct action level -->
+		<sheet sheet_config_file="${JEYZER_DEMO_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/sheet/action-distinct-histogram-with-graph.xml"/>
+
+		<!-- function and operation global appearance  -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/histogram/function-histogram-with-graph.xml"/>
+	
+		<!-- function and operation appearance categorized by executor -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/histogram/executor-function-histogram.xml"/>
+
+		<!-- action and stack counts appearance categorized by executor  -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/histogram/executor-histogram.xml"/>
+	
+		<!-- display the recording measurements. Only in Jeyzer agent mode -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-recording.xml"/>
+	
+		<!-- Monitoring rules display -->
+		<sheet type="monitoring_rules" name="Monitoring Rules"/>
+		
+		<!-- Monitoring stickers display -->
+		<sheet type="monitoring_stickers" name="Stickers"/>
+		
+		<!-- Process jars sheet will be displayed only if the process jar paths file is available -->
+		<sheet type="process_jars" name="Libraries"/>
+		
+		<!-- Profiles display -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/analysis-patterns/analysis-patterns.xml"/>
+		
+	</xlsx_report>
+
+</report>

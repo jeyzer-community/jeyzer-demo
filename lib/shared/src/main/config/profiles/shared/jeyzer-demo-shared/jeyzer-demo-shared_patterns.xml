@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="Demo-shared" version="${project.version}">
+
+		<patterns>
+			<!-- Shared library relies fully on the Jeyzer annotations -->
+			<functions>
+			</functions>
+			<operations>
+			</operations>
+			<executors>
+			</executors>
+			<executor_thread_names>
+			</executor_thread_names>
+			<excludes>
+			</excludes>
+			<exclude_thread_names>
+			</exclude_thread_names>
+		</patterns>
+
+</profile>

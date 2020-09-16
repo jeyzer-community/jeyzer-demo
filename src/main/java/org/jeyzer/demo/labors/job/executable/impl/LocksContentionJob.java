@@ -1,0 +1,60 @@
+package org.jeyzer.demo.labors.job.executable.impl;
+
+/*-
+ * ---------------------------LICENSE_START---------------------------
+ * Jeyzer Demo
+ * --
+ * Copyright (C) 2020 Jeyzer SAS
+ * --
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ * ----------------------------LICENSE_END----------------------------
+ */
+
+
+import java.util.Random;
+
+import org.jeyzer.annotations.Executor;
+import org.jeyzer.annotations.Function;
+import org.jeyzer.annotations.Operation;
+import org.jeyzer.demo.labors.job.executable.ExecutableJob;
+import org.jeyzer.demo.labors.job.executable.ExecutableJobDefinition;
+
+public class LocksContentionJob extends ExecutableJob {
+
+	// 3 shared locks
+	private final Object[] locks = {new Object(),new Object(),new Object()};
+	private Random random = new Random();
+	
+	public LocksContentionJob(ExecutableJobDefinition def) {
+		super(def);
+	}
+
+	@Override
+	@Executor(name="Job executor")
+	public void executeJob() {
+		try {
+			while(true) {
+				doRandomSynchronizedWork();
+				if (Thread.interrupted())
+					return; // in case we received the interruption outside of oneTicHold
+			}
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+	}
+	
+	@Function
+	private void doRandomSynchronizedWork() throws InterruptedException {
+		int index = random.nextInt(3);
+		synchronized(locks[index]) {
+			workAlone();
+		}
+	}
+
+	@Operation
+	private void workAlone() throws InterruptedException {
+		oneTicHold();
+	}	
+}

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Customized advanced">
+
+		<!-- ************************************************************************ -->
+		<!--                              ADVANCED RULES                              -->
+		<!-- ************************************************************************ -->
+
+		<!--  If System CPU usage is greater than [value] % for [count or time] times, generate event. -->
+		<rule name="System CPU overload" ref="DEM-ADV-001">
+			<thresholds>
+				<threshold type="global value"
+						   count="1"
+						   value="90" 
+				           level="CRITICAL"
+				           sub_level="7"
+				           message="System CPU very high. Check system usage and possibly stop the root cause application."/>
+				<threshold type="global value"
+						   count="1"
+						   value="60"
+				           level="WARNING"
+				           sub_level="7"
+				           message="System CPU high. Check system usage."/>
+			</thresholds>
+		</rule>
+	
+		<!--  If process consuming more than [value] CPU %, generate event. -->
+		<rule name="CPU consuming process" ref="DEM-ADV-002">
+			<thresholds>
+				<threshold type="session value" 
+						   count="1"
+				           value="30" 
+				           level="WARNING"
+				           sub_level="6" 
+				           message="Process consuming high CPU. If too frequent, please contact support."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If task consuming more than [second_threshold] CPU % for [threshold] times, generate event. -->
+		<rule name="CPU consuming task" ref="DEM-ADV-003">
+			<thresholds>
+				<threshold type="stack value" 
+						   count="1"
+				           value="20" 
+				           level="WARNING"
+				           sub_level="8" 
+				           message="CPU consuming stack. If too frequent, please contact support."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If system consuming more than [value] system memory % for [count] or [time], generate event. -->
+		<rule name="Memory consuming system" ref="DEM-ADV-004">
+			<thresholds>
+				<threshold type="global value"
+						   time="10m"
+						   value="50"
+				           level="WARNING"
+				           sub_level="7" 
+				           message="System consuming high amount of memory (>50%) on very long period. If too frequent, please check all running process states on this server."/>
+			</thresholds>
+		</rule>
+
+		<!--  If process consuming more than [value] heap memory % for [count or time], generate event. -->
+		<rule name="Memory consuming process" ref="DEM-ADV-005">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="10" 
+				           level="WARNING"
+				           sub_level="6"
+				           message="Process consuming high amount of memory. If too frequent, please contact support."/>
+			</thresholds>
+		</rule>
+
+		<!--  If task consuming more than [value] heap applicative memory % for [count] times, generate event. -->
+		<rule name="Memory consuming task" ref="DEM-ADV-006">
+			<thresholds>
+				<threshold type="action value"
+						   count="1"
+						   value="10" 
+				           level="WARNING"
+				           sub_level="9"
+				           message="Memory consuming action. If too frequent, please contact support."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If Garbage Collection takes more than [value] ms for [count or time] times, generate event. -->
+		<rule name="Excessive GC time" ref="DEM-ADV-007">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="500" 
+				           level="CRITICAL"
+				           sub_level="6"
+				           message="GC time high. Check memory figures. If too high, restart may be foreseen."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If Old GC execution count is greater than [value] for [count or time] times, generate event. -->
+		<rule name="Excessive old GC execution" ref="DEM-ADV-008">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="3" 
+				           level="WARNING"
+				           sub_level="6"
+				           message="Old GC execution is too frequent. Check memory figures. If too high, restart may be foreseen."/>
+			</thresholds>
+		</rule>
+
+		<!--  If used memory is increasing and upper than [used_memory] %, released memory is lower than [released_memory] % and GC time is higher than [gc_time] ms for [count or time] times, generate event. -->
+		<rule name="GC failing to release memory" ref="DEM-ADV-009">
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   used_memory="5" 
+						   released_memory="10"
+						   gc_time="100"
+				           level="CRITICAL"
+				           sub_level="10"
+				           message="GC probably failing to release memory. Check memory figures. If too high, restart may be foreseen."/>
+			</thresholds>
+		</rule>
+
+		<!--  If process up time is greater than [value] sec, generate event. -->
+		<rule name="Process up time" ref="DEM-ADV-010">
+			<thresholds>
+				<threshold type="session value"
+						   value="60"
+				           level="WARNING"
+				           sub_level="7"
+				           message="Process has been running for too long. It is recommended to restart it"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process restart is detected, generate event. -->
+		<rule name="Process restart" ref="DEM-ADV-011">
+			<thresholds>
+				<threshold type="session signal"
+			               level="INFO"
+			               sub_level="10"
+				           message="Process restart occurred."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process down time is too high, generate event. -->
+		<rule name="Process down time" ref="DEM-ADV-012">
+			<thresholds>
+				<threshold type="session custom"
+			               level="WARNING"
+			               sub_level="10"
+			               down_time="10s"
+			               message="Process down time too high. Please investigate the reasons."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If thread dump capture time is greater than [value] ms for [count or time in ms] times, generate event. -->
+		<rule name="Recording snapshot capture time" ref="DEM-ADV-013">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="230" 
+				           level="WARNING"
+				           sub_level="6"
+				           message="Recording snapshot capture time high. Check process state."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If thread dump capture time is greater than [value] ms for [count] thread dumps or [time] ms, generate event. -->
+		<rule name="Recording snapshot capture time" ref="DEM-ADV-014">
+			<thresholds>
+				<threshold type="session value"
+						   count="5"
+						   value="1000" 
+				           level="WARNING"
+				           message="Recording snapshot capture time high. Check process state."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If free disk space is lower than [value] % for [count] or [time], generate event. -->
+		<rule name="Disk space free percent" param_display="App partition" param="work" ref="DEM-ADV-015">
+			<thresholds>
+				<threshold type="global value"
+						   time="30s"
+						   value="5"
+				           level="CRITICAL"
+				           message="Free disk space very low. Check and free some disk space : log files, temp directories.."/>
+				<threshold type="global value"
+						   time="60s"
+						   value="99"
+				           level="WARNING" 
+				           message="Free disk space very low. Check the disk space : log files, temp directories.."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If used disk space is higher than [value] % for [count] or [time], generate event. -->
+		<rule name="Disk space used percent" param_display="App partition" param="work" ref="DEM-ADV-016">
+			<thresholds>
+				<threshold type="session value"
+						   time="30s"
+						   value="95"
+				           level="CRITICAL"
+				           message="Used disk space very high. Check and free some disk space : log files, temp directories.."/>
+				<threshold type="global value"
+						   time="60s"
+						   value="1"
+				           level="WARNING" 
+				           message="Used disk space very high. Check the disk space : log files, temp directories.."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If free disk space is lower than [value] Gb for [count] or [time], generate event. -->
+		<rule name="Disk space free" param_display="App partition" param="work" ref="DEM-ADV-017">
+			<thresholds>
+				<threshold type="global value"
+						   time="60s"
+						   value="3000"
+				           level="WARNING"
+				           message="Free disk space low. Check the disk space : log files, temp directories.."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If used disk space is higher than [value] Gb for [count] or [time], generate event. -->
+		<rule name="Disk space used" param_display="App partition" param="work" ref="DEM-ADV-018">
+			<thresholds>
+				<threshold type="global value"
+						   time="60s"
+						   value="100"
+				           level="WARNING"
+				           message="Used disk space high. Check the disk space : log files, temp directories.."/>
+			</thresholds>
+		</rule>
+
+		<!--  If total disk space is lower than [value] Gb, generate event. -->
+		<rule name="Disk space total" param_display="App partition" param="work" ref="DEM-ADV-019">
+			<thresholds>
+				<threshold type="system value"
+						   count="1"
+						   value="2500"
+				           level="INFO"
+				           message="Total disk space lower than recommend one to run the application. Please refer to your application Admin Guide."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If recording writing speed is lower than [value] Kb/sec for [count] or [time], generate event. Applicable only in Jeyzer agent mode -->
+		<rule name="Disk write speed" ref="DEM-ADV-020">
+			<thresholds>
+				<threshold type="global value"
+						   count="10"
+						   value="10000" 
+				           level="WARNING"
+				           message="Disk writing low. Check the disk controller state."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If recording writing time is higher than [value] ms for [count] or [time], generate event. Applicable only in Jeyzer agent mode -->
+		<rule name="Disk write time" ref="DEM-ADV-021">
+			<thresholds>
+				<threshold type="global value"
+						   count="10"
+						   value="3" 
+				           level="WARNING"
+				           message="Recording writing takes time. Check the disk controller state and recording content at that period of time."/>
+			</thresholds>
+		</rule>
+		
+	</rules>
+
+</monitor>
