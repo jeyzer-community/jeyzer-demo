@@ -3,7 +3,7 @@
 Content
 ------------------
 The Jeyzer demo project contains a set of java applications used to demonstrate the Jeyzer ecosystem capabilities.
-Jeyzer demos are detailed in the [Jeyzer Demo documentation](https://github.com/jeyzer-community/jeyzer-demo/src/main/doc/README.txt).
+Jeyzer demos are detailed in the [Jeyzer Demo documentation](https://github.com/jeyzer-community/jeyzer-demo/blob/master/src/main/doc/README.txt).
 
 The Jeyzer demo project is also a good example of the Jeyzer build features, in order later to apply it within your build.
 It highlights :
@@ -26,7 +26,7 @@ It highlights :
      At last, This context info will permit to retrieve - at Jeyzer analysis time - the proper mapping file, either from the mapper repository (Tomcat, Nexus..) or from the default mapper file.
 
 The Jeyzer demo relies on a few demo libraries, also for demonstration purposes : shared profile handling, monitoring rules on dependencies..
-Please read the [lib/README.txt](https://github.com/jeyzer-community/jeyzer-demo/lib/README.txt) for more details.
+Please read the [lib/README.txt](https://github.com/jeyzer-community/jeyzer-demo/blob/master/lib/README.txt) for more details.
 
 Note that the Jeyzer Demo is deployed by default by the Jeyzer Ecosystem Installer.
 
