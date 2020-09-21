@@ -16,15 +16,4 @@
 			<outputDirectory>deobfuscation/${artifactId}</outputDirectory>
 		</file>
 	</files>
-	<fileSets>
-		<fileSet>
-			<!-- As of now, demo-labors shares the same mapping than demo-features -->
-			<directory>src/main/samples/demo-features</directory>
-			<filtered>false</filtered>
-			<includes>
-				<include>**/*.txt</include>
-			</includes>
-			<outputDirectory>deobfuscation/${artifactId}</outputDirectory>
-		</fileSet>
-	</fileSets>
 </assembly>
