@@ -11,10 +11,11 @@
 	<description>The Jeyzer Demo. More info at https://jeyzer.org/demos/</description>
 	
 	<properties>
-		<jeyzer-demo-shared.version>${project.version}</jeyzer-demo-shared.version>
-    	<jeyzer-annotations.version>${project.version}</jeyzer-annotations.version>
-    	<jeyzer-publish.version>${project.version}</jeyzer-publish.version>
-    	<jeyzer-annotation-processors.version>${project.version}</jeyzer-annotation-processors.version>
+		<jeyzer-demo-shared.version>2.0</jeyzer-demo-shared.version>
+    	<jeyzer-annotations.version>2.0</jeyzer-annotations.version>
+    	<jeyzer-publish.version>2.0</jeyzer-publish.version>
+    	<jeyzer-annotation-processors.version>2.0</jeyzer-annotation-processors.version>
+    	<jeyzer-maven-plugin.version>2.0</jeyzer-maven-plugin.version>
     	
     	<!-- Logback - Old versions -->
 		<jeyzer.demo-ch.qos.logback.logback-classic.version>1.0.13</jeyzer.demo-ch.qos.logback.logback-classic.version>
@@ -347,7 +348,7 @@
 			<plugin>
 				<groupId>org.jeyzer.build</groupId>
 				<artifactId>jeyzer-maven-plugin</artifactId>
-				<version>${project.version}</version>
+				<version>${jeyzer-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>demo-features-mx</id>
@@ -388,8 +389,8 @@
 							<descriptors>
 								<descriptor>src/assembly/bin.xml</descriptor>
 								<descriptor>src/assembly/profiles.xml</descriptor>
-								<descriptor>src/assembly/obfuscation-mapping.xml</descriptor>
 								<descriptor>src/assembly/analyzer-bin-preset.xml</descriptor>
+								<descriptor>src/assembly/obfuscation-mapping.xml</descriptor>
 							</descriptors>
 							<attach>false</attach>
 							<outputDirectory>${project.build.directory}/distribution</outputDirectory>
