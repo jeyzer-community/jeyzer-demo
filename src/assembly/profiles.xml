@@ -22,9 +22,9 @@
 			<fileMode>774</fileMode>
 			<outputDirectory>profiles</outputDirectory>
 		</fileSet>
-		<!-- Shared profiles -->
+		<!-- Shared profiles. Could do better to prevent this dependency -->
 		<fileSet>
-			<directory>lib/shared/src/main/config/profiles</directory>
+			<directory>../jeyzer-demo-shared/src/main/config/profiles</directory>
 			<filtered>false</filtered>
 			<includes>
 				<include>**/*.xml</include>
@@ -54,9 +54,9 @@
 			<outputDirectory>profiles/master/demo-labors/analysis</outputDirectory>
 			<destName>patterns.xml</destName>
 		</file>
-		<!-- Shared profiles -->
+		<!-- Shared profiles. Could do better to prevent this dependency -->
 		<file>
-			<source>${basedir}/lib/shared/target/generated-sources/jeyzer/jeyzer-demo-shared_patterns.xml</source>
+			<source>../jeyzer-demo-shared/target/generated-sources/jeyzer/jeyzer-demo-shared_patterns.xml</source>
 			<outputDirectory>profiles/shared/jeyzer-demo-shared</outputDirectory>
 			<destName>jeyzer-demo-shared_patterns.xml</destName>
 		</file>

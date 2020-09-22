@@ -144,6 +144,6 @@
   us track down problems.
 
     Email:  contact@jeyzer.org 
-    Web:    http://www.jeyzer.org/
+    Web:    https://www.jeyzer.org/
 
   

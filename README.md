@@ -26,9 +26,9 @@ It highlights :
      
      The generated build number, the project name and version are injected as attributes in the jeyzer-demo.jar Manifest file. This context info will be accessed and stored in the application property card - at runtime - either automatically through the Jeyzer agent or programatically through the Jeyzer Publish API. This context info will finally permit to retrieve - at Jeyzer analysis time - the proper mapping file, either from the mapper repository (Tomcat, Nexus..) or from the default mapper file.
 
-The Jeyzer demo relies on a few demo libraries, also for demonstration purposes : shared profile handling, monitoring rules on dependencies..
+The Jeyzer demo relies on a few demo libraries which permit to demonstrate the shared profile handling and the monitoring rules on dependencies.
 
-Please read the [lib/README.txt](lib/README.txt) for more details.
+Please read the [lib/README.txt](lib/README.txt) for more details and check the [demo shared library project](https://github.com/jeyzer-community/jeyzer-demo-shared).
 
 Note that the Jeyzer Demo is deployed by default by the Jeyzer Ecosystem Installer.
 
@@ -43,10 +43,6 @@ Edit the project.properties file to adapt it to your needs and paths.
 **Maven**
 
 Under the current directory, execute :
-
-> mvn clean package
-
-You can also build the shared demo library under the lib/shared directory  and deploy it in your local Maven repository for tests : 
 
 > mvn clean package
 
