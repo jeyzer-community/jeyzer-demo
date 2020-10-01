@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Demo-features" version="${project.version}">
+<profile name="Demo-features" version="LATEST">
 
 
 		<!-- 
