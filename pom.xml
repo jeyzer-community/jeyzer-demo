@@ -344,7 +344,8 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			<!-- Update the project Jeyzer profiles -->
+			<!-- Update the master Jeyzer patterns (testing purpose only) -->
+			<!-- As an alternative, it could directly override the patterns.xml files in the demo repository -->
 			<plugin>
 				<groupId>org.jeyzer.build</groupId>
 				<artifactId>jeyzer-maven-plugin</artifactId>
@@ -354,7 +355,7 @@
 						<id>demo-features-mx</id>
 						<phase>package</phase>
 						<configuration>
-							<sourcePatterns>${basedir}/src/main/config/profiles/master/demo-features-mx/analysis/patterns.xml</sourcePatterns>
+							<sourcePatterns>${basedir}/src/test/config/profiles/master/demo-features-mx/analysis/patterns.xml</sourcePatterns>
 							<!-- newPatternEntries>${project.build.directory}/generated-sources/jeyzer/new_pattern_entries.xml</newPatternEntries>
 							<targetPatternsDir>${project.build.directory}/generated-sources/jeyzer</targetPatternsDir> -->
 							<targetPatternsName>demo-features-mx_patterns</targetPatternsName>
@@ -367,7 +368,7 @@
 						<id>demo-labors</id>
 						<phase>package</phase>
 						<configuration>
-							<sourcePatterns>${basedir}/src/main/config/profiles/master/demo-labors/analysis/patterns.xml</sourcePatterns>
+							<sourcePatterns>${basedir}/src/test/config/profiles/master/demo-labors/analysis/patterns.xml</sourcePatterns>
 							<!-- <newPatternEntries>${project.build.directory}/generated-sources/jeyzer/new_pattern_entries.xml</newPatternEntries>
 							<targetPatternsDir>${project.build.directory}/generated-sources/jeyzer</targetPatternsDir> -->
 							<targetPatternsName>demo-labors_patterns</targetPatternsName>
@@ -388,7 +389,6 @@
 						<configuration>
 							<descriptors>
 								<descriptor>src/assembly/bin.xml</descriptor>
-								<descriptor>src/assembly/profiles.xml</descriptor>
 								<descriptor>src/assembly/analyzer-bin-preset.xml</descriptor>
 								<descriptor>src/assembly/obfuscation-mapping.xml</descriptor>
 							</descriptors>

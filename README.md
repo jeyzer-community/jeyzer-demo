@@ -11,6 +11,7 @@ It highlights :
  1) **The Jeyzer profile updater usage**
  
      The profile updater permits to amend the Jeyzer demo-features profile with any new pattern entry defined at annotation source code level.
+     It is currently executed for testing purposes (but one could use it to update the original patterns file on the demo repository).
 	 
 	 Jeyzer profile updater is provided as Maven and Gradle plugins. See the respective projects for more details.
      
