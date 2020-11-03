@@ -38,7 +38,7 @@ public class ApplicativeSessionLongEventJob extends ExecutableJob {
 	private JzrEvent raiseApplicativeSessionLongEvent() {
 		JzrStandardEvent event = new JzrStandardEvent(
 				LaborEventCode.JZR_LAB_06,
-				"Remote service GH is not accessible. Please check its availability.");
+				"The payment gateway is not accessible. Please contact the gateway provider for immediate intervention.");
 		this.jmonitor.startGlobalEvent(event);
 		
 		waitSomeTime();
