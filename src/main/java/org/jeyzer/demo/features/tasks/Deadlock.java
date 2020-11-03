@@ -121,10 +121,19 @@ public class Deadlock extends Feature {
 			a.hello();
 			
 			try {
-				a.wait(2000);
+				Thread.sleep(2000L);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
+			
+//			try {
+			    // the synchronized is released on wait. 
+			    //Therefore once notified, the thread may acquire the synchronized AFTER the other competing thread. 
+			    // In such case, the deadlock does not occur. This happens more often when obfuscated (although obfuscated code is similar : no optim whatsoever)
+//				a.wait(2000L);     
+//			} catch (InterruptedException e) {
+//				Thread.currentThread().interrupt();
+//			}
 
 			log("Deadlock", "trying to lock resource : " + b);
 			
