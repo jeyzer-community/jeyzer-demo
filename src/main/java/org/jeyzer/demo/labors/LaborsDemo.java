@@ -27,9 +27,11 @@ import org.jeyzer.annotations.Exclude;
 import org.jeyzer.demo.event.codes.LaborEventCode;
 import org.jeyzer.demo.labors.job.executable.ExecutableJob;
 import org.jeyzer.demo.labors.job.executable.ExecutableJobAdjuster;
+import org.jeyzer.demo.labors.job.executable.ExecutableJobDefinition;
 import org.jeyzer.demo.labors.job.executable.ExecutableJobScheduler;
 import org.jeyzer.demo.labors.job.executable.impl.PlaneMXImpl;
 import org.jeyzer.demo.labors.job.system.SystemJob;
+import org.jeyzer.demo.labors.job.system.SystemJobDefinition;
 import org.jeyzer.publish.JeyzerPublisher;
 import org.jeyzer.publish.JeyzerPublisherInit;
 import org.jeyzer.publish.JzrMonitorHandler;
@@ -53,22 +55,51 @@ public class LaborsDemo {
 	
 	public static final int EVENTS_INFO_LIMIT = 1200;
 	public static final int EVENTS_WARN_LIMIT = 1100;
+
+	public static final String LIST_HELP = "help";
+	public static final String LIST_PARAM = "list";
+	
+	public static final String JOBS_PARAM = "jobs=";
 	
 	public static final String SCOPE_PARAM = "scope=";
 	public static final String SCOPE_VALUE_ALL = "all";
 	public static final String SCOPE_VALUE_TEST = "test"; // take the last 3
-	public static final String SCOPE_DEFAULT_VALUE = "3";
 	
 	private JzrMonitorHandler jmonitor;
 	
-	public void demo(int jobCount) {
+	@Exclude
+	public static void main(String[] args) {
+		LaborsDemo demo = new LaborsDemo();
+
+		 if (!checkParams(args))
+			 return;
+
+		if (parseListParam(args)) {
+			demo.list();
+			return;
+		}
+		
+		List<Integer> jobs = parseJobsParam(args);
+		if (!jobs.isEmpty()) {
+			// let's execute the specified jobs
+			demo.demo(jobs.size(), jobs);
+			return;
+		}
+
+		// execute random, or all, or last created jobs
+		int jobCount = parseScopeParam(args);
+		demo.demo(jobCount, jobs);
+	}
+		
+	public void demo(int jobCount, List<Integer> specificJobs) {
 		boolean testMode = jobCount == Integer.MIN_VALUE; // no dummy jobs and use only last created jobs
 		
 		displayTitle();
+		
 		initPublisher();
 		PlaneMXImpl.instance(); // Init the MX side to prevent from errors if test is not loaded
 		
-		JobGenerator generator = new JobGenerator(jobCount, testMode);
+		JobGenerator generator = new JobGenerator(jobCount, testMode, specificJobs);
 		applySystemJobs(generator);
 		
 		List<ExecutableJob> executablesJobs = generator.getExecutableJobs();
@@ -83,6 +114,23 @@ public class LaborsDemo {
 				testMode
 				);
 		scheduler.start();
+	}
+	
+	public void list() {
+		logger.info("Executable jobs :");
+		logger.info("");
+		ExecutableJobDefinition[] execJobs = ExecutableJobDefinition.values();
+		for (int i=1; i<execJobs.length; i++) {
+			logger.info("\t" + i + " - " + execJobs[i].toString());
+		}
+		
+		logger.info("");
+		logger.info("System jobs :");
+		logger.info("");		
+		SystemJobDefinition[] systemJobs = SystemJobDefinition.values();
+		for (int i=0; i<systemJobs.length; i++) {
+			logger.info("\t" + (i+1) + " - " + systemJobs[i].toString());
+		}
 	}
 
 	private void fireSystemEventsForExecutableJobs(List<ExecutableJob> executablesJobs) {
@@ -176,8 +224,8 @@ public class LaborsDemo {
 		return attributes;
 	}
 	
-	private static int parseParam(String[] args) {
-		String arg = args.length != 0 ? args[0].substring(SCOPE_PARAM.length()) : SCOPE_DEFAULT_VALUE;
+	private static int parseScopeParam(String[] args) {
+		String arg = args[0].substring(SCOPE_PARAM.length());
 		if (SCOPE_VALUE_ALL.equalsIgnoreCase(arg))
 			return Integer.MAX_VALUE;
 		else if (SCOPE_VALUE_TEST.equalsIgnoreCase(arg))
@@ -185,12 +233,81 @@ public class LaborsDemo {
 		else
 			return Integer.parseInt(arg);
 	}
-
-	@Exclude
-	public static void main(String[] args) {
-		int jobCount = parseParam(args);
-		LaborsDemo demo = new LaborsDemo();
-		demo.demo(jobCount);
+	
+	private static boolean parseListParam(String[] args) {
+		return args.length != 0 ? (LIST_PARAM.equals(args[0]) ? true : false) : false;
 	}
 
+	private static boolean checkParams(String[] args) {
+		if (args.length == 0 || args.length >= 2 || LIST_HELP.equals(args[0].toLowerCase())) {
+			displayMenu();
+			return false;
+		}
+		
+		String param = args[0].toLowerCase();
+		if (!param.startsWith(JOBS_PARAM) && !param.startsWith(SCOPE_PARAM) && !param.startsWith(LIST_PARAM)) {
+			displayMenu();
+			return false;
+		}
+		
+		return true;
+	}
+
+	private static void displayMenu() {
+		System.out.println("Demo labors command help. Use one of those options :");
+		System.out.println("\t scope=<value> : number of random jobs to execute");
+		System.out.println("\t\t\t Use the \"all\" value to execute all the jobs (takes 1h+)");
+		System.out.println("\t\t\t Use the \"test\" value to execute the last 2 created executable and system jobs");
+		System.out.println("\t jobs : comma separated list of job names");
+		System.out.println("\t list : list all the executable and system job names");
+		System.out.println("\t help : displays the current help");
+	}
+
+	private static List<Integer> parseJobsParam(String[] args) {
+		List<Integer> jobs = new ArrayList<>();
+		int execJobCounter = 0;
+		
+		if (!args[0].startsWith(JOBS_PARAM))
+			return jobs; // empty
+				
+		String[] jobSet = args[0].substring(JOBS_PARAM.length()).split(",");
+		for (int i=0; i<jobSet.length ;i++) {
+			String jobName = jobSet[i].toUpperCase();
+			
+			try {
+				ExecutableJobDefinition jobDef = ExecutableJobDefinition.valueOf(jobName);
+				if (jobDef.ordinal()>0) { // exclude dummy jobs
+					jobs.add(jobDef.ordinal());	
+					execJobCounter++;
+				}
+				continue;
+			}
+			catch (IllegalArgumentException e) { 
+				// do nothing, try the system job now
+			}
+			
+			try {
+				SystemJobDefinition jobDef = SystemJobDefinition.valueOf(jobName);
+				jobs.add(jobDef.ordinal() + 1000);
+				continue;
+			}
+			catch (IllegalArgumentException e) {
+			}
+			
+			logger.error("Unknown job name : " + jobName + ". Please check the job list.");
+			System.exit(-1);
+		}
+		
+		if (execJobCounter == 0) {
+			logger.error("Specified jobs must have at least one executable job. Please check the job list.");
+			System.exit(-1);
+		}
+		
+		if (jobs.isEmpty()) {
+			logger.error("No jobs provided. Please check the job list.");
+			System.exit(-1);
+		}
+		
+		return jobs;
+	}
 }

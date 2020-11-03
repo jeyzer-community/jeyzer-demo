@@ -42,15 +42,15 @@ public final class JobGenerator {
 	private final List<SystemJob> systemJobs = new ArrayList<>();
 	private final List<ExecutableJob> executableJobs = new ArrayList<>();
 	
-	public JobGenerator(int jobCount, boolean testMode) {
+	public JobGenerator(int jobCount, boolean testMode, List<Integer> forceSpecificJobs) {
 		this.testMode = testMode;
 		this.jobCount = (jobCount == Integer.MAX_VALUE || jobCount > ALL_JOBS) ? ALL_JOBS : (jobCount == Integer.MIN_VALUE)? TEST_JOBS : jobCount;
-		while (!generateJobs()); // must have at least 1 executable job
+		while (!generateJobs(forceSpecificJobs)); // must have at least 1 executable job
 		
 		declareJobs();
 		initJobs();
 	}
-	
+
 	private void declareJobs() {
 		List<String> refs = new ArrayList<>();
 		
@@ -80,13 +80,14 @@ public final class JobGenerator {
 		return executableJobs;
 	}
 	
-	private boolean generateJobs() {
+	private boolean generateJobs(List<Integer> forceSpecificJobs) {
 		boolean executablePresent = false;
 		
 		systemJobs.clear();
 		executableJobs.clear();
 		
-		List<Integer> idList = testMode ? buildTestIdList() : buildIdList();
+		// The last 2 created executable and system jobs OR the random/all jobs OR the given jobs
+		List<Integer> idList = forceSpecificJobs.isEmpty() ? (testMode ? buildTestIdList() : buildIdList()) : forceSpecificJobs;
         for (int i=0; i<jobCount; i++) {
         	int id = idList.get(i);
         	if (id>=1000)
