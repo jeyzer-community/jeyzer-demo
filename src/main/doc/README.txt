@@ -8,10 +8,13 @@
   It contains 4 demo applications :
   
   	- Labors (in reference to the Labours of Heracles)
-  	  The Labors demo executes randomly 3 incidents cases like deadlock, thread leaking, contentions, high CPU consumption at task/process/system levels, Xmx checks...
+  	  The Labors demo executes incidents cases like deadlock, thread leaking, contentions, high CPU consumption at task/process/system levels, Xmx checks...
   	  Each incident signature will have to be detected by the Jeyzer analyzer, thanks to the related monitoring rules defined in the the labors-demo profile.
-  	  When started with the scope=all (instead of 3), the Labors demo will execute all the possible incidents/check cases (around 80).
-  	  The scope=all mode is also used as part of the Jeyzer end to end testing : it takes about 1 hour to complete. All monitoring rules must match there.
+  	  When started with the "scope=<number of jobs>", the Labors demo will pick up randomly this number of jobs and execute it. 3 is a good value.
+  	  When started with the "scope=all", the Labors demo will execute all the possible incidents/check cases (around 80).
+  	  The "scope=all" mode is also used as part of the Jeyzer end to end testing : it takes about 1 hour to complete. All monitoring rules must match there.
+  	  When started with the "jobs=<list of comma separated job names>", the Labors demo will execute all the specified jobs in its declaration order.
+  	  Use the "list" parameter to display the list of available jobs.
   	  Note that the $JEYZER_DEMO_HOME/samples/demo-labors directory contains the All labors JZR report (and related recording) which guarantees the testing of the current Jeyzer release.
   	  Monitoring rules get activated through the sticker mechanism : for each executed case, 
   	  the labors demo will activate the related monitoring rule sticker property (exposed as a process card property).
