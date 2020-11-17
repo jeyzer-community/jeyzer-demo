@@ -204,6 +204,7 @@ public enum FeatureEventCode implements JzrEventCode {
 	private String abbreviation;
 	private String name;
 	private String description; // optional
+	private String ticket; // optional
 	private JzrEventLevel level;
 	private JzrEventSubLevel subLevel;
 
@@ -213,6 +214,7 @@ public enum FeatureEventCode implements JzrEventCode {
 		this.level = level;
 		this.subLevel = subLevel;
 		this.abbreviation = this.name();
+		this.ticket = null;
 		this.type = null;
 	}
 
@@ -234,6 +236,11 @@ public enum FeatureEventCode implements JzrEventCode {
 	@Override
 	public String getDescription() {
 		return description;
+	}
+	
+	@Override
+	public String getTicket() {
+		return ticket;
 	}
 	
 	@Override

@@ -104,6 +104,7 @@ public enum DemoEventCode implements JzrEventCode {
 	private String abbreviation;
 	private String name;
 	private String description; // optional
+	private String ticket; // optional
 	private JzrEventLevel level;
 	private JzrEventSubLevel subLevel;
 
@@ -114,6 +115,7 @@ public enum DemoEventCode implements JzrEventCode {
 		this.subLevel = subLevel;
 		this.abbreviation = this.name();
 		this.type = null;
+		this.ticket = null;
 	}
 
 	@Override
@@ -134,6 +136,11 @@ public enum DemoEventCode implements JzrEventCode {
 	@Override
 	public String getDescription() {
 		return description;
+	}
+	
+	@Override
+	public String getTicket() {
+		return ticket;
 	}
 	
 	@Override

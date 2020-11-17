@@ -76,6 +76,17 @@ public enum MyApplicationEventCode implements JzrEventCode{
 			JzrEventLevel.CRITICAL,
 			JzrEventSubLevel.HIGH
 			),
+
+	/**
+	 * Activity critical error event code.
+	 */
+	MCY_MYA_13(
+			"Activity critical error under investigation",
+			"Daily update activity failed unexpectedly - under investigation",
+			JzrEventLevel.CRITICAL,
+			JzrEventSubLevel.HIGH,
+			"MY-JIRA-3842"
+			),
 	
 	/**
 	 * Connectivity lost event code.
@@ -103,6 +114,7 @@ public enum MyApplicationEventCode implements JzrEventCode{
 	private String abbreviation;
 	private String name;
 	private String description; // optional
+	private String ticket; // optional
 	private JzrEventLevel level;
 	private JzrEventSubLevel subLevel;
 
@@ -113,6 +125,17 @@ public enum MyApplicationEventCode implements JzrEventCode{
 		this.subLevel = subLevel;
 		this.abbreviation = this.name();
 		this.type = null;
+		this.ticket = null;
+	}
+	
+	private MyApplicationEventCode(String name, String description, JzrEventLevel level, JzrEventSubLevel subLevel, String ticket) {
+		this.name = name;
+		this.description = description;
+		this.level = level;
+		this.subLevel = subLevel;
+		this.abbreviation = this.name();
+		this.type = null;
+		this.ticket = ticket;
 	}
 
 	@Override
@@ -133,6 +156,11 @@ public enum MyApplicationEventCode implements JzrEventCode{
 	@Override
 	public String getDescription() {
 		return description;
+	}
+	
+	@Override
+	public String getTicket() {
+		return ticket;
 	}
 	
 	@Override

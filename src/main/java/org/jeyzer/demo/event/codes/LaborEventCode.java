@@ -83,7 +83,7 @@ public enum LaborEventCode implements JzrEventCode{
 	JZR_LAB_06(
 			"Applicative session long event",
 			"description",
-			JzrEventLevel.WARNING,
+			JzrEventLevel.INFO,
 			JzrEventSubLevel.MEDIUM
 			),
 	
@@ -103,6 +103,7 @@ public enum LaborEventCode implements JzrEventCode{
 	private String abbreviation;
 	private String name;
 	private String description; // optional
+	private String ticket; // optional
 	private JzrEventLevel level;
 	private JzrEventSubLevel subLevel;
 
@@ -112,6 +113,7 @@ public enum LaborEventCode implements JzrEventCode{
 		this.level = level;
 		this.subLevel = subLevel;
 		this.abbreviation = this.name();
+		this.ticket = null;
 		this.type = null;
 	}
 
@@ -133,6 +135,11 @@ public enum LaborEventCode implements JzrEventCode{
 	@Override
 	public String getDescription() {
 		return description;
+	}
+	
+	@Override
+	public String getTicket() {
+		return ticket;
 	}
 	
 	@Override
