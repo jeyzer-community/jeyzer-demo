@@ -29,6 +29,16 @@
 	public long getAge();
 }
 
+-keep public enum org.jeyzer.demo.labors.job.executable.ExecutableJobDefinition {
+    **[] $VALUES;
+	public *;
+}
+
+-keep public enum org.jeyzer.demo.labors.job.system.SystemJobDefinition {
+    **[] $VALUES;
+	public *;
+}
+
 -keep public class org.jeyzer.demo.features.mx.generic.feature.DemoFeaturesMXBean {
 	public java.lang.String getDemoName();
 	public java.lang.String getVersion();
