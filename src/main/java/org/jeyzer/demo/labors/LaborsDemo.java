@@ -239,7 +239,7 @@ public class LaborsDemo {
 	}
 
 	private static boolean checkParams(String[] args) {
-		if (args.length == 0 || args.length >= 2 || LIST_HELP.equals(args[0].toLowerCase())) {
+		if (args.length == 0 || args.length >= 2 || LIST_HELP.equalsIgnoreCase(args[0])) {
 			displayMenu();
 			return false;
 		}
