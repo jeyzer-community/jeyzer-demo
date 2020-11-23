@@ -17,15 +17,15 @@ import org.jeyzer.demo.event.codes.FeatureEventCode;
 import org.jeyzer.demo.features.Feature;
 import org.jeyzer.publish.event.JzrStandardEvent;
 
-public class CroquetPlayer extends Feature {
+public class BoeingPlane extends Feature {
 
 	private static final String FEATURE_NAME = "Discovery";
 	
 	@Override
 	public void show() throws InterruptedException {
 		publishThreadApplicativeEvent(
-				new JzrStandardEvent(FeatureEventCode.JZR_FEA_14));
-		scoredTheLastHoop();
+				new JzrStandardEvent(FeatureEventCode.JZR_FEA_15));
+		maintenance();
 	}
 	
 	@Override
@@ -33,9 +33,10 @@ public class CroquetPlayer extends Feature {
 		return FEATURE_NAME;
 	}
 
-	private void scoredTheLastHoop() throws InterruptedException {
-		log("CroquetPlayer", "starts");
+	private void maintenance() throws InterruptedException {
+		log("BoeingPlane", "starts");
 		hold(); 
-		log("CroquetPlayer", "ends");	 
+		log("BoeingPlane", "ends");	 
 	}
+
 }

@@ -26,11 +26,11 @@
 	  The Features demo is delivered with 2 profiles : 
 	  - demo-features: standard one containing standard features
 	  - demo-features-mx: advanced one offering MX features as well as a discovery mode : 
-	    part of the demo - of course not referred into the demo-features-mx profile - relates to ball games.
-	    Enter related keywords to highlight those in the Discovery sheet. 
+	    part of the demo - of course not referred into the demo-features-mx profile - relates to commercial aircraft companies.
+	    Enter related company names to highlight those in the Discovery sheet. 
 	  The Features demo is linked with the Jeyzer publish library to expose process and user action info through the Jeyzer MX interface.
 	  The Features demo is also linked with the demo shared library to demonstrate the dynamic shared profile loading within the demo project.
-	  The Features demo is also exposing data through the DemoFeatures and VolleyBall MX beans.
+	  The Features demo is also exposing data through the DemoFeatures and MilitaryFlightMission MX beans.
 	  The $JEYZER_DEMO_HOME/samples/demo-features directory contains the JZR demo-features-mx report and it related recording.
 	  
 	- Philosophers

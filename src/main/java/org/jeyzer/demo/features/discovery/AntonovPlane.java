@@ -17,25 +17,25 @@ import org.jeyzer.demo.event.codes.FeatureEventCode;
 import org.jeyzer.demo.features.Feature;
 import org.jeyzer.publish.event.JzrStandardEvent;
 
-public class BaseballPlayer extends Feature {
-	
+public class AntonovPlane extends Feature {
+
 	private static final String FEATURE_NAME = "Discovery";
 	
 	@Override
 	public void show() throws InterruptedException {
 		publishThreadApplicativeEvent(
-				new JzrStandardEvent(FeatureEventCode.JZR_FEA_13));
-		hitsTheBall();
+				new JzrStandardEvent(FeatureEventCode.JZR_FEA_14));
+		land();
 	}
 	
 	@Override
 	public String getName() {
 		return FEATURE_NAME;
 	}
-	
-	private void hitsTheBall() throws InterruptedException {
-		log("BaseballPlayer", "starts");
+
+	private void land() throws InterruptedException {
+		log("AntonovPlane", "starts");
 		hold(); 
-		log("BaseballPlayer", "ends");	
+		log("AntonovPlane", "ends");	 
 	}
 }

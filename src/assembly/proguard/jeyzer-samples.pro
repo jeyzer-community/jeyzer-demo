@@ -51,14 +51,14 @@
 	public java.lang.String getPlayedFeatures();
 }
 
--keep public class org.jeyzer.demo.features.mx.generic.volley.VolleyBallMXBean {
-	public java.lang.String getFormationType();
-	public java.lang.String getGameVariant();
+-keep public class org.jeyzer.demo.features.mx.generic.fighter.MilitaryFlightMissionMXBean {
+	public java.lang.String getFormation();
+	public java.lang.String getModel();
 	public java.lang.String getAction();
 }
 
--keep public class org.jeyzer.demo.features.mx.generic.volley.VolleyBallMXBeanImpl {
-	public java.lang.String getFormationType();
-	public java.lang.String getGameVariant();
+-keep public class org.jeyzer.demo.features.mx.generic.fighter.MilitaryFlightMissionMXBeanImpl {
+	public java.lang.String getFormation();
+	public java.lang.String getModel();
 	public java.lang.String getAction();
 }

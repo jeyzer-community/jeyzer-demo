@@ -1,4 +1,4 @@
-package org.jeyzer.demo.features.mx.generic.volley;
+package org.jeyzer.demo.features.mx.generic.fighter;
 
 /*-
  * ---------------------------LICENSE_START---------------------------
@@ -15,13 +15,13 @@ package org.jeyzer.demo.features.mx.generic.volley;
 
 
 
-public interface VolleyBallMXBean {
+public interface MilitaryFlightMissionMXBean {
 	
-	public static final String VOLLEY_MXBEAN_NAME = "org.jeyzer.demo:type=VolleyBall";
+	public static final String FLIGHT_MISSION_MXBEAN_NAME = "org.jeyzer.demo:type=MilitaryFlightMission";
 	
-	public String getFormationType();
+	public String getFormation();
 	
-	public String getGameVariant();
+	public String getModel();
 	
 	public String getAction();
 	

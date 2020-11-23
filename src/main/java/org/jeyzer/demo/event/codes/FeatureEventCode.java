@@ -118,80 +118,80 @@ public enum FeatureEventCode implements JzrEventCode {
 			),
 	
 	/**
-	 * Ping pong task started.
+	 * Wing light tester task started.
 	 */
 	JZR_FEA_10(
-			"Ping pong task started",
+			"Wing light tester task started",
 			"description",
 			JzrEventLevel.INFO,
 			JzrEventSubLevel.LOW
 			),
 	
 	/**
-	 * Volley ball player task started.
+	 * Fighter aircraft started.
 	 */
 	JZR_FEA_11(
-			"Volley ball player task started",
+			"Fighter aircraft flight started",
 			"description",
 			JzrEventLevel.INFO,
 			JzrEventSubLevel.LOW
 			),
 	
 	/**
-	 * Tennis player task started.
+	 * Aircruise started.
 	 */
 	JZR_FEA_12(
-			"Tennis player task started",
+			"Aircruise flight started",
 			"description",
 			JzrEventLevel.INFO,
 			JzrEventSubLevel.LOW
 			),
 	
 	/**
-	 * Base ball player task started.
+	 * Airbus plane task started.
 	 */
 	JZR_FEA_13(
-			"Base ball player task started",
+			"Airbus plane flight started",
 			"description",
 			JzrEventLevel.INFO,
 			JzrEventSubLevel.LOW
 			),
 	
 	/**
-	 * Croquet player task started.
+	 * Antonov plane task started.
 	 */
 	JZR_FEA_14(
-			"Croquet player task started",
+			"Antonov plane flight started",
 			"description",
 			JzrEventLevel.INFO,
 			JzrEventSubLevel.LOW
 			),
 	
 	/**
-	 * Golf player task started.
+	 * Boeing plane task started.
 	 */
 	JZR_FEA_15(
-			"Golf player task started",
+			"Boeing plane flight started",
 			"description",
 			JzrEventLevel.INFO,
 			JzrEventSubLevel.LOW
 			),
 	
 	/**
-	 * Rugby player task started.
+	 * Mc Donnel-Douglas plane task started.
 	 */
 	JZR_FEA_16(
-			"Rugby player task started",
+			"Mc Donnel-Douglas flight started",
 			"description",
 			JzrEventLevel.INFO,
 			JzrEventSubLevel.LOW
 			),
 	
 	/**
-	 * Soccer player task started.
+	 * Tupolev plane task started.
 	 */
 	JZR_FEA_17(
-			"Soccer player task started",
+			"Tupolev flight started",
 			"description",
 			JzrEventLevel.INFO,
 			JzrEventSubLevel.LOW

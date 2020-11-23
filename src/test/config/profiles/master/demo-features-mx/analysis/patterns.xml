@@ -30,20 +30,20 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<!-- Features demo -->
-				<function pattern="features.tasks.PingPongPlayer.doPing"  name="Plays ping (blue)"/>
-				<function pattern="features.tasks.PingPongPlayer.doPong"  name="Plays pong (green)"/>
+			    <function name="Left wing light (yellow)" pattern="features.tasks.WingLightTester.lightYellow"/>
+      			<function name="Right wing light (green)" pattern="features.tasks.WingLightTester.lightGreen"/>
 				
-				<function pattern="features.mx.jeyzer.LongTennisPlayer.longRunningTask"  name="Long running tennis player"/>
-				<function pattern="features.mx.jeyzer.LongTennisPlayer.runLeft"  name="Run left"/>
-				<function pattern="features.mx.jeyzer.LongTennisPlayer.runRight"  name="Run right"/>
-				<function pattern="features.mx.jeyzer.LongTennisPlayer.runMiddle"  name="Run middle"/>
+				<function name="Long range flight" pattern="features.mx.jeyzer.Airliner.longRangeFlight"/>
+				<function pattern="features.mx.jeyzer.Airliner.assisted"  name="Assisted"/>
+				<function pattern="features.mx.jeyzer.Airliner.manual"  name="Manual"/>
+				<function pattern="features.mx.jeyzer.Airliner.autopilot"  name="Autopilot"/>
 
-				<!--
-				<function pattern="features.mx.generic.volley.VolleyBallPlayer.set"  name="Volley set"/>
-				<function pattern="features.mx.generic.volley.VolleyBallPlayer.serve"  name="Volley serve"/>
-				<function pattern="features.mx.generic.volley.VolleyBallPlayer.pass"  name="Volley pass"/>
-				<function pattern="features.mx.generic.volley.VolleyBallPlayer.attack"  name="Volley attack"/>
-				-->
+      			<!--
+				<function pattern="features.mx.generic.fighter.FighterAircraft.barrel"  name="fighter barrel"/>
+				<function pattern="features.mx.generic.fighter.FighterAircraft.cisor"  name="fighter cisor"/>
+				<function pattern="features.mx.generic.fighter.FighterAircraft.yoyo"  name="fighter yoyo"/>
+				<function pattern="features.mx.generic.fighter.FighterAircraft.immelmann"  name="Volley immelmann"/>
+	  			-->
 				
 				<function pattern="features.tasks.FrozenCode.frozenCode"  name="Frozen code section : stacks are identical" />
 				
@@ -76,16 +76,16 @@
 				<operation pattern="features.tasks.LockedThreads.executedActionLevel2"  name="Method action level2 is synchronized"/>
 				<operation pattern="features.tasks.Deadlock.accessSharedResources"  name="Access to already locked resource" />
 				
-				<operation pattern="features.mx.jeyzer.LongTennisPlayer.forehandShot"  name="Forehand shot" />
-				<operation pattern="features.mx.jeyzer.LongTennisPlayer.gripShot"  name="Grip shot" />
-				<operation pattern="features.mx.jeyzer.LongTennisPlayer.backhandShot"  name="Backhand shot" />
-				<operation pattern="features.mx.jeyzer.LongTennisPlayer.serveShot"  name="Serve shot" />
+				<operation pattern="features.mx.jeyzer.Airliner.decelerate"  name="Decelerate" />
+				<operation pattern="features.mx.jeyzer.Airliner.putGas"  name="Put gas" />
+				<operation pattern="features.mx.jeyzer.Airliner.accelerate"  name="Accelerate" />
+				<operation pattern="features.mx.jeyzer.Airliner.cruise"  name="Cruise" />
 			</operations>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<!-- Features demo -->
 				<executor pattern="features.FeatureRunnable.run" name="Demo thread"/>
-				<executor pattern="LongTennisPlayer$TennisRunnable.run" name="MX Demo thread"/>
+				<executor pattern="Airliner$AirlinerRunnable.run" name="MX Demo thread"/>
 				<executor pattern="features.tasks.LockedThreads$1.run" name="Lock feature thread"/>
 				<executor pattern="features.tasks.Deadlock$1.run" name="Deadlock feature thread"/>
 			</executors>

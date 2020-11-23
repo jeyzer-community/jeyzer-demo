@@ -17,7 +17,7 @@ import org.jeyzer.demo.event.codes.FeatureEventCode;
 import org.jeyzer.demo.features.Feature;
 import org.jeyzer.publish.event.JzrStandardEvent;
 
-public class SoccerPlayer extends Feature {
+public class TupolevPlane extends Feature {
 
 	private static final String FEATURE_NAME = "Discovery";
 	
@@ -25,7 +25,7 @@ public class SoccerPlayer extends Feature {
 	public void show() throws InterruptedException {
 		publishThreadApplicativeEvent(
 				new JzrStandardEvent(FeatureEventCode.JZR_FEA_17));
-		kickPenalty();
+		cruise();
 	}
 	
 	@Override
@@ -33,10 +33,10 @@ public class SoccerPlayer extends Feature {
 		return FEATURE_NAME;
 	}
 
-	private void kickPenalty() throws InterruptedException {
-		log("SoccerPlayer", "starts");
+	private void cruise() throws InterruptedException {
+		log("TupolevPlane", "starts");
 		hold(); 
-		log("SoccerPlayer", "ends");
+		log("TupolevPlane", "ends");
 	}
 
 }

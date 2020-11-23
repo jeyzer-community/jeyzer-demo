@@ -1,4 +1,4 @@
-package org.jeyzer.demo.features.mx.generic.volley;
+package org.jeyzer.demo.features.mx.generic.fighter;
 
 /*-
  * ---------------------------LICENSE_START---------------------------
@@ -14,23 +14,23 @@ package org.jeyzer.demo.features.mx.generic.volley;
 
 
 
-public class VolleyBallMXBeanImpl implements VolleyBallMXBean {
+public class MilitaryFlightMissionMXBeanImpl implements MilitaryFlightMissionMXBean {
 	
-	private VolleyBallGame game;
+	private MilitaryFlightPlan plane;
 	
-	public VolleyBallMXBeanImpl(VolleyBallGame game){
-		this.game = game;
+	public MilitaryFlightMissionMXBeanImpl(MilitaryFlightPlan plane){
+		this.plane = plane;
 	}
 	
-	public String getFormationType(){
-		return this.game.getType().toString();
+	public String getFormation(){
+		return this.plane.getFormation().name();
 	}
 	
-	public String getGameVariant(){
-		return this.game.getVariant().name();
+	public String getModel(){
+		return this.plane.getModel().name();
 	}
 	
 	public String getAction(){
-		return this.game.getAction().name();
+		return this.plane.getAction().name();
 	}
 }

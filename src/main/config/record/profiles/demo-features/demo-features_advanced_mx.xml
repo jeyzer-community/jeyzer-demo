@@ -67,7 +67,7 @@
 		<!-- Provided by applicative MX bean -->
 		<!-- MX object name query and related attributes. Demo example -->
 		<mx_parameters name="org.jeyzer.demo:type=DemoFeatures" attributes="PlayedFeatures"/>
-		<!--mx_parameters name="org.jeyzer.demo:type=VolleyBall" attributes="Action,GameVariant,FormationType"/-->
+		<!--mx_parameters name="org.jeyzer.demo:type=MilitaryFlightMission" attributes="Action,Model,Formation"/-->
 	</process>
 
 	<thread>

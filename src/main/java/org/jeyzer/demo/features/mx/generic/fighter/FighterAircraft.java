@@ -1,4 +1,4 @@
-package org.jeyzer.demo.features.mx.generic.volley;
+package org.jeyzer.demo.features.mx.generic.fighter;
 
 /*-
  * ---------------------------LICENSE_START---------------------------
@@ -27,65 +27,65 @@ import org.jeyzer.publish.event.JzrStandardEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class VolleyBallPlayer extends Feature {
+public class FighterAircraft extends Feature {
 	
-	private static final Logger logger = LoggerFactory.getLogger(VolleyBallPlayer.class);
+	private static final Logger logger = LoggerFactory.getLogger(FighterAircraft.class);
 	
 	private static final String FEATURE_NAME = "Generic MX";
 	
 	@Override
 	public void show() throws InterruptedException {
-		VolleyBallGame game = new VolleyBallGame();
+		MilitaryFlightPlan game = new MilitaryFlightPlan();
 		
 		publishThreadApplicativeEvent(
 				new JzrStandardEvent(FeatureEventCode.JZR_FEA_11));
 		
-		log("VolleyBallPlayer", "starts");
+		log("FighterAircraft", "starts");
 		
-		VolleyBallMXBean bean = new VolleyBallMXBeanImpl(game);
+		MilitaryFlightMissionMXBean bean = new MilitaryFlightMissionMXBeanImpl(game);
 		register(bean);
 		
 		for(int i=0; i<4; i++){
 			executeAction(game);
 		}
 		
-		log("VolleyBallPlayer", "ends");
+		log("FighterAircraft", "ends");
 	}
 	
-	private void executeAction(VolleyBallGame game) throws InterruptedException {
+	private void executeAction(MilitaryFlightPlan game) throws InterruptedException {
 		switch (game.getAction()){
-		case Attack: 
-			attack();
+		case CISORS: 
+			cisor();
 			break;
-		case Pass:
-			pass();
+		case IMMELMANN:
+			immelmann();
 			break;
-		case Serve:
-			serve();
+		case YOYO:
+			yoyo();
 			break;
-		case Set:
-			set();
+		case BARREL:
+			barrel();
 			break;
 		default:
-			pass();
+			immelmann();
 		}
-		log("VolleyBallPlayer", "updates VolleyBallPlayer action");
+		log("FighterAircraft", "updates FighterAircraft action");
 		game.updateAction();
 	}
 
-	private void set() throws InterruptedException {
+	private void barrel() throws InterruptedException {
 		hold();
 	}
 
-	private void serve() throws InterruptedException {
+	private void yoyo() throws InterruptedException {
 		hold();
 	}
 
-	private void pass() throws InterruptedException {
+	private void immelmann() throws InterruptedException {
 		hold();
 	}
 
-	private void attack() throws InterruptedException {
+	private void cisor() throws InterruptedException {
 		hold();
 	}
 
@@ -94,19 +94,19 @@ public class VolleyBallPlayer extends Feature {
 		return FEATURE_NAME;
 	}
 	
-	void register(VolleyBallMXBean bean){
+	void register(MilitaryFlightMissionMXBean bean){
 		ObjectName mxbeanName = null;
 		try {
-			mxbeanName = new ObjectName(VolleyBallMXBean.VOLLEY_MXBEAN_NAME);
+			mxbeanName = new ObjectName(MilitaryFlightMissionMXBean.FLIGHT_MISSION_MXBEAN_NAME);
 		} catch (MalformedObjectNameException e) {
-			logger.warn("Warning : Failed to start Volley Ball MX player. Error is : " + e.getMessage());
+			logger.warn("Warning : Failed to start the MX Military Flight mission. Error is : " + e.getMessage());
 		}
 	    MBeanServer mbs = ManagementFactory.getPlatformMBeanServer(); 
 	    
 	    try {
 			mbs.registerMBean(bean, mxbeanName);
 		} catch (Exception e) {
-			logger.warn("Warning : Failed to start Volley Ball MX player. Error is : " + e.getMessage());
+			logger.warn("Warning : Failed to start the MX Military Flight mission. Error is : " + e.getMessage());
 		}
 	}
 }

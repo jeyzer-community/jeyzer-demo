@@ -16,32 +16,32 @@ package org.jeyzer.demo.features.mx.jeyzer;
 import org.jeyzer.demo.features.Feature;
 import org.jeyzer.publish.JzrActionContext;
 
-public abstract class Player extends Feature {
+public abstract class Plane extends Feature {
 
-	public static final String JZR_MX_LEVEL_FIELD = "level";
+	public static final String JZR_MX_FLIGHT_HOURS_FIELD = "flight-hours";
 	
-	protected String user;
+	protected String flightId;
 	private String actionPrincipal;
-	private String level;
+	private String flightHours;
 	
 	protected JzrActionContext jzrActionContext;
 	
-	public Player(String user, String actionPrincipal, String level) {
-		this.user = user;
+	public Plane(String flightId, String actionPrincipal, String flightHours) {
+		this.flightId = flightId;
 		this.actionPrincipal = actionPrincipal;
-		this.level = level;
+		this.flightHours = flightHours;
 	}
 
 	@Override
 	public void show() throws InterruptedException {
-		jzrActionContext =  createContext(this.user, this.actionPrincipal);
-		jzrActionContext.setContextParam(JZR_MX_LEVEL_FIELD, level);
+		jzrActionContext =  createContext(this.flightId, this.actionPrincipal);
+		jzrActionContext.setContextParam(JZR_MX_FLIGHT_HOURS_FIELD, flightHours);
 		
 		start(jzrActionContext);
-		play();
+		flight();
 		stop();
 	}
 
-	protected abstract void play() throws InterruptedException;
+	protected abstract void flight() throws InterruptedException;
 	
 }

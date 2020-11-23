@@ -28,17 +28,17 @@ import org.jeyzer.demo.dup.DummyDemo1;
 import org.jeyzer.demo.dup.DummyDemo2;
 import org.jeyzer.demo.dup.DummyDemo3;
 import org.jeyzer.demo.event.codes.DemoEventCode;
-import org.jeyzer.demo.features.discovery.BaseballPlayer;
-import org.jeyzer.demo.features.discovery.CroquetPlayer;
-import org.jeyzer.demo.features.discovery.GolfPlayer;
-import org.jeyzer.demo.features.discovery.RugbyPlayer;
-import org.jeyzer.demo.features.discovery.SoccerPlayer;
+import org.jeyzer.demo.features.discovery.AirbusPlane;
+import org.jeyzer.demo.features.discovery.AntonovPlane;
+import org.jeyzer.demo.features.discovery.BoeingPlane;
+import org.jeyzer.demo.features.discovery.McDonnellDouglasPlane;
+import org.jeyzer.demo.features.discovery.TupolevPlane;
 import org.jeyzer.demo.features.event.DemoEventManager;
 import org.jeyzer.demo.features.mx.generic.feature.FeaturesPublisher;
-import org.jeyzer.demo.features.mx.generic.volley.VolleyBallPlayer;
-import org.jeyzer.demo.features.mx.jeyzer.LongTennisPlayer;
-import org.jeyzer.demo.features.mx.jeyzer.TennisGame;
-import org.jeyzer.demo.features.mx.jeyzer.LongTennisPlayer.TennisRunnable;
+import org.jeyzer.demo.features.mx.generic.fighter.FighterAircraft;
+import org.jeyzer.demo.features.mx.jeyzer.Airliner;
+import org.jeyzer.demo.features.mx.jeyzer.FlightPlan;
+import org.jeyzer.demo.features.mx.jeyzer.Airliner.AirlinerRunnable;
 import org.jeyzer.demo.features.tasks.CPUConsumingTask;
 import org.jeyzer.demo.features.tasks.Deadlock;
 import org.jeyzer.demo.features.tasks.DysfunctionalCodeSequence;
@@ -48,8 +48,8 @@ import org.jeyzer.demo.features.tasks.HiatusStart;
 import org.jeyzer.demo.features.tasks.LockedThreads;
 import org.jeyzer.demo.features.tasks.MemoryConsumingTask;
 import org.jeyzer.demo.features.tasks.MemoryExhaustingTask;
-import org.jeyzer.demo.features.tasks.PingPongPlayer;
-import org.jeyzer.demo.features.tasks.PingPongPlayer.PLAYER_TYPE;
+import org.jeyzer.demo.features.tasks.WingLightTester;
+import org.jeyzer.demo.features.tasks.WingLightTester.WING_TYPE;
 import org.jeyzer.demo.shared.DemoSharedLoader;
 import org.jeyzer.publish.JeyzerPublisher;
 import org.jeyzer.publish.event.JzrStandardEvent;
@@ -80,7 +80,7 @@ public class FeatureDemo {
 		FeaturesPublisher.instance(); // initialize
 		
 		// MX features static data : publish up front
-		publishProcessTennisInfo();
+		publishFlightInfo();
 		
 		// Demo event manager used to publish applicative events.
 		// Applicative events are collected by the Jeyzer Recorder.
@@ -114,16 +114,16 @@ public class FeatureDemo {
 		List<Feature> profilingFeatures1 = new ArrayList<>();
 		List<Feature> profilingFeatures2 = new ArrayList<>();
 		
-		TennisGame game1 = new TennisGame();
-		profilingFeatures1.add(new LongTennisPlayer(game1, "John", features.size() + 16, "3500"));
-		profilingFeatures2.add(new LongTennisPlayer(game1, "Mark", features.size() + 16, "2900"));
+		FlightPlan plan1 = new FlightPlan(2);
+		profilingFeatures1.add(new Airliner(plan1, "Japan Airlines Flight 987", features.size() + 16, "3500"));
+		profilingFeatures2.add(new Airliner(plan1, "British Airways Flight 223", features.size() + 16, "2900"));
 
-		TennisGame game2 = new TennisGame();
-		profilingFeatures1.add(new LongTennisPlayer(game2, "Ekaterina", features.size() + 16, "2800"));
-		profilingFeatures2.add(new LongTennisPlayer(game2, "Julia", features.size() + 16, "3000"));
+		FlightPlan plan2 = new FlightPlan(2);
+		profilingFeatures1.add(new Airliner(plan2, "KLM Flight 496", features.size() + 16, "2800"));
+		profilingFeatures2.add(new Airliner(plan2, "Lufthansa Flight 777", features.size() + 16, "3000"));
 		
-		TennisRunnable run2 = new TennisRunnable(profilingFeatures1); 
-		TennisRunnable run3 = new TennisRunnable(profilingFeatures2);
+		AirlinerRunnable run2 = new AirlinerRunnable(profilingFeatures1); 
+		AirlinerRunnable run3 = new AirlinerRunnable(profilingFeatures2);
 		
 		Thread t2 = new Thread(run2);
 		Thread t3 = new Thread(run3);
@@ -187,24 +187,24 @@ public class FeatureDemo {
 	private List<Feature> createDemoFeatures() {
 		List<Feature> features = new ArrayList<>();
 		
-		features.add(new PingPongPlayer(PLAYER_TYPE.PING));
-		features.add(new PingPongPlayer(PLAYER_TYPE.PONG));
-		features.add(new PingPongPlayer(PLAYER_TYPE.PING));
-		features.add(new PingPongPlayer(PLAYER_TYPE.PONG));
-		features.add(new PingPongPlayer(PLAYER_TYPE.PING));
-		features.add(new PingPongPlayer(PLAYER_TYPE.PONG));
+		features.add(new WingLightTester(WING_TYPE.LEFT));
+		features.add(new WingLightTester(WING_TYPE.RIGHT));
+		features.add(new WingLightTester(WING_TYPE.LEFT));
+		features.add(new WingLightTester(WING_TYPE.RIGHT));
+		features.add(new WingLightTester(WING_TYPE.LEFT));
+		features.add(new WingLightTester(WING_TYPE.RIGHT));
 		features.add(new FrozenCode());
 		features.add(new MemoryConsumingTask());
 		features.add(new DysfunctionalCodeSequence());
 		features.add(new CPUConsumingTask());
 		features.add(new HiatusStart());
 		features.add(new HiatusEnd());
-		features.add(new GolfPlayer());
-		features.add(new SoccerPlayer());
-		features.add(new BaseballPlayer());
-		features.add(new CroquetPlayer());
-		features.add(new RugbyPlayer());
-		features.add(new VolleyBallPlayer()); // MX generic
+		features.add(new BoeingPlane());
+		features.add(new TupolevPlane());
+		features.add(new AirbusPlane());
+		features.add(new AntonovPlane());
+		features.add(new McDonnellDouglasPlane());
+		features.add(new FighterAircraft()); // MX generic
 		features.add(new LockedThreads());
 		features.add(new Deadlock());
 		features.add(new MemoryExhaustingTask());
@@ -212,7 +212,7 @@ public class FeatureDemo {
 		return features;
 	}
 
-	private void publishProcessTennisInfo() {
+	private void publishFlightInfo() {
 		List<String> attributeNames = new ArrayList<>();
 		attributeNames.add(MANIFEST_IMPL_TITLE);
 		attributeNames.add(MANIFEST_IMPL_VERSION);
@@ -227,9 +227,9 @@ public class FeatureDemo {
 		mgr.setNodeName(NODE_NAME);
 		
 		// static values
-		mgr.addStaticProcessContextParam(LongTennisPlayer.JZR_MX_LOCATION, "Wimbledon");
-		mgr.addStaticProcessContextParam(LongTennisPlayer.JZR_MX_COURT, "Central");
-		mgr.addStaticProcessContextParam(LongTennisPlayer.JZR_MX_GROUND, "grass");
+		mgr.addStaticProcessContextParam(Airliner.JZR_MX_DEPARTURE_AIRPORT, "London");
+		mgr.addStaticProcessContextParam(Airliner.JZR_MX_DESTINATION_AIRPORT, "Tokyo");
+		mgr.addStaticProcessContextParam(Airliner.JZR_MX_FLIGHT_LINE_TYPE, "commercial");
 	}	
 
 	private Map<String, String> readManifestAttributes(List<String> names) {

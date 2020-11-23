@@ -26,18 +26,18 @@ import org.jeyzer.publish.event.JzrStandardEvent;
 @ExecutorThreadName(name="Thread executor", patternRegex="ThreadNameExecutor.*")
 @ExcludeThreadName(name="Thread to exclude", pattern="ExcludedThreadName",size=10)
 @Operation(priority=901, lowStack=true)
-public class PingPongPlayer extends Feature {
+public class WingLightTester extends Feature {
 	
-	private static final String FEATURE_NAME = "Ping pong";
+	private static final String FEATURE_NAME = "Wing light tester";
 	
 	private static int execCount = 0;
 	
-	public enum PLAYER_TYPE { PING, PONG; }
+	public enum WING_TYPE { LEFT, RIGHT; }
 	
-	private PLAYER_TYPE type;
+	private WING_TYPE type;
 	
 	@Exclude
-	public PingPongPlayer(PLAYER_TYPE type){
+	public WingLightTester(WING_TYPE type){
 		this.type =type;  
 	}
 	
@@ -48,13 +48,13 @@ public class PingPongPlayer extends Feature {
 		publishThreadApplicativeEvent(
 				new JzrStandardEvent(
 						FeatureEventCode.JZR_FEA_10, 
-						"Ping pong player " + this.type.name() + " executing hit " + execCount++ + ". Watch the match !")
+						"Wing light" + this.type.name() + " blink count event #" + execCount++)
 				);
 		
-		if (PLAYER_TYPE.PING.equals(type))
-			doPing();
+		if (WING_TYPE.LEFT.equals(type))
+			lightYellow();
 		else
-			doPong();
+			lightGreen();
 	}
 	
 	@Override
@@ -63,31 +63,31 @@ public class PingPongPlayer extends Feature {
 		return FEATURE_NAME;
 	}
 	
-	@Function(name="Plays ping (blue)")
-	private void doPing() throws InterruptedException{
-		log("PingPongPlayer", "starts ping");
+	@Function(name="Left wing light (yellow)")
+	private void lightYellow() throws InterruptedException{
+		log("WingLightTester", "starts yellow blinking");
 		hold();
-		log("PingPongPlayer", "ends ping");
+		log("WingLightTester", "ends yellow blinking");
 	}
 
-	@Operation(name="Plays pong (green)")
-	private void doPong() throws InterruptedException{
-		log("PingPongPlayer", "starts pong");
+	@Function(name="Rights wing light (green)")
+	private void lightGreen() throws InterruptedException{
+		log("WingLightTester", "starts green blinking");
 		hold();
-		log("PingPongPlayer", "ends pong");
+		log("WingLightTester", "ends green blinking");
 	}	
 	
 	// Inner class annotation tests
 	@Exclude
-	public static class PingPongReferee{
+	public static class EmergencyLightTester{
 		
 		@Function
-		public PingPongReferee(){
+		public EmergencyLightTester(){
 			// whatever code here
 		}
 		
 		@Function
-		public void watch(){
+		public void light(){
 			// whatever code here
 		}
 	}
