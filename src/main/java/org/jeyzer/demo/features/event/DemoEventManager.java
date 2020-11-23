@@ -65,7 +65,7 @@ public class DemoEventManager {
 		Properties props = new Properties();
 		props.put(JeyzerPublisherInit.EVENTS_INFO_LIMIT_PROPERTY, Integer.toString(EVENTS_INFO_LIMIT));
 		props.put(JeyzerPublisherInit.EVENTS_WARNING_LIMIT_PROPERTY, Integer.toString(EVENTS_WARN_LIMIT));
-		props.put(JeyzerPublisherInit.PUBLISHER_ENABLE_JZR_RECORDER_COLLECTION_EVENT_PROPERTY, "false");
+		props.put(JeyzerPublisherInit.PUBLISHER_ENABLE_JZR_RECORDER_COLLECTION_EVENT_PROPERTY, Boolean.FALSE.toString());
 		JeyzerPublisher.instance().init(props);
 	}
 	

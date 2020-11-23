@@ -42,7 +42,7 @@ public abstract class ExecutableJob extends Job implements Runnable{
 	
 	@Override
 	public void init() {
-		System.setProperty("demo.job." + def.getStickerName(), "true");
+		System.setProperty("demo.job." + def.getStickerName(), Boolean.TRUE.toString());
 	}
 	
 	@Override
