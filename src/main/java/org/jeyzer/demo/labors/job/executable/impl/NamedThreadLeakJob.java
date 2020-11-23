@@ -81,5 +81,5 @@ public class NamedThreadLeakJob extends ExecutableJob {
 				Thread.currentThread().interrupt();
 			}
 		}
-	};	
+	}
 }

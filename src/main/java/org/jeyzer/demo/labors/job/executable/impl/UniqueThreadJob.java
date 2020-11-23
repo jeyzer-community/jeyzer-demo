@@ -61,7 +61,7 @@ public class UniqueThreadJob extends ExecutableJob {
 				undesiredThreadExecution();
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
-			};
+			}
 		}
 
 		@Function

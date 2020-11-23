@@ -63,13 +63,13 @@ public class GcFailingToReleaseMemoryJob extends ExecutableJob {
 			float oldPoolUsedPercent = (float)memPoolBean.getCollectionUsage().getUsed()/memPoolBean.getCollectionUsage().getMax();
 			
 			if (oldPoolUsedPercent > 0.90) {
-				surfMemoryEdge(memPoolBean);
+				surfMemoryEdge();
 				return;
 			}
 		}
 	}
 
-	private void surfMemoryEdge(MemoryPoolMXBean memPoolBean) throws InterruptedException {
+	private void surfMemoryEdge() throws InterruptedException {
 		while(true){
 			for (long i=1; i<1000; i++){ //remove some entries, very very slow..
 				elements.remove(i);

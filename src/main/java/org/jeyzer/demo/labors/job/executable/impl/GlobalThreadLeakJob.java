@@ -76,5 +76,5 @@ public class GlobalThreadLeakJob extends ExecutableJob {
 				Thread.currentThread().interrupt();
 			}
 		}
-	};	
+	}
 }

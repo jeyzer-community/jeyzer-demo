@@ -33,11 +33,6 @@ public class NamedThreadLimitJob extends ExecutableJob {
 	public NamedThreadLimitJob(ExecutableJobDefinition def) {
 		super(def);
 	}
-	
-	@Override
-	public void init() {
-		super.init();
-	}
 
 	@Override
 	@Executor(name="Job executor")

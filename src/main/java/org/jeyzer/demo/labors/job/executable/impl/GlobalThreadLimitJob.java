@@ -69,5 +69,5 @@ public class GlobalThreadLimitJob extends ExecutableJob {
 				Thread.currentThread().interrupt();
 			}
 		}
-	};
+	}
 }
