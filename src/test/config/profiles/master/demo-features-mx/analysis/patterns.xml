@@ -30,8 +30,8 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<!-- Features demo -->
-			    <function name="Left wing light (yellow)" pattern="features.tasks.WingLightTester.lightYellow"/>
-      			<function name="Right wing light (green)" pattern="features.tasks.WingLightTester.lightGreen"/>
+				<function name="Left wing yellow light" pattern="features.tasks.WingLightTester.lightYellow"/>
+				<function name="Right wing green light" pattern="features.tasks.WingLightTester.lightGreen"/>
 				
 				<function name="Long range flight" pattern="features.mx.jeyzer.Airliner.longRangeFlight"/>
 				<function pattern="features.mx.jeyzer.Airliner.assisted"  name="Assisted"/>
@@ -39,10 +39,10 @@
 				<function pattern="features.mx.jeyzer.Airliner.autopilot"  name="Autopilot"/>
 
       			<!--
-				<function pattern="features.mx.generic.fighter.FighterAircraft.barrel"  name="fighter barrel"/>
-				<function pattern="features.mx.generic.fighter.FighterAircraft.cisor"  name="fighter cisor"/>
-				<function pattern="features.mx.generic.fighter.FighterAircraft.yoyo"  name="fighter yoyo"/>
-				<function pattern="features.mx.generic.fighter.FighterAircraft.immelmann"  name="Volley immelmann"/>
+				<function pattern="features.mx.generic.fighter.FighterAircraft.barrel"  name="Fighter barrel"/>
+				<function pattern="features.mx.generic.fighter.FighterAircraft.cisor"  name="Fighter cisor"/>
+				<function pattern="features.mx.generic.fighter.FighterAircraft.yoyo"  name="Fighter yoyo"/>
+				<function pattern="features.mx.generic.fighter.FighterAircraft.immelmann"  name="Fighter immelmann"/>
 	  			-->
 				
 				<function pattern="features.tasks.FrozenCode.frozenCode"  name="Frozen code section : stacks are identical" />
