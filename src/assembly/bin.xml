@@ -83,11 +83,11 @@
 		</file>
 		<file>
 			<source>${basedir}/LICENSE.txt</source>
-			<outputDirectory></outputDirectory>
+			<outputDirectory>/licenses</outputDirectory>
 		</file>
 		<file>
 			<source>${basedir}/THIRD-PARTY.txt</source>
-			<outputDirectory>/</outputDirectory>
+			<outputDirectory>/licenses</outputDirectory>
 		</file>
 	</files>
 </assembly>
