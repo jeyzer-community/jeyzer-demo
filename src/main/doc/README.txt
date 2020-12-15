@@ -139,6 +139,13 @@
 
   
   
+  Licensing
+  ----------------------------
+  This program is free software distributed under the terms of the Mozilla Public License Version 2.0.
+  Please see the file called LICENSE.txt in the licenses directory.
+  
+  
+  
   Contact Info
   ------------
   If you have any questions, comments or suggestions, we would like to hear from
