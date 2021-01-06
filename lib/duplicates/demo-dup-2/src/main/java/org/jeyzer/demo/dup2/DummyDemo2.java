@@ -1,4 +1,4 @@
-package org.jeyzer.demo.dup;
+package org.jeyzer.demo.dup2;
 
 /*-
  * ---------------------------LICENSE_START---------------------------
@@ -15,11 +15,11 @@ package org.jeyzer.demo.dup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DummyDemo1 {
+public class DummyDemo2 {
 	
-	public static final Logger logger = LoggerFactory.getLogger(DummyDemo1.class);	
+	public static final Logger logger = LoggerFactory.getLogger(DummyDemo2.class);	
 	
 	public void load(){
-		logger.debug("Dummy demo 1 loaded.");
+		logger.debug("Dummy demo 2 loaded.");
 	}
 }

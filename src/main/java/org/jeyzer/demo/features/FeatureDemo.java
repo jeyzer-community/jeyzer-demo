@@ -24,9 +24,9 @@ import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
 import org.jeyzer.annotations.Exclude;
-import org.jeyzer.demo.dup.DummyDemo1;
-import org.jeyzer.demo.dup.DummyDemo2;
-import org.jeyzer.demo.dup.DummyDemo3;
+import org.jeyzer.demo.dup1.DummyDemo1;
+import org.jeyzer.demo.dup2.DummyDemo2;
+import org.jeyzer.demo.dup3.DummyDemo3;
 import org.jeyzer.demo.event.codes.DemoEventCode;
 import org.jeyzer.demo.features.discovery.AirbusPlane;
 import org.jeyzer.demo.features.discovery.AntonovPlane;

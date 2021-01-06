@@ -13,7 +13,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.0.13</version>
+			<version>1.3.0-alpha4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.janino</groupId>
@@ -27,13 +27,39 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<verbose>true</verbose>
-					<fork>false</fork>
-				</configuration>
+				<version>3.8.1</version>
+				<executions>
+					<execution>
+            			<id>default-compile</id>
+            			<phase>compile</phase>
+            			<goals>
+              				<goal>compile</goal>
+            			</goals>
+						<configuration>
+							<release>9</release>
+							<compileSourceRoots>
+								<compileSourceRoot>${project.basedir}/src/main/java9</compileSourceRoot>
+								<compileSourceRoot>${project.basedir}/src/main/java</compileSourceRoot>
+							</compileSourceRoots>
+							<verbose>true</verbose>
+							<fork>false</fork>
+							<!-- do not process annotations -->
+							<compilerArgument>-proc:none</compilerArgument>
+						</configuration>
+					</execution>
+					<execution>
+						<id>backward-compile</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<source>1.7</source>
+							<target>1.7</target>
+							<verbose>true</verbose>
+							<fork>false</fork>
+						</configuration>
+					</execution> 
+				</executions>
 			</plugin>
 			<!-- Generate the jar file with Manifest properties -->
 			<plugin>

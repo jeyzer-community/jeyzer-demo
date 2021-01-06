@@ -14,7 +14,7 @@ package org.jeyzer.demo.labors.job.executable.impl;
 
 
 import org.jeyzer.annotations.Executor;
-import org.jeyzer.demo.dup.DummyDemo3;
+import org.jeyzer.demo.dup3.DummyDemo3;
 import org.jeyzer.demo.labors.job.executable.ExecutableJob;
 import org.jeyzer.demo.labors.job.executable.ExecutableJobDefinition;
 

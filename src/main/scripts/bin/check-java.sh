@@ -6,9 +6,21 @@
 #  Jeyzer start scripts only use JAVA_HOME
 # -----------------------------------------------------------------------------
 
+setJavaModuleSupport(){
+  JAVA_VERSION=`"$JAVA_HOME/bin/java" -version 2>&1 | awk -F'"' '/version/ {print $2}'`
+  JAVA_MAJOR_VERSION=`echo $JAVA_VERSION | awk -F'.' '{ print $1 }'` 
+
+  if [ "$JAVA_MAJOR_VERSION" = "1" ]; then
+    JAVA_MODULE_SUPPORT=false   # 1.7 or 1.8
+  else
+    JAVA_MODULE_SUPPORT=true    # 9, 10..
+  fi
+}
+
 JEYZER_INSTALLER_DEPLOYMENT=%{jeyzer.installer.deployment}
 if [ "$JEYZER_INSTALLER_DEPLOYMENT" = "true" ]; then
   JAVA_HOME="%{jeyzer.installer.java.home}"
+  setJavaModuleSupport
   return
 fi
 
@@ -38,3 +50,4 @@ if [ -z "$JAVA_HOME" ]; then
   JAVA_HOME="$JRE_HOME"
 fi
 
+setJavaModuleSupport

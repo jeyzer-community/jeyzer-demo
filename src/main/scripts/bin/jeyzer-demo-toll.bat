@@ -39,6 +39,7 @@ set "JEYZER_DEMO_HOME=%cd%"
 cd "%CURRENT_DIR%"
 
 set CLASSPATH=
+set MODULE_PATH=
 
 rem Set the Jeyzer Recorder Agent paths if enabled
 if not exist "%JEYZER_DEMO_HOME%\bin\set-jeyzer-recorder-agent.bat" goto noSetJeyzerRecorderAgent
@@ -61,14 +62,30 @@ rem set "JAVA_OPTS=%JAVA_OPTS% -agentlib:jdwp=transport=dt_socket,server=y,suspe
 rem JVM options
 rem set "JAVA_OPTS=%JAVA_OPTS% -Xmn15m -Xms20m -Xmx20m"
 
-rem logging libraries
-set "CLASSPATH=%CLASSPATH%;%JEYZER_DEMO_HOME%\lib\slf4j-api-${jeyzer.demo-slf4j-api.version}.jar;%JEYZER_DEMO_HOME%\lib\logback-core-${jeyzer.demo-logback-core.version}.jar;%JEYZER_DEMO_HOME%\lib\logback-classic-${jeyzer.demo-ch.qos.logback.logback-classic.version}.jar;%JEYZER_DEMO_HOME%\lib\janino-${jeyzer.demo-org.codehaus.janino.janino.version}.jar;%JEYZER_DEMO_HOME%\lib\commons-compiler-${jeyzer.demo-janino.commons-compiler.version}.jar"
+rem - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+rem Classpath and Module path setup
+if "%JAVA_MODULE_SUPPORT%" == "true" goto gotJavaModuleSupport
 
-rem Jeyzer-demo, Jeyzer-demo-shared libraries and logback
-set "CLASSPATH=%CLASSPATH%;%JEYZER_DEMO_HOME%\lib\jeyzer-demo.jar;%JEYZER_DEMO_HOME%\lib\jeyzer-demo-shared-${jeyzer-demo-shared.version}.jar;%JEYZER_DEMO_HOME%\config\log"
+rem Standard classpath (JDK 8)
+rem logging libraries
+set "CLASSPATH=%CLASSPATH%;%JEYZER_DEMO_HOME%\lib\slf4j-api-${jeyzer.demo-slf4j-api.version}.jar;%JEYZER_DEMO_HOME%\lib\logback-core-${jeyzer.demo-logback-core.version}.jar;%JEYZER_DEMO_HOME%\lib\logback-classic-${jeyzer.demo-ch.qos.logback.logback-classic.version}.jar"
+
+rem Jeyzer-demo, Jeyzer-demo-shared libraries
+set "CLASSPATH=%CLASSPATH%;%JEYZER_DEMO_HOME%\lib\jeyzer-demo.jar;%JEYZER_DEMO_HOME%\lib\jeyzer-demo-shared-${jeyzer-demo-shared.version}.jar"
+goto okDependencyPaths
+
+rem Modules (JDK 9+)
+:gotJavaModuleSupport
+set "MODULE_PATH=--module-path %JEYZER_DEMO_HOME%\mods --add-modules org.jeyzer.publish,org.jeyzer.demo.shared,org.slf4j,org.jeyzer.demo"
+
+:okDependencyPaths
+rem - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+rem logback
+set "CLASSPATH=%CLASSPATH%;%JEYZER_DEMO_HOME%\config\log"
 
 echo Starting Demo Tollbooth v${project.version}...
-call "%JAVA_HOME%\bin\java.exe" %JEYZER_AGENT% %JAVA_OPTS% -cp %CLASSPATH% org.jeyzer.demo.tollbooth.TollDemo
+call "%JAVA_HOME%\bin\java.exe" %JEYZER_AGENT% %JAVA_OPTS% %MODULE_PATH% -cp %CLASSPATH% org.jeyzer.demo.tollbooth.TollDemo
 goto end
 
 :exit

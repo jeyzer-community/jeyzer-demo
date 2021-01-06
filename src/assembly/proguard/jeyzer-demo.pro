@@ -4,6 +4,9 @@
 -renamesourcefileattribute SourceFile
 -keepattributes SourceFile,LineNumberTable
 
+-keep class module-info
+-keepattributes Module*
+
 -keep public class org.jeyzer.demo.features.FeatureDemo {
     public static void main(java.lang.String[]);
 }

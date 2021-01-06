@@ -6,6 +6,7 @@
 		<format>zip</format>
 	</formats>
 	<dependencySets>
+		<!-- Lib directory for JDk8 -->
 		<dependencySet>
 			<outputDirectory>lib</outputDirectory>
 			<scope>runtime</scope>
@@ -21,7 +22,30 @@
 				<exclude>org.jeyzer:jeyzer-demo</exclude>
 				<exclude>org.jeyzer:jeyzer-annotations</exclude>
 				<exclude>org.jeyzer:jeyzer-annotation-processors</exclude>
-				<exclude>org.jeyzer:jeyzer-demo-dup</exclude>
+				<exclude>org.jeyzer:jeyzer-demo-dup1</exclude>
+				<exclude>org.jeyzer:jeyzer-demo-dup2</exclude>
+				<exclude>org.jeyzer:jeyzer-demo-dup3</exclude>
+			</excludes>
+		</dependencySet>
+		<!-- Mods directory for JDk9+ -->
+		<dependencySet>
+			<outputDirectory>mods</outputDirectory>
+			<scope>runtime</scope>
+			<outputFileNameMapping>${artifact.artifactId}${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
+			<includes>
+				<include>org.jeyzer:jeyzer-demo</include>
+			</includes>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>mods</outputDirectory>
+			<scope>runtime</scope>
+			<excludes>
+				<exclude>org.jeyzer:jeyzer-demo</exclude>
+				<exclude>org.jeyzer:jeyzer-annotations</exclude>
+				<exclude>org.jeyzer:jeyzer-annotation-processors</exclude>
+				<exclude>org.jeyzer:jeyzer-demo-dup1</exclude>
+				<exclude>org.jeyzer:jeyzer-demo-dup2</exclude>
+				<exclude>org.jeyzer:jeyzer-demo-dup3</exclude>
 			</excludes>
 		</dependencySet>
 	</dependencySets> 
@@ -65,6 +89,18 @@
 				<exclude>jeyzer-demo-dup-3.3.3.jar</exclude>
 			</excludes>
 			<outputDirectory>lib</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<!-- duplicate libraries -->
+			<directory>lib</directory>
+			<filtered>false</filtered>
+			<includes>
+				<include>*.jar</include>
+			</includes>
+			<excludes>
+				<exclude>jeyzer-demo-dup-3.3.3.jar</exclude>
+			</excludes>
+			<outputDirectory>mods</outputDirectory>
 		</fileSet>
 		<fileSet>
 			<directory>${project.build.directory}/site/apidocs</directory>

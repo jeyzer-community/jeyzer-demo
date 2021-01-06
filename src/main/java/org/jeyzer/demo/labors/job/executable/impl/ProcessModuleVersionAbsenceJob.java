@@ -14,24 +14,24 @@ package org.jeyzer.demo.labors.job.executable.impl;
 
 
 import org.jeyzer.annotations.Executor;
-import org.jeyzer.demo.dup2.DummyDemo2;
+import org.jeyzer.demo.dup3.DummyDemo3;
 import org.jeyzer.demo.labors.job.executable.ExecutableJob;
 import org.jeyzer.demo.labors.job.executable.ExecutableJobDefinition;
 
-public class ProcessJarManifestVersionMismatchJob extends ExecutableJob {
+public class ProcessModuleVersionAbsenceJob extends ExecutableJob {
 
-	public ProcessJarManifestVersionMismatchJob(ExecutableJobDefinition def) {
+	public ProcessModuleVersionAbsenceJob(ExecutableJobDefinition def) {
 		super(def);
 	}
 
 	@Override
 	@Executor(name="Job executor")
 	public void executeJob() {
-		loadVersionJarWithDifferentManifestSpecificationVersion();
+		loadNoVersionJar();
 	}
 	
-	private void loadVersionJarWithDifferentManifestSpecificationVersion() {
-		DummyDemo2 demo2 = new DummyDemo2();
-		demo2.load();
+	private void loadNoVersionJar() {
+		DummyDemo3 demo3 = new DummyDemo3();
+		demo3.load();
 	}
 }

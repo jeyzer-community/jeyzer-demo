@@ -2,14 +2,14 @@
 
   <!-- File log -->
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-	  <file>${JEYZER_DEMO_HOME}/log/jeyzer-${DEMO_AGENT_PROFILE}.log</file>
-	  <encoder>
-	      <pattern>%d{MM/dd/yyyy HH:mm:ss} %level %msg%n</pattern>
-	  </encoder>
+    <file>log/jeyzer-demo.log</file>
+	<encoder>
+	  <pattern>%d{MM/dd/yyyy HH:mm:ss} %level %msg%n</pattern>
+	</encoder>
   </appender>
 
   <root level="debug">
-	 <appender-ref ref="FILE" />
+    <appender-ref ref="FILE" />
   </root>
 
   <!--  Console log -->

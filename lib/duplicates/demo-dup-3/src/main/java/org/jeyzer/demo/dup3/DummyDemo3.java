@@ -1,4 +1,4 @@
-package org.jeyzer.demo.dup;
+package org.jeyzer.demo.dup3;
 
 /*-
  * ---------------------------LICENSE_START---------------------------
