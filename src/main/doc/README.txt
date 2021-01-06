@@ -11,7 +11,7 @@
   	  The Labors demo executes incidents cases like deadlock, thread leaking, contentions, high CPU consumption at task/process/system levels, Xmx checks...
   	  Each incident signature will have to be detected by the Jeyzer analyzer, thanks to the related monitoring rules defined in the the labors-demo profile.
   	  When started with the "scope=<number of jobs>", the Labors demo will pick up randomly this number of jobs and execute it. 3 is a good value.
-  	  When started with the "scope=all", the Labors demo will execute all the possible incidents/check cases (around 80).
+  	  When started with the "scope=all", the Labors demo will execute all the possible incidents/check cases (around 90).
   	  The "scope=all" mode is also used as part of the Jeyzer end to end testing : it takes about 1 hour to complete. All monitoring rules must match there.
   	  When started with the "jobs=<list of comma separated job names>", the Labors demo will execute all the specified jobs in its declaration order.
   	  Use the "list" parameter to display the list of available jobs.
@@ -57,6 +57,7 @@
   The demo libraries include 3 fake libraries (prefixed with jeyzer-demo-dup) used to demonstrate the versionning and duplicate checks.
   The jeyzer-demo-shared library is provided to test the dynamic shared profile loading : it contains the Jeyzer-Repository=demo in its Manifest attributes.
   Each demo application is delivered with its source code.
+  All demo binaries are Java modules, backward compatible with JDK 7.
   Important : all demo classes are obfuscated with Proguard, to demonstrate the Jeyzer de-obfuscation capabilities.
   
   
