@@ -11,9 +11,9 @@
 	<description>The Jeyzer Demo. More info at https://jeyzer.org/demos/</description>
 	
 	<properties>
-		<jeyzer-demo-shared.version>2.2-SNAPSHOT</jeyzer-demo-shared.version>
-    	<jeyzer-annotations.version>2.1-SNAPSHOT</jeyzer-annotations.version>
-    	<jeyzer-publish.version>2.2-SNAPSHOT</jeyzer-publish.version>
+		<jeyzer-demo-shared.version>2.2</jeyzer-demo-shared.version>
+    	<jeyzer-annotations.version>2.1</jeyzer-annotations.version>
+    	<jeyzer-publish.version>2.2</jeyzer-publish.version>
     	<jeyzer-annotation-processors.version>2.0</jeyzer-annotation-processors.version>
     	<jeyzer-maven-plugin.version>2.0</jeyzer-maven-plugin.version>
     	
