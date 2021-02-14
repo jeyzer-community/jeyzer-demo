@@ -27,6 +27,9 @@ if [ -f "$JEYZER_AGENT_HOME/lib/jeyzer-agent-${hapiware-agent.version}.jar" ]; t
 	JEYZER_RECORDER_LOG_FILE="$JEYZER_AGENT_HOME/log/jeyzer-recorder-agent-"$DEMO_AGENT_PROFILE".log"
 	export JEYZER_RECORDER_LOG_FILE
 	
+	# Recorder boot debug traces
+	# JAVA_OPTS="$JAVA_OPTS" -Djeyzer.recorder.boot.debug=true
+	
 	echo "Jeyzer Recorder agent is detected and will be loaded from $JEYZER_AGENT_HOME."
 else
 	echo "No Jeyzer Recorder agent detected. Please use JMX connection method. JMX port is $JMX_PORT"
