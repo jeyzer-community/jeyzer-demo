@@ -10,14 +10,14 @@
 JEYZER_AGENT_HOME=%{jeyzer.recorder.agent.home-to-be-set}
 export JEYZER_AGENT_HOME
 
-if [ -f "$JEYZER_AGENT_HOME/lib/jeyzer-agent-${hapiware-agent.version}.jar" ]; then
+if [ -f "$JEYZER_AGENT_HOME/lib/jeyzer-agent.jar" ]; then
 
 	# Jeyzer agent configuration
 	DEMO_RECORD_CONFIG_HOME="$JEYZER_DEMO_HOME/config/record"
 	export DEMO_RECORD_CONFIG_HOME
 
 	# Jeyzer agent parameters
-	JEYZER_AGENT="-javaagent:"$JEYZER_AGENT_HOME/lib/jeyzer-agent-${hapiware-agent.version}.jar"=$DEMO_RECORD_CONFIG_HOME/agent/jeyzer-agent.xml"
+	JEYZER_AGENT="-javaagent:"$JEYZER_AGENT_HOME/lib/jeyzer-agent.jar"=$DEMO_RECORD_CONFIG_HOME/agent/jeyzer-agent.xml"
 	export JEYZER_AGENT
 	
 	# Jeyzer agent parameters
@@ -28,7 +28,7 @@ if [ -f "$JEYZER_AGENT_HOME/lib/jeyzer-agent-${hapiware-agent.version}.jar" ]; t
 	export JEYZER_RECORDER_LOG_FILE
 	
 	# Recorder boot debug traces
-	# JAVA_OPTS="$JAVA_OPTS" -Djeyzer.recorder.boot.debug=true
+	# JAVA_OPTS="$JAVA_OPTS" -Djeyzer.recorder.boot.debug=true -Djeyzer.agent.boot.debug=true
 	
 	echo "Jeyzer Recorder agent is detected and will be loaded from $JEYZER_AGENT_HOME."
 else

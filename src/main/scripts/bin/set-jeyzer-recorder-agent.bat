@@ -11,10 +11,10 @@ SET "JEYZER_AGENT_HOME=${jeyzer.recorder.agent.home-to-be-set}"
 
 set JEYZER_AGENT=
 set "DEMO_RECORD_CONFIG_HOME=%JEYZER_DEMO_HOME%\config\record"
-if exist %JEYZER_AGENT_HOME%/lib/jeyzer-agent-${hapiware-agent.version}.jar (
+if exist %JEYZER_AGENT_HOME%\lib\jeyzer-agent.jar (
 
 	rem Jeyzer agent parameters
-	set "JEYZER_AGENT=-javaagent:"%JEYZER_AGENT_HOME%/lib/jeyzer-agent-${hapiware-agent.version}.jar"=%DEMO_RECORD_CONFIG_HOME%/agent/jeyzer-agent.xml"
+	set "JEYZER_AGENT=-javaagent:"%JEYZER_AGENT_HOME%\lib\jeyzer-agent.jar"=%DEMO_RECORD_CONFIG_HOME%\agent\jeyzer-agent.xml"
 	
 	rem Jeyzer agent parameters
 	set "CLASSPATH=%JEYZER_AGENT_HOME%"
@@ -23,7 +23,7 @@ if exist %JEYZER_AGENT_HOME%/lib/jeyzer-agent-${hapiware-agent.version}.jar (
     set "JEYZER_RECORDER_LOG_FILE=%JEYZER_AGENT_HOME%\log\jeyzer-recorder-agent-%DEMO_AGENT_PROFILE%.log"
     
     rem Recorder boot debug traces
-	rem set "JAVA_OPTS="$JAVA_OPTS" -Djeyzer.recorder.boot.debug=true"
+	rem set "JAVA_OPTS="$JAVA_OPTS" -Djeyzer.recorder.boot.debug=true -Djeyzer.agent.boot.debug=true"
 	
 	echo Jeyzer Recorder Agent is detected and will be loaded from %JEYZER_AGENT_HOME%.
 ) else (
