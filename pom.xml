@@ -21,8 +21,6 @@
 		<jeyzer.demo-ch.qos.logback.logback-classic.version>1.3.0-alpha4</jeyzer.demo-ch.qos.logback.logback-classic.version>
 		<jeyzer.demo-slf4j-api.version>2.0.0-alpha1</jeyzer.demo-slf4j-api.version>
 		<jeyzer.demo-logback-core.version>1.3.0-alpha4</jeyzer.demo-logback-core.version>
-		
-		<hapiware-agent.version>3.0</hapiware-agent.version>
 	</properties>
 	
 	<profiles>
