@@ -306,7 +306,7 @@
 							<target>
 								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.dependency.classpath" />
 								<!-- Default file -->
-								<copy file="${project.build.directory}/${project.artifactId}-${project.version}-${buildNumber}-proguard_map.txt" tofile="${obfuscation.mapping.default.deploy.directory}/${project.artifactId}/proguard_map.txt" />
+								<copy file="${project.build.directory}/${project.artifactId}-${project.version}-${buildNumber}-proguard_map.txt" tofile="${obfuscation.mapping.default.deploy.directory}/${project.artifactId}/default-proguard_map.txt" />
 								<!-- Repository file -->
 								<if>
 									<available file="${tomcat.base.dir}" type="dir"/>

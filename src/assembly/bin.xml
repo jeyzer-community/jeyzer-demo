@@ -70,6 +70,12 @@
 			<outputDirectory>/config/record</outputDirectory>
 		</fileSet>
 		<fileSet>
+			<directory>src/main/config/jfr</directory>
+			<filtered>false</filtered>
+			<fileMode>774</fileMode>
+			<outputDirectory>/config/jfr</outputDirectory>
+		</fileSet>
+		<fileSet>
 			<directory>src/main/java</directory>
 			<filtered>false</filtered>
 			<includes>

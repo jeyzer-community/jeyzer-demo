@@ -15,5 +15,10 @@
 			<source>${basedir}/target/${artifactId}-${project.version}-${buildNumber}-proguard_seeds.txt</source>
 			<outputDirectory>deobfuscation/${artifactId}</outputDirectory>
 		</file>
+		<file>
+			<source>${basedir}/target/${artifactId}-${project.version}-${buildNumber}-proguard_map.txt</source>
+			<outputDirectory>deobfuscation/${artifactId}</outputDirectory>
+			<destName>default-proguard_map.txt</destName>
+		</file>
 	</files>
 </assembly>

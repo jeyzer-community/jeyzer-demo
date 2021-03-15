@@ -30,6 +30,12 @@ rem True by default, set it to false to disable the Jeyzer Publisher
 SET "JEYZER_PUBLISH_PARAMS=-Djeyzer.publisher.active=true"
 
 rem -----------------------------------------------------------
+rem Java Flight Recorder activation
+rem -----------------------------------------------------------
+rem Requires Java 9+
+SET JAVA_JFR_ACTIVE=true
+
+rem -----------------------------------------------------------
 rem Internals - do not edit
 rem -----------------------------------------------------------
 
@@ -63,6 +69,9 @@ goto exit
 call "%JEYZER_DEMO_HOME%\bin\check-java.bat"
 if errorlevel 1 goto exit
 
+rem Set the JFR parameters
+call "%JEYZER_DEMO_HOME%\bin\set-java-flight-recorder.bat"
+
 rem Java debug options
 rem set "JAVA_OPTS=%JAVA_OPTS% -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5000"
 
@@ -91,6 +100,8 @@ rem Modules (JDK 9+)
 :gotJavaModuleSupport
 set "MODULE_PATH=--module-path %JEYZER_DEMO_HOME%\mods --add-modules org.jeyzer.publish,org.jeyzer.demo.shared,org.slf4j,org.jeyzer.demo"
 
+if not "%JAVA_MODULE_SUPPORT%" == "true" goto okDependencyPaths
+
 :okDependencyPaths
 rem - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -98,7 +109,7 @@ rem logback
 set "CLASSPATH=%CLASSPATH%;%JEYZER_DEMO_HOME%\config\log"
 
 echo Starting Demo Features v${project.version}...
-call "%JAVA_HOME%\bin\java.exe" %JEYZER_AGENT% %JEYZER_PUBLISH_PARAMS% %JAVA_OPTS% %MODULE_PATH% -cp %CLASSPATH% org.jeyzer.demo.features.FeatureDemo
+call "%JAVA_HOME%\bin\java.exe" %JEYZER_AGENT% %JFR_OPTS% %JEYZER_PUBLISH_PARAMS% %JAVA_OPTS% %MODULE_PATH% -cp %CLASSPATH% org.jeyzer.demo.features.FeatureDemo
 goto end
 
 :exit

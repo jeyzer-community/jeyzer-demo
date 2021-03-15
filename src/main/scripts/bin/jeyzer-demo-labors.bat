@@ -39,6 +39,12 @@ rem True by default, set it to false to disable the Jeyzer Publisher
 SET "JEYZER_PUBLISH_PARAMS=-Djeyzer.publisher.active=true"
 
 rem -----------------------------------------------------------
+rem Java Flight Recorder activation
+rem -----------------------------------------------------------
+rem Requires Java 9+
+SET JAVA_JFR_ACTIVE=true
+
+rem -----------------------------------------------------------
 rem Internals - do not edit
 rem -----------------------------------------------------------
 
@@ -71,6 +77,9 @@ goto exit
 :okCheckJava
 call "%JEYZER_DEMO_HOME%\bin\check-java.bat"
 if errorlevel 1 goto exit
+
+rem Set the JFR parameters
+call "%JEYZER_DEMO_HOME%\bin\set-java-flight-recorder.bat"
 
 rem Java debug options
 rem set "JAVA_OPTS=%JAVA_OPTS% -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5000"
@@ -110,7 +119,7 @@ rem logback
 set "CLASSPATH=%CLASSPATH%;%JEYZER_DEMO_HOME%\config\log"
 
 echo Starting Demo Labors v${project.version}...
-call "%JAVA_HOME%\bin\java.exe" %JEYZER_AGENT% %JEYZER_PUBLISH_PARAMS% %JAVA_OPTS% %MODULE_PATH% -cp %CLASSPATH% org.jeyzer.demo.labors.LaborsDemo %PRG_PARAMS%
+call "%JAVA_HOME%\bin\java.exe" %JEYZER_AGENT% %JFR_OPTS% %JEYZER_PUBLISH_PARAMS% %JAVA_OPTS% %MODULE_PATH% -cp %CLASSPATH% org.jeyzer.demo.labors.LaborsDemo %PRG_PARAMS%
 goto end
 
 :exit

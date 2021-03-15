@@ -48,26 +48,29 @@ rem echo Java version : %JAVA_VERSION%
 if %JAVA_VERSION% NEQ notfound goto gotJavaVersion
 
 rem Version not found : let's test now the JDK9+ directory structure (not valid for JREs) :
-if exist "%JAVA_HOME%\jmods" goto gotModuleSupport
+if exist "%JAVA_HOME%\jmods" goto gotJava9Plus
 
 echo Java version not detected : demo Java modules (JDK9+) will not be used.
-goto gotNoModuleSupport
+goto gotJava8OrLower
 
 :gotJavaVersion
 
 rem JDK 1.7 or 1.8. Starts with 1.
-if %JAVA_VERSION% EQU 1 goto gotNoModuleSupport
+if %JAVA_VERSION% EQU 1 goto gotJava8OrLower
 
-:gotModuleSupport
+:gotJava9Plus
 set JAVA_MODULE_SUPPORT=true
+set JAVA_JFR_SUPPORT=true
 goto okModuleSupportCheck
 
-:gotNoModuleSupport
+:gotJava8OrLower
 set JAVA_MODULE_SUPPORT=false
+set JAVA_JFR_SUPPORT=false
 goto okModuleSupportCheck
 
 :okModuleSupportCheck
 rem echo Module support : %JAVA_MODULE_SUPPORT%
+rem echo JFR support : %JAVA_JFR_SUPPORT%
 
 goto end
 

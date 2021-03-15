@@ -18,6 +18,7 @@ export JMX_PORT
 JAVA_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=$JMX_PORT -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false"
 export JAVA_OPTS
 
+
 # -----------------------------------------------------------
 # Jeyzer Recorder Agent mode
 # Configure the bin/set-jeyzer-recorder-agent.sh file
@@ -25,6 +26,16 @@ export JAVA_OPTS
 
 DEMO_AGENT_PROFILE=demo-toll
 export DEMO_AGENT_PROFILE
+
+
+# -----------------------------------------------------------
+# Java Flight Recorder activation
+# -----------------------------------------------------------
+# Requires Java 9+
+
+JAVA_JFR_ACTIVE=true
+export JAVA_JFR_ACTIVE
+
 
 # -----------------------------------------------------------
 # Internals - do not edit
@@ -68,6 +79,10 @@ else
   exit 1
 fi
 
+if [ -r "$JEYZER_DEMO_HOME"/bin/set-java-flight-recorder.sh ]; then
+  . "$JEYZER_DEMO_HOME"/bin/set-java-flight-recorder.sh
+fi
+
 # JVM options
 #JAVA_OPTS="$JAVA_OPTS -Xmn15m -Xms20m -Xmx20m"
 
@@ -94,4 +109,4 @@ export CLASSPATH
 # JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5000"
 
 echo Starting Demo Tollbooth v${project.version}...
-$JAVA_HOME/bin/java $JEYZER_AGENT $JAVA_OPTS $MODULE_PATH -cp $CLASSPATH org.jeyzer.demo.tollbooth.TollDemo
+$JAVA_HOME/bin/java $JEYZER_AGENT $JFR_OPTS $JAVA_OPTS $MODULE_PATH -cp $CLASSPATH org.jeyzer.demo.tollbooth.TollDemo

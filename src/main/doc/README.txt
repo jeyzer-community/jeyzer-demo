@@ -59,6 +59,7 @@
   Each demo application is delivered with its source code.
   All demo binaries are Java modules, backward compatible with JDK 7.
   Important : all demo classes are obfuscated with Proguard, to demonstrate the Jeyzer de-obfuscation capabilities.
+  The demo package also include a JFR configuration available in the $JEYZER_DEMO_HOME/config/jfr directory. 
   
   
   Jeyzer profiles
@@ -76,6 +77,18 @@
   The demo shared repository is declared in the $JEYZER_HOME/profiles/shared-repositories directory.
   
   
+  Java Flight Recorder
+  --------------------
+  
+  Each demo is configured to generate a JFR recording to illustrate the Jeyzer Analyzer tool capabilities to handle such format.
+  Important : demo applications must be stopped using a SIGQUIT signal (kill -3 or CTRL+C), 
+   otherwise the JVM will not dump its events and the JFR recording will therefore be empty. 
+  To disable it, set the JAVA_JFR_ACTIVE environment variable - defined in every demo start script - to false.
+  The JFR configuration can be customized through the $JEYZER_DEMO_HOME/config/jfr/jeyzer-demo.jfc file.
+  By default the JFR thread dump period is set to 5 seconds.
+  Note that JFR support requires Java 11+. On Java 8, the JFR recording on the demos is disabled.
+  
+  
   Logging
   -------
 
@@ -87,6 +100,7 @@
   Release Notes
   -------------
 
+  2.4 :	- JFR support
   2.0 :	- Jeyzer demo package
 			- 4 demo applications : Labors, Features, Philosophers, Tollbooth. 
   
@@ -135,7 +149,9 @@
 
   3.a) If you use the Jeyzer Monitor, run it while the demo is up.
 
-  3.b) Once complete, stop the demo application, collect the recording 
+  3.b) Once complete, stop the demo application (preferably with kill -3 or CTRL+C), 
+       collect the recording available in the $JEYZER_HOME/work/recordings/<profile name>/archive directory
+       or the JFR recording available in the $JEYZER_HOME/work/recordings/<profile name>/jfr directory
 	   and analyze it with the Jeyzer Analyzer
 
   

@@ -30,6 +30,11 @@ rem -----------------------------------------------------------
 
 set DEMO_AGENT_PROFILE=demo-philosophers
 
+rem -----------------------------------------------------------
+rem Java Flight Recorder activation
+rem -----------------------------------------------------------
+rem Requires Java 9+
+SET JAVA_JFR_ACTIVE=true
 
 rem -----------------------------------------------------------
 rem Internals - do not edit
@@ -64,6 +69,9 @@ goto exit
 call "%JEYZER_DEMO_HOME%\bin\check-java.bat"
 if errorlevel 1 goto exit
 
+rem Set the JFR parameters
+call "%JEYZER_DEMO_HOME%\bin\set-java-flight-recorder.bat"
+
 rem Java debug options
 rem set "JAVA_OPTS=%JAVA_OPTS% -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5000"
 
@@ -93,7 +101,7 @@ rem logback
 set "CLASSPATH=%CLASSPATH%;%JEYZER_DEMO_HOME%\config\log"
 
 echo Starting Demo Philosophers v${project.version}...
-call "%JAVA_HOME%\bin\java.exe" %JEYZER_AGENT% %JAVA_OPTS% %MODULE_PATH% -cp %CLASSPATH% org.jeyzer.demo.philosopher2.PhilosophersDemo type=%SCENARIO%
+call "%JAVA_HOME%\bin\java.exe" %JEYZER_AGENT% %JFR_OPTS% %JAVA_OPTS% %MODULE_PATH% -cp %CLASSPATH% org.jeyzer.demo.philosopher2.PhilosophersDemo type=%SCENARIO%
 goto end
 
 :exit

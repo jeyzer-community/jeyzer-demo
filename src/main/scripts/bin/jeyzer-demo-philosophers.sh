@@ -38,6 +38,15 @@ export DEMO_AGENT_PROFILE
 
 
 # -----------------------------------------------------------
+# Java Flight Recorder activation
+# -----------------------------------------------------------
+# Requires Java 9+
+
+JAVA_JFR_ACTIVE=true
+export JAVA_JFR_ACTIVE
+
+
+# -----------------------------------------------------------
 # Internals - do not edit
 # -----------------------------------------------------------
 
@@ -79,6 +88,10 @@ else
   exit 1
 fi
 
+if [ -r "$JEYZER_DEMO_HOME"/bin/set-java-flight-recorder.sh ]; then
+  . "$JEYZER_DEMO_HOME"/bin/set-java-flight-recorder.sh
+fi
+
 # JVM options
 #JAVA_OPTS="$JAVA_OPTS -Xmn15m -Xms20m -Xmx20m"
 
@@ -105,4 +118,4 @@ export CLASSPATH
 # JAVA_OPTS="$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5000"
 
 echo Starting Demo Philosophers v${project.version}...
-$JAVA_HOME/bin/java $JEYZER_AGENT $JAVA_OPTS $MODULE_PATH -cp $CLASSPATH org.jeyzer.demo.philosopher2.PhilosophersDemo type=$SCENARIO
+$JAVA_HOME/bin/java $JEYZER_AGENT $JFR_OPTS $JAVA_OPTS $MODULE_PATH -cp $CLASSPATH org.jeyzer.demo.philosopher2.PhilosophersDemo type=$SCENARIO
