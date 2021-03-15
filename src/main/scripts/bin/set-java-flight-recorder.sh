@@ -24,11 +24,14 @@ fi
 [ -z "$DEMO_PARENT_HOME" ] && DEMO_PARENT_HOME=`cd "$JEYZER_DEMO_HOME/.." >/dev/null; pwd`
 export DEMO_PARENT_HOME
 
-JFR_OUTPUT_DIR="$DEMO_PARENT_HOME/work/recordings/$DEMO_AGENT_PROFILE/jfr"
+APP_RECORDING_OUTPUT_DIR="$DEMO_PARENT_HOME/work/recordings/$DEMO_AGENT_PROFILE"
+JFR_OUTPUT_DIR="$APP_RECORDING_OUTPUT_DIR/jfr"
 JFR_RECORDING="$JFR_OUTPUT_DIR/$DEMO_AGENT_PROFILE.jfr"
 JFR_CONGIGURATION="$JEYZER_DEMO_HOME/config/jfr/jeyzer-demo.jfc"
 
+# Mkdir is not recursive : create the parent directory
 if [ ! -d "$JFR_OUTPUT_DIR" ]; then
+  mkdir "$APP_RECORDING_OUTPUT_DIR"
   mkdir "$JFR_OUTPUT_DIR"
 fi
 
