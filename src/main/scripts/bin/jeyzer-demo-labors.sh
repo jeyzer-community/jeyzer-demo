@@ -50,8 +50,8 @@ export JEYZER_PUBLISH_PARAMS
 # Java Flight Recorder activation
 # -----------------------------------------------------------
 # Requires Java 9+
-
-JAVA_JFR_ACTIVE=true
+# Non sense on the demo labors as the rules are activated upon properties which are not propagated in the JFR recording
+JAVA_JFR_ACTIVE=false
 export JAVA_JFR_ACTIVE
 
 

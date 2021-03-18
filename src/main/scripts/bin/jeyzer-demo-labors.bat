@@ -42,7 +42,8 @@ rem -----------------------------------------------------------
 rem Java Flight Recorder activation
 rem -----------------------------------------------------------
 rem Requires Java 9+
-SET JAVA_JFR_ACTIVE=true
+rem Non sense on the demo labors as the rules are activated upon properties which are not propagated in the JFR recording 
+SET JAVA_JFR_ACTIVE=false
 
 rem -----------------------------------------------------------
 rem Internals - do not edit
