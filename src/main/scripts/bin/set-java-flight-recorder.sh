@@ -40,5 +40,5 @@ if [ ! -d "$JFR_OUTPUT_DIR" ]; then
   return
 fi
 
-JFR_OPTS="-XX:StartFlightRecording=maxage=6h,maxsize=100M,settings=$JFR_CONGIGURATION,filename=$JFR_RECORDING"
+JFR_OPTS="-XX:StartFlightRecording=maxage=6h,maxsize=100M,dumponexit=true,settings=$JFR_CONGIGURATION,filename=$JFR_RECORDING"
 export JFR_OPTS

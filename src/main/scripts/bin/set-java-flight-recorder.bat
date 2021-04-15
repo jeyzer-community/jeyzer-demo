@@ -40,7 +40,7 @@ echo Warning : JFR output directory creation failed : Java Flight Recorder will 
 goto end
 
 :gotJFRDirectory
-set "JFR_OPTS=-XX:StartFlightRecording=maxage=6h,maxsize=100M,settings=%JFR_CONGIGURATION%,filename=%JFR_RECORDING%"
+set "JFR_OPTS=-XX:StartFlightRecording=maxage=6h,maxsize=100M,dumponexit=true,settings=%JFR_CONGIGURATION%,filename=%JFR_RECORDING%"
 
 echo Java Flight Recorder is detected and will be loaded.
 
