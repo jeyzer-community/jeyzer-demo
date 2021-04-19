@@ -97,12 +97,23 @@
   Log file is generated in the $JEYZER_DEMO_HOME/log directory.
   
   
+  Time zones
+  -------
+
+  To demonstrate the time zone management, the Demo features is started in US/Pacific time zone
+  and the Demo labors is started in IST time zone (Indian Standard Time).
+  The JZR report must therefore display the times in the right time zone, 
+  indicating the source ("Process") and time zone id.
+  
+  
   Release Notes
   -------------
 
+  2.5 :	- Time zones
   2.4 :	- JFR support
   2.0 :	- Jeyzer demo package
 			- 4 demo applications : Labors, Features, Philosophers, Tollbooth. 
+  
   
   System Requirements
   -------------------
