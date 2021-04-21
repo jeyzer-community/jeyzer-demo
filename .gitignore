@@ -6,4 +6,5 @@
 .apt_generated
 # ignore generated license files
 /LICENSE.txt
-
+# log directory
+log
