@@ -8,10 +8,15 @@
 
 setJavaSupportFlags(){
   JAVA_VERSION=`"$JAVA_HOME/bin/java" -version 2>&1 | awk -F'"' '/version/ {print $2}'`
-  JAVA_MAJOR_VERSION=`echo $JAVA_VERSION | awk -F'.' '{ print $1 }'` 
+  JAVA_MAJOR_VERSION=`echo $JAVA_VERSION | awk -F'.' '{ print $1 }'`
 
   if [ "$JAVA_MAJOR_VERSION" = "1" ]; then
-    JAVA_MODULE_SUPPORT=false   # 1.7 or 1.8
+    JAVA_MAJOR_OLD_VERSION=`echo $JAVA_VERSION | awk -F'.' '{ print $2 }'`
+    if [ "$JAVA_MAJOR_OLD_VERSION" = "7" ]; then
+      echo "The Jeyzer demos require Java 8+. Please update the demo JAVA_HOME in the demo/bin/check-java.sh"
+      exit 1
+    fi
+    JAVA_MODULE_SUPPORT=false   # 1.8
     JAVA_JFR_SUPPORT=false
   else
     JAVA_MODULE_SUPPORT=true    # 9, 10..

@@ -64,6 +64,15 @@ set JAVA_JFR_SUPPORT=true
 goto okModuleSupportCheck
 
 :gotJava8OrLower
+
+for /f tokens^=3-5^ delims^=.-_^" %%k in ('%JAVA_HOME%\bin\java -fullversion 2^>^&1') do set " JAVA_OLD_VERSION=%%k"
+rem echo Java version : %JAVA_OLD_VERSION%
+
+if %JAVA_OLD_VERSION% EQU 8 goto gotJava8
+echo The Jeyzer demos require Java 8+. Please update the JAVA_HOME in the demo/bin/check-java.bat.
+goto exit
+
+:gotJava8
 set JAVA_MODULE_SUPPORT=false
 set JAVA_JFR_SUPPORT=false
 goto okModuleSupportCheck
