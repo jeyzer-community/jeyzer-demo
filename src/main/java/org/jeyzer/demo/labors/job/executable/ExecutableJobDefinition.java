@@ -112,7 +112,9 @@ public enum ExecutableJobDefinition {
 	
 	// module collection happens in between (period 15s)
 	PROCESS_MODULE_VERSION_SNAPSHOT(1,4),
-	PROCESS_MODULE_VERSION_ABSENCE(1,4);
+	PROCESS_MODULE_VERSION_ABSENCE(1,4),
+	
+	JVM_FLAG(1,4);
 	
 	private ExecutableJobDefinition(int threadCount, int ticCount) {
 		this(threadCount, ticCount, -1, false);

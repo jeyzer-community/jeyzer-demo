@@ -13,7 +13,6 @@ package org.jeyzer.demo.features;
  */
 
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -50,6 +49,7 @@ import org.jeyzer.demo.features.tasks.MemoryConsumingTask;
 import org.jeyzer.demo.features.tasks.MemoryExhaustingTask;
 import org.jeyzer.demo.features.tasks.WingLightTester;
 import org.jeyzer.demo.features.tasks.WingLightTester.WING_TYPE;
+import org.jeyzer.demo.shared.DemoHelper;
 import org.jeyzer.demo.shared.DemoSharedLoader;
 import org.jeyzer.publish.JeyzerPublisher;
 import org.jeyzer.publish.event.JzrStandardEvent;
@@ -81,6 +81,8 @@ public class FeatureDemo {
 		
 		// MX features static data : publish up front
 		publishFlightInfo();
+		
+		DemoHelper.updateJVMHeapDumpPathFlag();
 		
 		// Demo event manager used to publish applicative events.
 		// Applicative events are collected by the Jeyzer Recorder.
@@ -274,7 +276,7 @@ public class FeatureDemo {
 		DemoSharedLoader loader = new DemoSharedLoader();
 		loader.loadSharedDemoLibrary();
 	}
-
+	
 	@Exclude
 	public static void main(String[] args) {
 		FeatureDemo demo = new FeatureDemo();
