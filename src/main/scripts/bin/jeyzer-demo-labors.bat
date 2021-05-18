@@ -23,7 +23,7 @@ rem -----------------------------------------------------------
 
 set JMX_PORT=2503
 
-set "JAVA_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=%JMX_PORT% -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Duser.timezone=IST"
+set "JAVA_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=%JMX_PORT% -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Duser.timezone=GMT"
 
 rem -----------------------------------------------------------
 rem Jeyzer Recorder Agent mode
