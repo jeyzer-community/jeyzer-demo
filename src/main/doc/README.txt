@@ -101,9 +101,17 @@
   -------
 
   To demonstrate the time zone management, the Demo features is started in US/Pacific time zone
-  and the Demo labors is started in IST time zone (Indian Standard Time).
-  The JZR report must therefore display the times in the right time zone, 
-  indicating the source ("Process") and time zone id.
+  and the Demo labors is started in the GMT time zone. 
+  Those settings define therefore the recording time zones.
+  
+  The display time zone is set by default in the profiles : 
+  the Demo features profile is using the US/Central time zone 
+  and the Demo labors is using the IST time zone (Indian Standard Time).
+  
+  The JZR report must therefore display the times in the right display time zone, 
+  indicating the source ("User selected", "Profile" or "Process") and time zone id.
+  
+  Those time zone details are available in the Session Details sheet of any JZR report.
   
   
   Release Notes
