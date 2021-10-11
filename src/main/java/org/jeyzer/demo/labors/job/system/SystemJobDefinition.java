@@ -40,7 +40,8 @@ public enum SystemJobDefinition {
 	PROCESS_JAR_NAME_ABSENCE(true),
 	PROCESS_MODULE_VERSION(true),
 	PROCESS_MODULE_NAME(true),
-	PROCESS_MODULE_NAME_ABSENCE(true);
+	PROCESS_MODULE_NAME_ABSENCE(true),
+	RECORDING_SIZE(true);
 	
 	private boolean fullSessionScope;
 	
