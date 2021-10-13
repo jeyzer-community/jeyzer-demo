@@ -17,7 +17,7 @@
 			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
 	 	-->
 		<patterns>
-			<!-- Discovery functions are loaded only if discovery mode is enabled (cf. discovery_mode) -->
+			<!-- Discovery functions are loaded only if discovery mode is enabled (cf. discovery_rules) -->
 			<discovery_functions>
 				<!-- pattern is a list of keywords, comma separated. Each keyword will issue one discovery rule -->
 				<!-- pattern_regex is optional. Focus can be : method, class, both -->
