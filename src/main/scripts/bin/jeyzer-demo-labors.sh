@@ -102,7 +102,7 @@ if [ -r "$JEYZER_DEMO_HOME"/bin/set-java-flight-recorder.sh ]; then
 fi
 
 # JVM options
-JAVA_OPTS="$JAVA_OPTS -Xmx768m -Xmn100m"
+JAVA_OPTS="$JAVA_OPTS -Xmx768m -Xmn100m -XX:+UseSerialGC"
 
 # Program parameters
 PRG_PARAMS="scope=$LABORS_SCOPE"

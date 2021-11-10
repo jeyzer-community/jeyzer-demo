@@ -41,7 +41,8 @@ public enum SystemJobDefinition {
 	PROCESS_MODULE_VERSION(true),
 	PROCESS_MODULE_NAME(true),
 	PROCESS_MODULE_NAME_ABSENCE(true),
-	RECORDING_SIZE(true);
+	RECORDING_SIZE(true),
+	GARBAGE_COLLECTOR_NAME(true);
 	
 	private boolean fullSessionScope;
 	

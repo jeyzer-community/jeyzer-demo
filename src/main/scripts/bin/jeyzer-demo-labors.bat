@@ -86,7 +86,7 @@ rem Java debug options
 rem set "JAVA_OPTS=%JAVA_OPTS% -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5000"
 
 rem JVM options
-set "JAVA_OPTS=%JAVA_OPTS% -Xmx768m -Xmn100m"
+set "JAVA_OPTS=%JAVA_OPTS% -Xmx768m -Xmn100m -XX:+UseSerialGC"
 
 rem Program parameters
 set "PRG_PARAMS=scope=%LABORS_SCOPE%"
