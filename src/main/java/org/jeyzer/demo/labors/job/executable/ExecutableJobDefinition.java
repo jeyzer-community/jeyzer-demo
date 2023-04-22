@@ -26,6 +26,8 @@ public enum ExecutableJobDefinition {
 	
 	FUNCTION_PRESENCE(1, 2, true),
 	OPERATION_PRESENCE(1, 2, true),
+	CONTENTION_TYPE_PRESENCE(1, 2, true),
+	
 	CONTENTION_TYPE_PATTERN(1, 15),
 	
 	APPLICATIVE_TASK_ONESHOT_EVENT(1, 1),
