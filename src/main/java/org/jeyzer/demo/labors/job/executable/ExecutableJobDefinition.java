@@ -4,7 +4,7 @@ package org.jeyzer.demo.labors.job.executable;
  * ---------------------------LICENSE_START---------------------------
  * Jeyzer Demo
  * --
- * Copyright (C) 2020 Jeyzer SAS
+ * Copyright (C) 2020 - 2023 Jeyzer
  * --
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -116,7 +116,9 @@ public enum ExecutableJobDefinition {
 	PROCESS_MODULE_VERSION_SNAPSHOT(1,4),
 	PROCESS_MODULE_VERSION_ABSENCE(1,4),
 	
-	JVM_FLAG(1,4);
+	JVM_FLAG(1,4),
+	
+	SHARED_PROFILE(1,3);
 	
 	private ExecutableJobDefinition(int threadCount, int ticCount) {
 		this(threadCount, ticCount, -1, false);

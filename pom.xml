@@ -5,17 +5,19 @@
 	<groupId>org.jeyzer</groupId>
 	<artifactId>jeyzer-demo</artifactId>
 	<packaging>jar</packaging>
-	<version>2.7</version>
+	<version>3.0-SNAPSHOT</version>
 	<name>Jeyzer Demo</name>
 	<url>https://github.com/jeyzer-community/jeyzer-demo</url>
 	<description>The Jeyzer Demo. More info at https://jeyzer.org/demos/</description>
 	
 	<properties>
-		<jeyzer-demo-shared.version>2.3</jeyzer-demo-shared.version>
-    	<jeyzer-annotations.version>2.1</jeyzer-annotations.version>
-    	<jeyzer-publish.version>2.2</jeyzer-publish.version>
-    	<jeyzer-annotation-processors.version>2.0</jeyzer-annotation-processors.version>
-    	<jeyzer-maven-plugin.version>2.0</jeyzer-maven-plugin.version>
+		<jeyzer-demo-shared.version>3.1-SNAPSHOT</jeyzer-demo-shared.version>
+    	<jeyzer-annotations.version>3.0-SNAPSHOT</jeyzer-annotations.version>
+    	<jeyzer-publish.version>3.0-SNAPSHOT</jeyzer-publish.version>
+    	<jeyzer-annotation-processors.version>3.0-SNAPSHOT</jeyzer-annotation-processors.version>
+    	<jeyzer-maven-plugin.version>3.0-SNAPSHOT</jeyzer-maven-plugin.version>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     	
 		<!-- Logback - Java9+ versions -->
 		<jeyzer.demo-ch.qos.logback.logback-classic.version>1.3.0-alpha4</jeyzer.demo-ch.qos.logback.logback-classic.version>
@@ -482,7 +484,7 @@
 	</developers>
 	
 	<organization>
-		<name>Jeyzer SAS</name>
+		<name>Jeyzer</name>
 		<url>https://jeyzer.org</url>
 	</organization>
 	<inceptionYear>2020</inceptionYear>

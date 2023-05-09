@@ -92,7 +92,7 @@
     	<url>http://127.0.0.1/websvn/samples</url>
   	</scm>
   	<organization>
-  		<name>Jeyzer SAS</name>
+  		<name>Jeyzer</name>
   		<url>https://jeyzer.org</url>
   	</organization>
   	<inceptionYear>2020</inceptionYear>
