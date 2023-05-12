@@ -11,11 +11,11 @@
 	<description>The Jeyzer Demo. More info at https://jeyzer.org/demos/</description>
 	
 	<properties>
-		<jeyzer-demo-shared.version>3.1-SNAPSHOT</jeyzer-demo-shared.version>
-    	<jeyzer-annotations.version>3.0-SNAPSHOT</jeyzer-annotations.version>
-    	<jeyzer-publish.version>3.0-SNAPSHOT</jeyzer-publish.version>
-    	<jeyzer-annotation-processors.version>3.0-SNAPSHOT</jeyzer-annotation-processors.version>
-    	<jeyzer-maven-plugin.version>3.0-SNAPSHOT</jeyzer-maven-plugin.version>
+		<jeyzer-demo-shared.version>3.1</jeyzer-demo-shared.version>
+    	<jeyzer-annotations.version>3.0</jeyzer-annotations.version>
+    	<jeyzer-publish.version>3.0</jeyzer-publish.version>
+    	<jeyzer-annotation-processors.version>3.0</jeyzer-annotation-processors.version>
+    	<jeyzer-maven-plugin.version>3.0</jeyzer-maven-plugin.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     	

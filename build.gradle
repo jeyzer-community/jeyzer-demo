@@ -16,12 +16,12 @@ plugins {
     id 'java'
     id 'java-library'
     id 'maven'
-    id 'org.jeyzer.profile-updater' version '2.0'
+    id 'org.jeyzer.profile-updater' version '3.0'
 }
 
 dependencies {
 		implementation 'org.jeyzer:jeyzer-publish:3.0'
-		implementation 'org.jeyzer:jeyzer-demo-shared:3.0'
+		implementation 'org.jeyzer:jeyzer-demo-shared:3.1'
 		implementation 'org.jeyzer:jeyzer-logger:3.0'
 		implementation 'ch.qos.logback:logback-classic:1.0.13'
 		implementation 'ch.qos.logback:logback-core:1.0.13'
@@ -31,7 +31,7 @@ dependencies {
 
 
 group = 'org.jeyzer.demo'
-version = '2.0'
+version = '3.0'
 
 description = "jeyzer-demo"
 
@@ -57,10 +57,10 @@ repositories {
     maven { url 'C:/Dev/programs/Build/maven-repository' }
 }
 dependencies {
-    compile group: 'org.jeyzer', name: 'jeyzer-demo-shared', version:'2.0'
-    compile group: 'org.jeyzer', name: 'jeyzer-publish', version:'2.0'
-    compile group: 'org.jeyzer', name: 'jeyzer-annotations', version:'2.0'
-    compile group: 'org.jeyzer', name: 'jeyzer-annotation-processors', version:'2.0'
+    compile group: 'org.jeyzer', name: 'jeyzer-demo-shared', version:'3.1'
+    compile group: 'org.jeyzer', name: 'jeyzer-publish', version:'3.0'
+    compile group: 'org.jeyzer', name: 'jeyzer-annotations', version:'3.0'
+    compile group: 'org.jeyzer', name: 'jeyzer-annotation-processors', version:'3.0'
 	implementation files('lib/jeyzer-demo-dup-1.1.1.alpha.jar', 'lib/jeyzer-demo-dup-2.2.2-SNAPSHOT.jar', 'lib/jeyzer-demo-dup-3.3.3.jar')
 }
 
