@@ -118,7 +118,9 @@ public enum ExecutableJobDefinition {
 	
 	JVM_FLAG(1,4),
 	
-	SHARED_PROFILE(1,3);
+	SHARED_PROFILE(1,3),
+	
+	EXECUTOR_PRESENCE(1,3);
 	
 	private ExecutableJobDefinition(int threadCount, int ticCount) {
 		this(threadCount, ticCount, -1, false);
