@@ -76,7 +76,9 @@ rem Java debug options
 rem set "JAVA_OPTS=%JAVA_OPTS% -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5000"
 
 rem JVM options
-set "JAVA_OPTS=%JAVA_OPTS% -XX:+UseBiasedLocking -server -Xmx256m -Xms128m"
+rem -XX:+UseBiasedLocking on Java 21
+rem set "JAVA_OPTS=%JAVA_OPTS% -XX:+UseBiasedLocking -server -Xmx256m -Xms128m"
+set "JAVA_OPTS=%JAVA_OPTS% -server -Xmx256m -Xms128m"
 
 rem - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rem Classpath and Module path setup

@@ -4,6 +4,8 @@
 **/.gradle
 **/build
 .apt_generated
+# ignore work directory
+**/work/
 # ignore generated license files
 /LICENSE.txt
 # log directory

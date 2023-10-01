@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration version="2.0" label="Jeyzer" description="JFR recording settings addapted for a Jeyzer analysis" provider="Oracle">
+<configuration version="2.21" label="Jeyzer" description="JFR recording settings addapted for a Jeyzer analysis" provider="Jeyzer">
 
   <category label="Java Development Kit">
 
@@ -681,6 +681,29 @@
 
     <event name="jdk.ThreadEnd" label="Java Thread End">
       <setting name="enabled" label="Enabled" description="Record event" contentType="jdk.jfr.Flag">false</setting>
+    </event>
+	
+	<!-- Virtual threads - Java 17+ -->
+
+    <event name="jdk.VirtualThreadStart" label="Virtual Thread Start">
+      <setting name="enabled" label="Enabled" description="Record event" contentType="jdk.jfr.Flag">true</setting>
+      <setting name="stackTrace" label="Stack Trace" description="Record stack traces" contentType="jdk.jfr.Flag">false</setting>
+    </event>
+
+    <event name="jdk.VirtualThreadEnd" label="Virtual Thread End">
+      <setting name="enabled" label="Enabled" description="Record event" contentType="jdk.jfr.Flag">true</setting>
+      <setting name="stackTrace" label="Stack Trace" description="Record stack traces" contentType="jdk.jfr.Flag">false</setting>
+    </event>
+
+	<!--
+    <event name="jdk.VirtualThreadSubmitFailed" label="Virtual Thread Submit Failed">
+      <setting name="enabled" label="Enabled" description="Record event" contentType="jdk.jfr.Flag">true</setting>
+      <setting name="stackTrace" label="Stack Trace" description="Record stack traces" contentType="jdk.jfr.Flag">false</setting>
+    </event>
+    -->
+    <event name="jdk.VirtualThreadPinned" label="Virtual Thread Pinned">
+      <setting name="enabled" label="Enabled" description="Record event" contentType="jdk.jfr.Flag">true</setting>
+      <setting name="stackTrace" label="Stack Trace" description="Record stack traces" contentType="jdk.jfr.Flag">true</setting>
     </event>
 
   </category>

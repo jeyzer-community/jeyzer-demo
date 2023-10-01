@@ -5,7 +5,23 @@
   -----------
 
   This demo package is a set of java applications used to demonstrate the Jeyzer Analyzer tool capabilities.
-  It contains 4 demo applications :
+  It contains 5 demo applications :
+  
+  	- Virtual Threads
+	  The Virtual Threads demo executes classical Loom tests. 
+	  It is almost derived from Bazlur Rahman's demo code available at https://github.com/rokon12/project-loom-slides-and-demo-code
+	  The application is exploring 2 topics with 7 sequences :
+	  1. Massive number of virtual threads sleeping, working (with 1 and 2 executors), accessing I/O
+	     The I/O sequence is the most advanced and interesting one as it compares platform and virtual threads, using the Executors and StructuredTaskScope frameworks.
+	     The I/O sequence load can be controlled with the JEYZER_DEMO_VIRTUAL_THREADS_IMAGE_DOWNLOADER_FETCH_LIMIT environment variable (1000 by default)
+	     With a value of 5000, you may experiment some few pending threads still waiting for results : we do assume this is coming from the network layer.
+	     This I/O sequence confirms the need for throttling when using virtual threads to prevent from high performance side effects.
+	     The I/O sequence code has been courtesy redesigned and enriched by José Paumard (Paris JUG).
+	  2. Locking inside the virtual threads : the spinning synchronization case, the reentrant lock case and the deadlock case 
+	     The latter case shows that it is difficult to troubleshoot it, as raised initially by Heinz Kabutz.
+	  The JZR report will permit to highlight the different cases from functional and technical view : look at the virtual threads sheet.
+	  The jcmd.bat tool is provided in the virtual-threads directory, along with the build and source resources.
+	  The jcmd.bat and build.bat require a JDK 21.
   
   	- Labors (in reference to the Labours of Heracles)
   	  The Labors demo executes incidents cases like deadlock, thread leaking, contentions, high CPU consumption at task/process/system levels, Xmx checks...
@@ -57,9 +73,9 @@
   The demo libraries include 3 fake libraries (prefixed with jeyzer-demo-dup) used to demonstrate the versionning and duplicate checks.
   The jeyzer-demo-shared library is provided to test the dynamic shared profile loading : it contains the Jeyzer-Repository=demo in its Manifest attributes.
   Each demo application is delivered with its source code.
-  All demo binaries are Java modules, backward compatible with JDK 7.
-  Important : all demo classes are obfuscated with Proguard, to demonstrate the Jeyzer de-obfuscation capabilities.
-  The demo package also include a JFR configuration available in the $JEYZER_DEMO_HOME/config/jfr directory. 
+  All demo binaries are Java modules, backward compatible with JDK 7, except the virtual threads one which was built with Java 21.
+  Important : all demo classes (except the virtual threads ones) are obfuscated with Proguard, to demonstrate the Jeyzer de-obfuscation capabilities.
+  The demo package also include a JFR configuration available in the $JEYZER_DEMO_HOME/config/jfr directory.
   
   
   Jeyzer profiles
@@ -117,6 +133,7 @@
   Release Notes
   -------------
 
+  3.1 :	- Virtual threads : extra demo added
   2.5 :	- Time zones
   2.4 :	- JFR support
   2.0 :	- Jeyzer demo package
@@ -128,6 +145,7 @@
 
   JDK:
     1.7 or above
+    21 for the virtual threads
   Memory:
     No minimum requirement. 
   Disk:
@@ -156,15 +174,22 @@
   Execution
   ----------------------------
   
-  1) Start the Jeyzer Recorder connecting to localhost:2500  
-     JMX port is 2500 for features, 2501 for philosophers and 2502 for toll.
+  1.a) Start the Jeyzer Recorder connecting to localhost:2500  
+     JMX port is 2500 for features, 2501 for philosophers, 2502 for toll, 2503 for labors, 2504 for virtual threads.
      If the Jeyzer Recorder agent is enabled, ignore this step.
+
+  1.b) If you intend to run the virtual threads demo, start the $JEYZER_DEMO_HOME\virtual-threads\jcmd.bat on Windows.
+     On Unix, execute the watch command (requires the procps package) : 
+     watch -n 30 'jcmd Thread.dump_to_file -format=txt > $JEYZER_HOME/work/recordings/jeyzer-demo-virtual-threads/jcmd-dump-${date}.txt'
+     Replace $JEYZER_HOME with the right path value.
+     Note that the JFR and JZR recordings will also be generated.
 
   2) Execute one of the demo application startup scripts available in the $JEYZER_DEMO_HOME/bin directory :
 		jeyzer-demo-labors.bat|sh
 		jeyzer-demo-features.bat|sh
 		jeyzer-demo-philosophers.bat|sh
 		jeyzer-demo-toll.bat|sh
+		jeyzer-demo-virtual-threads.bat|sh
 
   3.a) If you use the Jeyzer Monitor, run it while the demo is up.
 
@@ -173,6 +198,8 @@
        or the JFR recording available in the $JEYZER_HOME/work/recordings/<profile name>/jfr directory
 	   and analyze it with the Jeyzer Analyzer
 
+  3.c) For the virtual threads demo, zip the jcmd dump files available in the $JEYZER_HOME/work/recordings/<profile name>
+       and analyze it with the Jeyzer Analyzer
   
   
   Licensing

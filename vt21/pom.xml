@@ -1,0 +1,144 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jeyzer</groupId>
+	<artifactId>jeyzer-demo-virtual-threads</artifactId>
+	<packaging>jar</packaging>
+	<version>3.1</version>
+	<name>Jeyzer Demo Virtual Threads</name>
+	<url>https://github.com/jeyzer-community/jeyzer-demo</url>
+	<description>The Jeyzer Demo for virtual threads in Java 21. More info at https://jeyzer.org/demos/</description>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>    	
+	</properties>
+	
+	<dependencies>
+	</dependencies>
+	
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		
+		<plugins>
+			<!-- Sonar -->
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.6.0.1398</version>
+			</plugin>
+			<!-- Process license -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>1.19</version>
+				<configuration>
+					<licenseName>mpl-2.0</licenseName>
+                    <licenseResolver>${project.baseUri}/src/license</licenseResolver>
+                    <processStartTag>---------------------------LICENSE_START---------------------------</processStartTag>
+			        <processEndTag>----------------------------LICENSE_END----------------------------</processEndTag>
+			        <sectionDelimiter>--</sectionDelimiter>
+					<roots>
+						<root>src/main/java</root>
+					</roots>
+				</configuration>
+				<executions>
+					<execution>
+						<id>first</id>
+						<goals>
+							<goal>update-file-header</goal>
+							<goal>update-project-license</goal>
+						</goals>
+						<phase>process-sources</phase>
+					</execution>
+				</executions>
+			</plugin>
+      		<!-- Compile -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<executions>
+					<execution>
+            			<id>default-compile</id>
+            			<phase>compile</phase>
+            			<goals>
+              				<goal>compile</goal>
+            			</goals>
+						<configuration>
+							<release>21</release>
+							<compileSourceRoots>
+								<compileSourceRoot>${project.basedir}/src/main/java</compileSourceRoot>
+							</compileSourceRoots>
+							<verbose>true</verbose>
+							<fork>false</fork>
+							<!-- do not process annotations -->
+							<compilerArgs>
+								<!-- Java 20 specific -->
+								<arg>--enable-preview</arg>
+								<arg>-proc:none</arg>
+							</compilerArgs>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Generate the jar file with Manifest properties -->
+			<!-- 3.1 plugin version supports modules but is not compatible with the obfuscation -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+						<manifestEntries>
+              				<Built-By></Built-By>
+              				<!--  Used for the deobfuscation -->
+              				<Implementation-ArtifactId>${project.artifactId}</Implementation-ArtifactId>
+            			</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<licenses>
+      <license>
+        <name>Mozilla Public License Version 2.0</name>
+        <url>http://mozilla.org/MPL/2.0/</url>
+        <distribution>repo</distribution>
+      </license>
+    </licenses>
+	
+	<developers>
+		<developer>
+			<id>jeyzer-community-admin</id>
+			<name>Jeyzer Community Admin</name>
+			<email>jeyzer-community-admin@jeyzer.org</email>
+			<url>https://jeyzer.org/contribute-and-share/</url>
+			<organization>Jeyzer</organization>
+			<organizationUrl>https://jeyzer.org</organizationUrl>
+			<roles>
+				<role>administrator</role>
+			</roles>
+		</developer>
+	</developers>
+	
+	<organization>
+		<name>Jeyzer</name>
+		<url>https://jeyzer.org</url>
+	</organization>
+	<inceptionYear>2020</inceptionYear>
+	
+	<scm>
+		<url>https://github.com/jeyzer-community/jeyzer-demo</url>
+		<connection>scm:git:ssh://git@github.com/jeyzer-community/jeyzer-demo.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/jeyzer-community/jeyzer-demo.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+	
+</project>

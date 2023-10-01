@@ -94,7 +94,9 @@ if [ -r "$JEYZER_DEMO_HOME"/bin/set-java-flight-recorder.sh ]; then
 fi
 
 # JVM options
-JAVA_OPTS="$JAVA_OPTS -XX:+UseBiasedLocking -server -Xmx256m -Xms128m"
+# -XX:+UseBiasedLocking removed on Java 21
+# JAVA_OPTS="$JAVA_OPTS -XX:+UseBiasedLocking -server -Xmx256m -Xms128m"
+JAVA_OPTS="$JAVA_OPTS -server -Xmx256m -Xms128m"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Classpath and Module path setup
