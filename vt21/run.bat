@@ -33,7 +33,7 @@ rem -----------------------------------------------------------
 rem JFR parameters
 rem -----------------------------------------------------------
 
-set "JAVA_OPTS=%JAVA_OPTS% -XX:StartFlightRecording=maxage=6h,maxsize=100M,dumponexit=true,settings=..\..\..\config\jfr\jeyzer-demo.jfc,filename=..\..\work\demo-vt-all.jfr"
+set "JAVA_OPTS=%JAVA_OPTS% -XX:StartFlightRecording=maxage=6h,maxsize=100M,dumponexit=true,settings=..\..\..\src\main\config\jfr\jeyzer-demo.jfc,filename=..\..\work\demo-vt-all.jfr"
 
 
 
