@@ -16,6 +16,10 @@ package org.jeyzer.demo.virtualthreads;
 
 public class DemoVT21 {
     public static void main(String[] args) throws InterruptedException {
+
+    	ClassicMethodSynchronization cms = new ClassicMethodSynchronization();
+    	cms.sleep(5);
+    	cms.startSequence();
     	
     	ThousandsVirtualThreads mvt = new ThousandsVirtualThreads();
     	mvt.sleep(5); // wait to start jcmd
