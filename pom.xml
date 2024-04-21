@@ -5,7 +5,7 @@
 	<groupId>org.jeyzer</groupId>
 	<artifactId>jeyzer-demo</artifactId>
 	<packaging>jar</packaging>
-	<version>3.2</version>
+	<version>3.3-SNAPSHOT</version>
 	<name>Jeyzer Demo</name>
 	<url>https://github.com/jeyzer-community/jeyzer-demo</url>
 	<description>The Jeyzer Demo. More info at https://jeyzer.org/demos/</description>
