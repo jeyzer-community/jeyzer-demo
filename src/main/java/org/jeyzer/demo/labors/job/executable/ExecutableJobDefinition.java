@@ -120,7 +120,9 @@ public enum ExecutableJobDefinition {
 	
 	SHARED_PROFILE(1,3),
 	
-	EXECUTOR_PRESENCE(1,3);
+	EXECUTOR_PRESENCE(1,3),
+	
+	CONTENTION_TYPE_AND_HIGH_PROCESS_CPU(1, 3);
 	
 	private ExecutableJobDefinition(int threadCount, int ticCount) {
 		this(threadCount, ticCount, -1, false);
